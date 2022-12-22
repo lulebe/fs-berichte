@@ -1,11 +1,17 @@
 const session = require('express-session')
 const app = require('express')()
+const nunjucks = require('nunjucks')
 
 const config = require('./config')
 const sessionStore = require('./db').sessionStore
 
 var path = require('path')
 global.appRoot = path.resolve(__dirname)
+
+nunjucks.configure('templates', {
+    autoescape: true,
+    express: app
+});
 
 app.use(
   session({
