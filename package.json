@@ -11,5 +11,20 @@
     "url": "github.com/lulebe/fs-berichte"
   },
   "author": "Leander Berg",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "connect-session-sequelize": "^7.1.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.28.0",
+    "twing": "^5.1.2"
+  },
+  "devDependencies": {
+    "brunch": "^4.0.1",
+    "nodemon": "^2.0.20",
+    "sass-brunch": "^3.0.1"
+  }
 }
