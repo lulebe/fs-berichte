@@ -1,0 +1,15 @@
+{
+  "name": "fs-berichte",
+  "version": "1.0.0",
+  "description": "Berichte Website für FSmed-HD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/lulebe/fs-berichte"
+  },
+  "author": "Leander Berg",
+  "license": "MIT"
+}
