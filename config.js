@@ -3,7 +3,7 @@ module.exports = {
   DB_DIALECT: process.env.DB_DIALECT || "mysql",
   DB_HOST: process.env.DB_HOST || "localhost",
   DB_NAME: process.env.DB_NAME || "db-berichte",
-  DB_USER: process.env.DB_USER || "root",
+  DB_USER: process.env.DB_USER || "dbu-berichte",
   DB_PASSWORD: process.env.DB_PASSWORD || "testpw",
   PORT: process.env.PORT || 8080,
   COOKIE_SECRET: process.env.COOKIE_SECRET || "testsecret",
