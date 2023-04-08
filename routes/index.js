@@ -27,6 +27,8 @@ function makeMsg (code) {
     case 4:
       return "Diese Mailadresse wird schon verwendet, nutze das Login-Formular oder die Passwort-vergessen Funktion."
     case 5:
-      return "Bitte bestätige die E-Mail, die du von uns erhalten hast!"
+      return "Bitte bestätige die E-Mail, die du von uns erhalten hast! Falls du auch nach 10 Minuten keine E-Mail erhalten hast, registriere dich erneut."
+    case 6:
+      return "Du kannst dich nun einloggen!"
   }
 }

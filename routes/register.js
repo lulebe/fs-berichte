@@ -11,8 +11,12 @@ module.exports = async (req, res) => {
   if (req.body.repeatPassword !== req.body.password)
     return res.redirect('/?status=2')
   const foundUser = await User.findOne({where: {email: req.body.email.toLowerCase()}})
-  if (foundUser)
+  if (foundUser && foundUser.activated)
     return res.redirect('/?status=4')
+  else if (foundUser && !foundUser.activated && foundUser.authorized) {
+    sendActivationEmail(req.body.email)
+    return res.redirect('/?status=5')
+  }
   
 
   const userIsAuthorizedDomain = req.body.email.endsWith('@' + config.AUTHORIZED_DOMAIN)
@@ -23,10 +27,7 @@ module.exports = async (req, res) => {
   })
   if (userIsAuthorizedDomain) {
     sendActivationEmail(req.body.email)
-    if (req.query.goto)
-      res.redirect('/?status=5&goto='+encodeURIComponent(req.query.goto))
-    else
-      res.redirect('/?status=5&')
+    res.redirect('/?status=5')
   } else {
     //show notification to contact for authorization
     res.redirect('/nonAuthorizedEmail?email='+encodeURIComponent(req.body.email))
