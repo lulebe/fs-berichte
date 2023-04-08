@@ -4,11 +4,16 @@
   "description": "Berichte Website für FSmed-HD",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "brunch build",
+    "watch-build": "brunch watch",
+    "start": "node .",
+    "watch-server": "nodemon -e js,twig,html,phtml,json",
+    "dbinit": "node ./db/init-db.js"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/lulebe/fs-berichte"
+    "url": "https://github.com/lulebe/fs-berichte"
   },
   "author": "Leander Berg",
   "license": "MIT",
@@ -20,6 +25,7 @@
     "express-session": "^1.17.3",
     "mysql2": "^2.3.3",
     "nunjucks": "^3.2.3",
+    "pdfkit": "^0.13.0",
     "sequelize": "^6.28.0"
   },
   "devDependencies": {

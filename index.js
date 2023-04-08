@@ -3,7 +3,7 @@ const app = require('express')()
 const nunjucks = require('nunjucks')
 
 const config = require('./config')
-const sessionStore = require('./db').sessionStore
+const sessionStore = require('./db/db').sessionStore
 
 var path = require('path')
 global.appRoot = path.resolve(__dirname)
