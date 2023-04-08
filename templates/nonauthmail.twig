@@ -1,0 +1,22 @@
+{% extends "base.twig" %}
+
+{% block title %}Registrierung{% endblock %}
+
+{% block content %}
+  <section id="splash">
+    FSmed Berichte
+  </section>
+  <div style="padding: 16px;">
+    <section class="login-area card">
+      <h3>Autorisierung erforderlich</h3>
+      Bitte kontaktiere <a href="mailto:lehre@fsmed-hd.de">lehre@fsmed-hd.de</a>
+      von der bei der Registrierung angegebenen Mailadresse ({{ email }})
+      aus und beschreibe kurz, weshalb du Zugriff auf die Seite benötigst.
+    </section>
+    
+    <section class="login-area" style="text-align: center">
+      &copy; Leander Berg, 2023. Licensed under <a href="/assets/LICENSE.txt" target="_blank">MIT License</a>.<br>
+      Code at <a href="https://github.com/lulebe/fs-berichte">GitHub</a>
+    </section>
+  </div>
+{% endblock %}

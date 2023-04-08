@@ -22,6 +22,16 @@ const User = sequelize.define('User', {
       this.setDataValue('email', val.toLowerCase())
     }
   },
+  activated: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  authorized: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
   password: {
     type: DataTypes.STRING(60),
     allowNull: false

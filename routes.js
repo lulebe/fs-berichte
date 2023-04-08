@@ -11,6 +11,7 @@ router.use((req, res, next) => {
 })
 
 router.get('/', require('./routes/index'))
+router.get('/nonAuthorizedEmail', require('./routes/nonauthmail'))
 router.post('/login', require('./routes/login'))
 router.post('/forgotpwd', require('./routes/forgotpwd'))
 
@@ -26,7 +27,7 @@ appRouter.get('/logout', require('./routes/app/logout'))
 
 async function userHandler (req, res, next) {
   if (!req.session.userId) {
-    const goto = req.originalUrl != '/app/logout' ? '?goto=' + req.originalUrl : ''
+    const goto = req.originalUrl != '/app/logout' ? '?goto=' + encodeURIComponent(req.originalUrl) : ''
     return res.redirect('/' + goto)
   }
   res.tmplOpts.isLoggedIn = true

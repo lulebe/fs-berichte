@@ -21,8 +21,12 @@ function makeMsg (code) {
     case 1:
       return "Ein neues Passwort wurde per E-Mail zugestellt."
     case 2:
-      return "E-Mail nicht gefunden. Bei Bedarf Admins informieren."
+      return "Passwörter stimmen nicht überein."
     case 3:
       return "E-Mail oder Passwort sind inkorrekt."
+    case 4:
+      return "Diese Mailadresse wird schon verwendet, nutze das Login-Formular oder die Passwort-vergessen Funktion."
+    case 5:
+      return "Bitte bestätige die E-Mail, die du von uns erhalten hast!"
   }
 }

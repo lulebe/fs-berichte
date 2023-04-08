@@ -9,5 +9,8 @@ module.exports = {
   COOKIE_SECRET: process.env.COOKIE_SECRET || "testsecret",
   MJ_APIKEY_PUBLIC: process.env.MJ_PUB || "",
   MJ_APIKEY_PRIVATE: process.env.MJ_PRIV || "",
+  AUTHORIZED_DOMAIN: process.env.AUTHORIZED_DOMAIN || "stud.uni-heidelberg.de",
+  ROOT_URL: process.env.ROOT_URL || "http://localhost:8080",
+  JWT_SECRET: process.env.JWT_SECRET || "secret",
   production: process.env.NODE_ENV === "production"
 }
