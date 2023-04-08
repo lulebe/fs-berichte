@@ -1,0 +1,77 @@
+{% extends "base.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <section id="splash">
+    FSmed Berichte
+  </section>
+  {% if hasError %}<section id="error-msg">{{ errorMsg }}</section>{% endif %}
+  <div style="padding: 16px;">
+    <section class="login-area card">
+      <h3>Login</h3>
+      <form action="/login{{loginGoto}}" method="POST">
+        <input type="email" name="email" placeholder="E-Mail">
+        <div class="pwinput" id="pw-login">
+          <input type="password" name="password" placeholder="Passwort">
+          <i class="material-icons on">visibility</i>
+          <i class="material-icons off">visibility_off</i>
+        </div>
+        <input type="submit" value="einloggen">
+      </form>
+    </section>
+    <section class="login-area card">
+      <h3>Registrierung</h3>
+      <form action="/register{{loginGoto}}" method="POST">
+        <input type="email" name="email" placeholder="E-Mail">
+        <div class="pwinput" id="pw-reg">
+          <input type="password" name="password" placeholder="Passwort">
+          <i class="material-icons on">visibility</i>
+          <i class="material-icons off">visibility_off</i>
+        </div>
+        <div class="pwinput" id="pw-reg-repeat">
+          <input type="password" name="repeatPassword" placeholder="Passwort wiederholen">
+          <i class="material-icons on">visibility</i>
+          <i class="material-icons off">visibility_off</i>
+        </div>
+        <input type="submit" value="registrieren">
+      </form>
+    </section>
+    <section class="login-area card">
+      <h3>Passwort vergessen</h3>
+      <form action="/forgotpwd" method="POST">
+        <input type="email" name="email" placeholder="E-Mail">
+        <input type="submit" value="Password zurücksetzen">
+      </form>
+    </section>
+    <section class="login-area" style="text-align: center">
+      &copy; Leander Berg, {{ currentYear }}. Licensed under <a href="/assets/LICENSE.txt" target="_blank">MIT License</a>.<br>
+      Code at <a href="https://github.com/lulebe/fs-berichte">GitHub</a>
+    </section>
+  </div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  function makePWVisibilityToggle (container) {
+    const elContainer = document.getElementById(container)
+    const elOn = elContainer.querySelector('i.on')
+    const elOff = elContainer.querySelector('i.off')
+    const elInput = elContainer.querySelector('input')
+    elOff.style.display = 'none'
+    elOn.addEventListener('click', e => {
+      elOn.style.display = 'none'
+      elOff.style.display = 'block'
+      elInput.type = 'text'
+    })
+    elOff.addEventListener('click', e => {
+      elOff.style.display = 'none'
+      elOn.style.display = 'block'
+      elInput.type = 'password'
+    })
+  }
+  makePWVisibilityToggle('pw-login')
+  makePWVisibilityToggle('pw-reg')
+  makePWVisibilityToggle('pw-reg-repeat')
+</script>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FS-Berichte: {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  {% if isLoggedIn %}
+    <header id="top-bar">
+      <a href="/app/main" id="home-link">FS-Berichte</a>
+      <nav id="main-nav">
+        {% if user.isAdmin %}<a href="/app/admin"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
+        <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
+      </nav>
+      <input type="checkbox" id="mobile-nav-btn">
+      <label for="mobile-nav-btn">Menü</label>
+      <nav id="mobile-nav">
+        {% if user.isAdmin %}<a href="/app/admin"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
+        <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
+      </nav>
+    </header>
+  {% endif %}
+  {% block content %}{% endblock %}
+  {% block js %}{% endblock %}
+</body>
+</html>

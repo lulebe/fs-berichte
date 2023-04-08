@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const appRouter = require('express').Router()
 
-const { User } = require('./db')
+const { User } = require('./db/db')
 
 module.exports = router
 
@@ -11,13 +11,18 @@ router.use((req, res, next) => {
 })
 
 router.get('/', require('./routes/index'))
+router.post('/login', require('./routes/login'))
+router.post('/forgotpwd', require('./routes/forgotpwd'))
 
 
 router.use('/app', userHandler)
 router.use('/app', appRouter)
 
-//app Routes
-
+appRouter.get('/main', require('./routes/app/main'))
+appRouter.get('/logout', require('./routes/app/logout'))
+//appRouter.get('/profile', require('./routes/app/profile'))
+//appRouter.post('/profile', [require('./routes/app/profile_post')], require('./routes/app/profile'))
+//appRouter.get('/admin', [onlyAdmin], require('./routes/app/admin'))
 
 async function userHandler (req, res, next) {
   if (!req.session.userId) {

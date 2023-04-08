@@ -1,0 +1,37 @@
+ul {
+    list-style: none;
+    padding: 0;
+    li {
+      .main-text {
+        display: block;
+        padding-left: 12px;
+        color: black;
+        flex-grow: 1;
+      }
+      a.main-text {
+        &:hover {
+          background-color: rgba(0,0,0,0.1);
+        }
+        padding-right: 12px;
+      }
+      .end-btn {
+        display: inline-block;
+        flex-grow: unset;
+        width: 48px;
+        text-align: center;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+      line-height: 48px;
+      display: flex;
+      flex-direction: row;
+      &:nth-child(odd) {
+        background-color: rgba(0,0,0,0.05);
+      }
+      &.endpad {
+        padding-right: 12px;
+      }
+    }
+  }

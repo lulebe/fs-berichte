@@ -1,0 +1,134 @@
+$primary-color: #3d84c0;
+$accent-color: #c10b1d;
+$primary-color-dark: #014178;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f3f3f3;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-color;
+  &:visited {
+    color: $primary-color;
+  }
+  &:hover {
+    color: $primary-color-dark;
+  }
+}
+
+button, input[type=submit], .btn {
+  border-radius: 50px;
+  border: 1px solid $primary-color;
+  font-size: 1rem;
+  padding: 6px 12px;
+  background: white;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    background: $primary-color;
+    .material-icons:first-child:last-child {
+      color: grey;
+    }
+  }
+}
+
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel] {
+  display: block;
+  width: 100%;
+  margin: 16px auto;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 50px;
+  outline: none;
+  background: white;
+  &:focus {
+    border-color: $primary-color;
+  }
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: 1px solid #aaa;
+  padding: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  border-radius: 4px;
+  &:focus {
+    border-color: $primary-color;
+  }
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: grey;
+  margin: 16px 0;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.schedule-top-wrapper {
+  width: 100%;
+  padding: 16px;
+  margin: 0;
+  height: 136px;
+  position: relative;
+}
+
+.wrapper-2-col {
+  width: 100%;
+  padding: 16px;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 30% 70%;
+  height: calc(100vh - 200px);
+  .grid-col.top {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+  }
+  .grid-col.left {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+  .grid-col {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+    padding: 0 16px;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+i.material-icons {
+  position: relative;
+  top: 6px;
+  &.up {
+    top: 2px;
+  }
+}
+
+@import "nav";
+@import "cards";
+@import "login";
+@import "lists";
