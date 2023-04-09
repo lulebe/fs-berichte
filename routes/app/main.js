@@ -39,8 +39,6 @@ module.exports = async (req, res) => {
     sqlquery.include[0].include[1] = {model: Examiner, where: {name: {[Op.like]: '%'+req.query.examiner+'%'}}}
   }
 
-  console.log(sqlquery)
-
   //results
   sqlquery.order = [['id', 'DESC']]
   sqlquery.limit = 100
@@ -50,8 +48,10 @@ module.exports = async (req, res) => {
     r.readableDate = new Date(r.date).toLocaleDateString('de-DE')
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
+  console.log(JSON.stringify(results))
   res.tmplOpts.results = results
   res.tmplOpts.query = req.query
   res.tmplOpts.multiDLIds = results.map(r => r.id).join('-')
+  res.tmplOpts.multiDLquery = encodeURIComponent(JSON.stringify(req.query))
   tmpl.render('app/main.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
