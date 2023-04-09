@@ -13,12 +13,12 @@ module.exports = async (req, res) => {
     ExamLocation.count()
   )
   res.tmplOpts.pageIndex = req.query.page || 1
-  res.tmplOpts.pageCount = Math.ceil(LocationCount / 2)
-  const offset = req.query.page ? (req.query.page-1) * 2 : 0
+  res.tmplOpts.pageCount = Math.ceil(LocationCount / 50)
+  const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allLocations = await (
     (searchTerm) ?
-    ExamLocation.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 2, offset}) :
-    ExamLocation.findAll({order: [['name', 'DESC']], limit: 2, offset})
+    ExamLocation.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 50, offset}) :
+    ExamLocation.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.locations = allLocations.map(s => s.dataValues)
   res.tmplOpts.locations.forEach(s => {

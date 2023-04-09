@@ -13,12 +13,12 @@ module.exports = async (req, res) => {
     Subject.count()
   )
   res.tmplOpts.pageIndex = req.query.page || 1
-  res.tmplOpts.pageCount = Math.ceil(SubjectCount / 2)
-  const offset = req.query.page ? (req.query.page-1) * 2 : 0
+  res.tmplOpts.pageCount = Math.ceil(SubjectCount / 50)
+  const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allSubjects = await (
     (searchTerm) ?
-    Subject.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 2, offset}) :
-    Subject.findAll({order: [['name', 'DESC']], limit: 2, offset})
+    Subject.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 50, offset}) :
+    Subject.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.subjects = allSubjects.map(s => s.dataValues)
   res.tmplOpts.subjects.forEach(s => {

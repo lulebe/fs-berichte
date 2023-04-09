@@ -13,12 +13,12 @@ module.exports = async (req, res) => {
     User.count()
   )
   res.tmplOpts.pageIndex = req.query.page || 1
-  res.tmplOpts.pageCount = Math.ceil(userCount / 2)
-  const offset = req.query.page ? (req.query.page-1) * 2 : 0
+  res.tmplOpts.pageCount = Math.ceil(userCount / 50)
+  const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allUsers = await (
     (searchTerm) ?
-    User.findAll({where: {email: {[Op.like]: searchTerm}}, order: [['isAdmin', 'DESC']], limit: 2, offset}) :
-    User.findAll({order: [['isAdmin', 'DESC']], limit: 2, offset})
+    User.findAll({where: {email: {[Op.like]: searchTerm}}, order: [['isAdmin', 'DESC']], limit: 50, offset}) :
+    User.findAll({order: [['isAdmin', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.users = allUsers.map(u => u.dataValues)
   res.tmplOpts.users.forEach(u => {
