@@ -14,11 +14,11 @@
           <div class="inputlabel">
             <label>Prüfungsort (Klinik oder Institut)</label>
             <input type="hidden" name="locationId">
-            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum">
+            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum" required minlength="3">
           </div><br>
           <div class="inputlabel">
             <label>Prüflinge insgesamt</label>
-            <input type="number" name="studentCount" min="1" max="10" step="1" value="2">
+            <input type="number" name="studentCount" required min="1" max="10" step="1" value="2">
           </div>
         </div>
         {% for subjectIndex in 1..examType.subjectCount %}
@@ -27,20 +27,21 @@
             <div class="inputlabel">
               <label>Fach</label>
               <input type="hidden" name="subjectId{{subjectIndex}}">
-              <input type="text" name="subject{{subjectIndex}}" data-autocomplete="subject" placeholder="Anatomie">
+              <input type="text" name="subject{{subjectIndex}}" data-autocomplete="subject" placeholder="Anatomie" required minlength="3">
             </div><br>
             <div class="inputlabel">
               <label>Prüfer (Ganzer Name ohne Titel!)</label>
               <input type="hidden" name="examinerId{{subjectIndex}}">
-              <input type="text" name="examiner{{subjectIndex}}" data-autocomplete="examiner" placeholder="Joachim Kirsch">
+              <input type="text" name="examiner{{subjectIndex}}" data-autocomplete="examiner" placeholder="Joachim Kirsch" required minlength="3">
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..."></textarea>
+            <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
           </div>
         {% endfor %}
-        <input type="submit" value="eintragen">
+        <button type="submit" class="fullpagesubmit">eintragen</button>
       </form>
     </section>
+    <div style="height: 64px">&nbsp;</div>
   </div>
 {% endblock %}
 
@@ -48,12 +49,10 @@
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 <script type="text/javascript">
   atData = {
-    examiner: new Fuse({{examiners | json_encode() | raw}}),
-    subject: new Fuse({{subjects | json_encode() | raw}}),
-    location: new Fuse({{locations | json_encode() | raw}})
+    examiner: new Fuse({{examiners | json_encode() | raw}}, {keys: ['name']}),
+    subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),
+    location: new Fuse({{locations | json_encode() | raw}}, {keys: ['name']})
   }
-
-  const testSubjects = new Fuse([{id: 1, name: "Anatomie"}, {id: 2, name: "Anästhesie"}], {keys: ['name']})
 
   let attachedField = null
   const autocompleteMenu = document.createElement('div')
@@ -70,7 +69,10 @@
     const autocompleteField = autocompleteFields[i];
     autocompleteField.addEventListener('blur', hideAutocomplete)
     autocompleteField.addEventListener('focus', showAutocomplete)
-    autocompleteField.addEventListener('input', showAutocomplete)
+    autocompleteField.addEventListener('input', e => {
+      e.target.previousElementSibling.value = ''
+      showAutocomplete(e)
+    })
   }
 
   function hideAutocomplete () {
@@ -84,6 +86,7 @@
       return
     }
     attachedField = e.target
+    console.log(e.target.value, atData[e.target.dataset.autocomplete])
     fillMenu(e.target.value, atData[e.target.dataset.autocomplete])
     e.target.parentElement.appendChild(autocompleteMenu)
   }

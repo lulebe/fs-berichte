@@ -1,4 +1,4 @@
-$primary-color: #3d84c0;
+$primary-color: #296ea7;
 $accent-color: #c10b1d;
 $primary-color-dark: #014178;
 
@@ -49,6 +49,18 @@ button, input[type=submit], .btn {
     color: white;
     background: $primary-color;
   }
+  &.important {
+    color: $accent-color;
+    border-color: $accent-color;
+    &:hover {
+      color: white;
+      background: $accent-color;
+    }
+  }
+  &.iconbtn {
+    line-height: 38px;
+    padding: 0 24px;
+  }
 }
 
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
@@ -94,6 +106,22 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
     width: 32px;
     height: 32px;
   }
+}
+
+.fullpagesubmit {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  line-height: 64px;
+  padding: 0;
+  border-radius: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background: $primary-color-dark;
+  color: white;
+  font-weight: bold;
 }
 
 .search-block {

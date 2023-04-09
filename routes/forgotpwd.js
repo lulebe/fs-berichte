@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const generator = require('generate-password')
 
 const mailer = require.main.require('./email')

@@ -20,10 +20,10 @@ body {
 
 a {
   text-decoration: none;
-  color: #3d84c0;
+  color: #296ea7;
 }
 a:visited {
-  color: #3d84c0;
+  color: #296ea7;
 }
 a:hover {
   color: #014178;
@@ -31,7 +31,7 @@ a:hover {
 
 button, input[type=submit], .btn {
   border-radius: 50px;
-  border: 1px solid #3d84c0;
+  border: 1px solid #296ea7;
   font-size: 1rem;
   padding: 6px 12px;
   background: white;
@@ -40,7 +40,19 @@ button, input[type=submit], .btn {
 }
 button:hover, input[type=submit]:hover, .btn:hover {
   color: white;
-  background: #3d84c0;
+  background: #296ea7;
+}
+button.important, input[type=submit].important, .btn.important {
+  color: #c10b1d;
+  border-color: #c10b1d;
+}
+button.important:hover, input[type=submit].important:hover, .btn.important:hover {
+  color: white;
+  background: #c10b1d;
+}
+button.iconbtn, input[type=submit].iconbtn, .btn.iconbtn {
+  line-height: 38px;
+  padding: 0 24px;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
@@ -55,7 +67,7 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   background: white;
 }
 input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus, input[type=tel]:focus, input[type=search]:focus {
-  border-color: #3d84c0;
+  border-color: #296ea7;
 }
 
 .inputlabel label {
@@ -84,6 +96,22 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
 .radiorow input[type=radio] {
   width: 32px;
   height: 32px;
+}
+
+.fullpagesubmit {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  line-height: 64px;
+  padding: 0;
+  border-radius: 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  background: #014178;
+  color: white;
+  font-weight: bold;
 }
 
 .search-block {
@@ -116,7 +144,7 @@ textarea {
   resize: vertical;
 }
 textarea:focus {
-  border-color: #3d84c0;
+  border-color: #296ea7;
 }
 
 hr {
@@ -242,7 +270,7 @@ nav#mobile-nav {
   }
   nav#mobile-nav a {
     display: block;
-    color: #3d84c0;
+    color: #296ea7;
     padding: 0 16px;
     height: 64px;
     line-height: 64px;
@@ -256,7 +284,7 @@ nav#mobile-nav {
   }
   #mobile-nav-btn:checked + label {
     background: white;
-    color: #3d84c0;
+    color: #296ea7;
   }
 }
 nav#admin-tabs {
@@ -298,7 +326,7 @@ nav#admin-tabs .tab:hover {
   cursor: pointer;
 }
 .card.selectable.selected {
-  border: 2px solid #3d84c0;
+  border: 2px solid #296ea7;
   box-shadow: 0 7px 12px rgba(0, 0, 0, 0.3);
 }
 
