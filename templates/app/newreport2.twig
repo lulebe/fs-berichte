@@ -19,6 +19,14 @@
           <div class="inputlabel">
             <label>Prüflinge insgesamt</label>
             <input type="number" name="studentCount" required min="1" max="10" step="1" value="2">
+          </div><br>
+          <div class="inputlabel">
+            <label>Note (bei Bedarf freilassen)</label>
+            <input type="text" name="grade" placeholder="noch nicht bekannt">
+          </div><br>
+          <div class="inputlabel">
+            <label>Allgemeines</label>
+            <textarea name="comment" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum..."></textarea>
           </div>
         </div>
         {% for subjectIndex in 1..examType.subjectCount %}

@@ -6,6 +6,8 @@ module.exports = async (req, res) => {
   const exam = await req.user.createExam({
     date: req.body.date,
     studentCount: req.body.studentCount,
+    grade: req.body.grade,
+    comment: req.body.comment,
     ExamTypeId: examType.id
   })
   let location = null

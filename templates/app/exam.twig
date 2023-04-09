@@ -9,6 +9,8 @@
       <a href="{{exam.id}}/pdf" class="btn"><i class="material-icons">save</i> als PDF speichern</a>
       {% if user.id == exam.UserId %}<a href="editreport/{{exam.id}}" class="btn important"><i class="material-icons">edit</i> bearbeiten</a>{% endif %}
       <h4>{{exam.ExamLocation.name}}</h4>
+      <h4>Note: {{exam.grade}}</h4>
+      <p>{{exam.comment}}</p>
       {% for report in exam.SubjectExams %}
         <div class="card" style="margin-bottom: 16px">
           <h3>{{report.Subject.name}}</h3>

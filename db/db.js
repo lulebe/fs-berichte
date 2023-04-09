@@ -74,7 +74,9 @@ const ExamLocation = sequelize.define('ExamLocation', {
 //gesamte Prüfung
 const Exam = sequelize.define('Exam', {
   date: DataTypes.DATE,
-  studentCount: DataTypes.INTEGER
+  studentCount: DataTypes.INTEGER,
+  grade: DataTypes.STRING,
+  comment: DataTypes.TEXT
 })
 
 //Physikum, M3 etc
