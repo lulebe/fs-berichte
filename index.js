@@ -7,6 +7,7 @@ const sessionStore = require('./db/db').sessionStore
 
 var path = require('path')
 global.appRoot = path.resolve(__dirname)
+global.requiremain = require
 
 nunjucks.configure('templates', {
     autoescape: true,

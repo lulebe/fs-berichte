@@ -1,7 +1,7 @@
 const PDFDocument = require('pdfkit')
 const joinpath = require('path').join
 
-const { Exam, ExamLocation, SubjectExam, Subject, Examiner } = require.main.require('./db/db')
+const { Exam, ExamLocation, SubjectExam, Subject, Examiner } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.query.exams) return res.status(400).send()

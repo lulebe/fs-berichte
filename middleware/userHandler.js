@@ -1,4 +1,4 @@
-const { User } = require.main.require('./db/db')
+const { User } = requiremain('./db/db')
 
 module.exports = async function (req, res, next) {
   if (!req.session.userId) {

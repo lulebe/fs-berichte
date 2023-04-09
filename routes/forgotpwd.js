@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs')
 const generator = require('generate-password')
 
-const mailer = require.main.require('./email')
-const config = require.main.require('./config')
-const { User } = require.main.require('./db/db')
+const mailer = requiremain('./email')
+const config = requiremain('./config')
+const { User } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.body.email)

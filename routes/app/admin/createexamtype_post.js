@@ -1,4 +1,4 @@
-const { ExamType } = require.main.require('./db/db')
+const { ExamType } = requiremain('./db/db')
 
 
 module.exports = async (req, res) => {

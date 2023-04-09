@@ -1,4 +1,4 @@
-const tmpl = require.main.require('./templates')
+const tmpl = requiremain('./templates')
 
 module.exports = (req, res) => {
   if (req.session.userId)

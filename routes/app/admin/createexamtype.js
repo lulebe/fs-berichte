@@ -1,4 +1,4 @@
-const tmpl = require.main.require('./templates')
+const tmpl = requiremain('./templates')
 
 module.exports = async (req, res) => {
   tmpl.render('app/admin/createexamtype.twig', res.tmplOpts).then(rendered => res.end(rendered))

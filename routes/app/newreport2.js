@@ -1,6 +1,6 @@
-const tmpl = require.main.require('./templates')
+const tmpl = requiremain('./templates')
 
-const { ExamType, Subject, ExamLocation, Examiner } = require.main.require('./db/db')
+const { ExamType, Subject, ExamLocation, Examiner } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const examType = await ExamType.findByPk(req.params.examType)

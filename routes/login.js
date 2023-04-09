@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 
-const { User } = require.main.require('./db/db')
+const { User } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.body.email)

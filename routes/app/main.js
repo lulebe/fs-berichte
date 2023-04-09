@@ -1,7 +1,7 @@
-const tmpl = require.main.require('./templates')
+const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 
-const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation } = require.main.require('./db/db')
+const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   //search autocomplete Date

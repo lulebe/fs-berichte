@@ -2,8 +2,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const config = require('../config')
-const { User } = require.main.require('./db/db')
-const mailer = require.main.require('./email')
+const { User } = requiremain('./db/db')
+const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
   if (!req.body.email || !req.body.password || !req.body.repeatPassword)

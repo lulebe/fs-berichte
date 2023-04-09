@@ -1,7 +1,7 @@
 const { Op } = require('sequelize')
 
-const tmpl = require.main.require('./templates')
-const { Subject } = require.main.require('./db/db')
+const tmpl = requiremain('./templates')
+const { Subject } = requiremain('./db/db')
 
 const filename = require('path').parse(__filename).name
 

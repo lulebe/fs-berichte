@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const config = require('../config')
-const { User } = require.main.require('./db/db')
+const { User } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.query.token) return res.status(400).send()

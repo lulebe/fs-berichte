@@ -1,6 +1,6 @@
-const tmpl = require.main.require('./templates')
+const tmpl = requiremain('./templates')
 
-const { ExamType } = require.main.require('./db/db')
+const { ExamType } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   res.tmplOpts.examTypes = (await ExamType.findAll({attributes: ['id', 'name', 'subjectCount']})).map(d => d.dataValues)

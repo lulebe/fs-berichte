@@ -1,5 +1,5 @@
-const tmpl = require.main.require('./templates')
-const { ExamType } = require.main.require('./db/db')
+const tmpl = requiremain('./templates')
+const { ExamType } = requiremain('./db/db')
 
 const filename = require('path').parse(__filename).name
 
