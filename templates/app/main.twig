@@ -31,7 +31,9 @@
         </div><br>
         <button type="submit" class="important iconbtn"><i class="material-icons">search</i> suchen</button>
       </form><br><br>
+      {% if results %}
       <a href="pdfmulti?exams={{multiDLIds}}" class="btn"><i class="material-icons">save</i> alle als PDF speichern</a>
+      {% endif %}
       <ul>
         {% for result in results %}
           <li><a href="exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
