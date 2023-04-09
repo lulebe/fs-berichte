@@ -1,0 +1,39 @@
+{% extends "base.twig" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+  <div class="wrapper-2-col">
+    <section class="grid-col left">
+      <nav id="admin-tabs">
+        <a {% if activeAdminTab != "users" %}href="/app/admin/users"{% endif %} class="tab {% if activeAdminTab == "users" %}active {% endif %}">Nutzer</a>
+        <a {% if activeAdminTab != "examiners" %}href="/app/admin/examiners"{% endif %} class="tab {% if activeAdminTab == "examiners" %}active {% endif %}">Prüfer</a>
+        <a {% if activeAdminTab != "locations" %}href="/app/admin/locations"{% endif %} class="tab {% if activeAdminTab == "locations" %}active {% endif %}">Orte</a>
+        <a {% if activeAdminTab != "subjects" %}href="/app/admin/subjects"{% endif %} class="tab {% if activeAdminTab == "subjects" %}active {% endif %}">Fächer</a>
+        <a {% if activeAdminTab != "examtypes" %}href="/app/admin/examtypes"{% endif %} class="tab {% if activeAdminTab == "examtypes" %}active {% endif %}">Prüfungsarten</a>
+      </nav>
+      <div class="card">
+        {% block admincontent %}{% endblock %}
+      </div>
+    </section>
+    <section class="grid-col right card">
+      <h1 class="mtop0">ausstehende Autorisierungen</h1>
+      {% if pendingAuths %}
+      <ul>
+        {% for auth in pendingAuths %}
+          <li>
+            <div class="main-text small">{{auth.email}}</div>
+            <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
+            <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <div class="empty-status">
+        <i class="material-icons icon">checklist</i>
+        Derzeit warten keine Nutzer auf Autorisierung.
+      </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

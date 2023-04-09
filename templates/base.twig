@@ -21,14 +21,16 @@
     <header id="top-bar">
       <a href="/app/main" id="home-link">FS-Berichte</a>
       <nav id="main-nav">
-        {% if user.isAdmin %}<a href="/app/admin"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        {% if user.isAdmin %}<a href="/app/admin/users"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        <a href="/app/newreport"><i class="material-icons">add_circle</i>eintragen</a>
         <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
         <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
       </nav>
       <input type="checkbox" id="mobile-nav-btn">
       <label for="mobile-nav-btn">Menü</label>
       <nav id="mobile-nav">
-        {% if user.isAdmin %}<a href="/app/admin"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        {% if user.isAdmin %}<a href="/app/admin/users"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
+        <a href="/app/newreport"><i class="material-icons">add_circle</i>eintragen</a>
         <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
         <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
       </nav>

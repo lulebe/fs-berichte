@@ -102,7 +102,7 @@ User.hasMany(Exam,
     }
   }
 )
-Exam.hasOne(User)
+Exam.belongsTo(User)
 
 Exam.hasMany(SubjectExam,
   {

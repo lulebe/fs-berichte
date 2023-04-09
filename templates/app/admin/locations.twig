@@ -1,0 +1,35 @@
+{% extends "app/admin/base.twig" %}
+
+{% block admincontent %}
+  <h1 class="mtop0">Orte</h1>
+  <form method="get">
+    <div class="search-block">
+      <div class="inputlabel">
+        <label for="locationsearchinput">Ortssuche</label>
+        <input type="search" name="searchLocation" id="locationsearchinput" value="{{searchQuery}}" placeholder="Name">
+      </div>
+      <button type="submit"><i class="material-icons">search</i></button>
+    </div>
+  </form>
+  <ul>
+    {% for location in locations %}
+      <li>
+        <a href="examlocation/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAt}}</small></a>
+      </li>
+    {% endfor %}
+  </ul>
+  Seiten:
+  {% for p in 1..pageCount %}
+    {% if loop.index == pageIndex %}
+      <strong>{{p}}</strong>
+    {% else %}
+      <a href="?page={{p}}">{{p}}</a>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  
+</script>
+{% endblock %}

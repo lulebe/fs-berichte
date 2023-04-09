@@ -23,6 +23,12 @@ ul {
         border: none;
         padding: 0;
         margin: 0;
+        &.danger {
+          color: red;
+        }
+        &:hover {
+          background: rgba(0,0,0,0.1);
+        }
       }
       line-height: 48px;
       display: flex;

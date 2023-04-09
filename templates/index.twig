@@ -6,8 +6,8 @@
   <section id="splash">
     FSmed Berichte
   </section>
-  {% if hasError %}<section id="error-msg">{{ errorMsg }}</section>{% endif %}
   <div style="padding: 16px;">
+  {% if hasError %}<section class="login-area card" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
     <section class="login-area card">
       <h3>Login</h3>
       <form action="/login{{loginGoto}}" method="POST">

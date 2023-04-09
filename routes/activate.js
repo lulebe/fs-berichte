@@ -10,5 +10,5 @@ module.exports = async (req, res) => {
   if (!user) return res.status(404).send()
   user.activated = true
   await user.save()
-  res.redirect('/?status=6')
+  res.redirect('/?status=7')
 }

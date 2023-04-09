@@ -1,0 +1,35 @@
+{% extends "app/admin/base.twig" %}
+
+{% block admincontent %}
+  <h1 class="mtop0">Prüfer</h1>
+  <form method="get">
+    <div class="search-block">
+      <div class="inputlabel">
+        <label for="examinersearchinput">Prüfersuche</label>
+        <input type="search" name="searchExaminer" id="examinersearchinput" value="{{searchQuery}}" placeholder="Name">
+      </div>
+      <button type="submit"><i class="material-icons">search</i></button>
+    </div>
+  </form>
+  <ul>
+    {% for examiner in examiners %}
+      <li>
+        <a href="examiner/{{examiner.id}}" class="main-text">{{examiner.name}}<small> - seit {{examiner.createdAt}}</small></a>
+      </li>
+    {% endfor %}
+  </ul>
+  Seiten:
+  {% for p in 1..pageCount %}
+    {% if loop.index == pageIndex %}
+      <strong>{{p}}</strong>
+    {% else %}
+      <a href="?page={{p}}">{{p}}</a>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  
+</script>
+{% endblock %}

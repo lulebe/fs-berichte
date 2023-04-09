@@ -1,0 +1,35 @@
+{% extends "app/admin/base.twig" %}
+
+{% block admincontent %}
+  <h1 class="mtop0">Fächer</h1>
+  <form method="get">
+    <div class="search-block">
+      <div class="inputlabel">
+        <label for="subjectsearchinput">Fachsuche</label>
+        <input type="search" name="searchSubject" id="subjectsearchinput" value="{{searchQuery}}" placeholder="Name">
+      </div>
+      <button type="submit"><i class="material-icons">search</i></button>
+    </div>
+  </form>
+  <ul>
+    {% for subject in subjects %}
+      <li>
+        <a href="{{subject.id}}" class="main-text">{{subject.name}}<small> - seit {{subject.createdAt}}</small></a>
+      </li>
+    {% endfor %}
+  </ul>
+  Seiten:
+  {% for p in 1..pageCount %}
+    {% if loop.index == pageIndex %}
+      <strong>{{p}}</strong>
+    {% else %}
+      <a href="?page={{p}}">{{p}}</a>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  
+</script>
+{% endblock %}

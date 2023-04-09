@@ -1,0 +1,19 @@
+{% extends "app/admin/base.twig" %}
+
+{% block admincontent %}
+  <h1 class="mtop0">Prüfungsarten</h1>
+  <a href="createexamtype" class="btn"><i class="material-icons">add</i>Neue Prüfungsart anlegen</a>
+  <ul>
+    {% for examType in examTypes %}
+      <li>
+        <a href="examtype/{{examType.id}}" class="main-text">{{examType.name}}<small> - seit {{examType.createdAt}}</small></a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  
+</script>
+{% endblock %}

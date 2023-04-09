@@ -11,6 +11,11 @@ body {
   background-color: #f3f3f3;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+  accent-color: #c10b1d;
+}
+
+.small, small {
+  font-size: 0.85rem;
 }
 
 a {
@@ -37,11 +42,8 @@ button:hover, input[type=submit]:hover, .btn:hover {
   color: white;
   background: #3d84c0;
 }
-button:hover .material-icons:first-child:last-child, input[type=submit]:hover .material-icons:first-child:last-child, .btn:hover .material-icons:first-child:last-child {
-  color: grey;
-}
 
-input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel] {
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
   display: block;
   width: 100%;
   margin: 16px auto;
@@ -52,8 +54,53 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   outline: none;
   background: white;
 }
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus, input[type=tel]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus, input[type=tel]:focus, input[type=search]:focus {
   border-color: #3d84c0;
+}
+
+.inputlabel label {
+  font-size: 0.85rem;
+  padding: 0;
+  margin: 0;
+}
+.inputlabel input {
+  margin: 0;
+  border-top-left-radius: 0;
+}
+
+.radiorow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.radiorow .grouper {
+  text-align: center;
+}
+.radiorow label {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.radiorow input[type=radio] {
+  width: 32px;
+  height: 32px;
+}
+
+.search-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+  gap: 16px;
+}
+.search-block .inputlabel {
+  flex-grow: 1;
+}
+.search-block button:hover {
+  color: white;
+}
+.search-block button > i {
+  top: 2px;
 }
 
 textarea {
@@ -77,43 +124,20 @@ hr {
   margin: 16px 0;
 }
 
-.wrapper {
-  width: 100%;
-  padding: 16px;
-  max-width: 800px;
-  margin: 0 auto;
+.mtop0 {
+  margin-top: 0;
 }
 
-.schedule-top-wrapper {
-  width: 100%;
-  padding: 16px;
-  margin: 0;
-  height: 136px;
-  position: relative;
+.empty-status {
+  font-size: 0.85rem;
+  color: grey;
+  text-align: center;
 }
-
-.wrapper-2-col {
-  width: 100%;
-  padding: 16px;
-  display: grid;
-  grid-template-rows: 100%;
-  grid-template-columns: 30% 70%;
-  height: calc(100vh - 200px);
-}
-.wrapper-2-col .grid-col.top {
-  grid-column: 1/span 2;
-  grid-row: 1/span 1;
-}
-.wrapper-2-col .grid-col.left {
-  grid-column: 1/span 1;
-  grid-row: 1/span 1;
-}
-.wrapper-2-col .grid-col {
-  grid-column: 2/span 1;
-  grid-row: 1/span 1;
-  padding: 0 16px;
-  height: 100%;
-  overflow-y: auto;
+.empty-status .icon {
+  display: block;
+  font-size: 80px;
+  margin-bottom: 24px;
+  color: lightgrey;
 }
 
 i.material-icons {
@@ -124,11 +148,21 @@ i.material-icons.up {
   top: 2px;
 }
 
+#error-msg {
+  border-radius: 8px;
+  background: #ff6633;
+  display: block;
+  padding: 16px;
+  color: white;
+  font-weight: 600;
+  padding-bottom: 24px;
+}
+
 header#top-bar {
   height: 64px;
   width: 100%;
-  background-color: #3d84c0;
-  box-shadow: 0 -50px 10px 50px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(159deg, rgb(229, 69, 69) 0%, rgb(193, 11, 29) 24%, rgb(61, 132, 192) 90%);
+  box-shadow: 0 -50px 10px 50px rgba(0, 0, 0, 0.5);
   padding: 0 16px;
   display: flex;
   flex-direction: row;
@@ -150,7 +184,7 @@ nav#main-nav {
   display: none;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 699px) {
   nav#main-nav {
     display: initial;
   }
@@ -178,7 +212,7 @@ nav#mobile-nav {
   display: none;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 699px) {
   #mobile-nav-btn + label {
     display: block;
     border: 1px solid white;
@@ -197,11 +231,12 @@ nav#mobile-nav {
   nav#mobile-nav {
     display: none;
     position: absolute;
+    z-index: 100;
     top: 64px;
     right: 0px;
     background: white;
     width: 180px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   }
   nav#mobile-nav a {
     display: block;
@@ -212,7 +247,7 @@ nav#mobile-nav {
     text-align: center;
   }
   nav#mobile-nav a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
   }
   #mobile-nav-btn:checked ~ #mobile-nav {
     display: block;
@@ -222,6 +257,31 @@ nav#mobile-nav {
     color: #3d84c0;
   }
 }
+nav#admin-tabs {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 16px;
+  justify-content: space-evenly;
+}
+nav#admin-tabs .tab {
+  flex-grow: 1;
+  padding: 16px 0;
+  text-align: center;
+}
+nav#admin-tabs .tab.active {
+  border-bottom: 3px solid orange;
+  cursor: default;
+}
+nav#admin-tabs .tab.active:hover {
+  background: none;
+}
+nav#admin-tabs .tab:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .card {
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -244,7 +304,7 @@ nav#mobile-nav {
   width: 100%;
   padding: 16px;
   border-radius: 4px;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
   margin-bottom: 16px;
   color: white;
 }
@@ -324,11 +384,55 @@ ul li .end-btn {
   padding: 0;
   margin: 0;
 }
+ul li .end-btn.danger {
+  color: red;
+}
+ul li .end-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
 ul li:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);
 }
 ul li.endpad {
   padding-right: 12px;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wrapper-2-col {
+  width: 100%;
+  padding: 16px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 2fr 1fr;
+  align-items: start;
+  gap: 16px;
+}
+.wrapper-2-col .grid-col.top {
+  grid-column: 1/span 2;
+  grid-row: 1/span 1;
+}
+.wrapper-2-col .grid-col.left {
+  grid-column: 1/span 1;
+  grid-row: 1/span 1;
+}
+.wrapper-2-col .grid-col {
+  grid-column: 2/span 1;
+  grid-row: 1/span 1;
+}
+@media (max-width: 1000px) {
+  .wrapper-2-col {
+    grid-template-columns: 100%;
+  }
+  .wrapper-2-col .grid-col {
+    grid-column: 1/span 1;
+    grid-row: 2/span 1;
+  }
 }
 
 

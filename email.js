@@ -1,4 +1,4 @@
-// TODO implement mailer
+// TODO: implement mailer
 
 //const nodemj = require ('node-mailjet')
 
@@ -8,7 +8,7 @@ const config = require('./config')
 
 module.exports = function (users, subject, text, html) {
   const to = users.map(u => ({"Email": u.email, "Name": u.name}))
-  return mailjet.post("send", {'version': 'v3.1'}).request({
+  /*return mailjet.post("send", {'version': 'v3.1'}).request({
         "Messages":[{
             "From": {
                 "Email": "lehre@fsmed-hd.de",
@@ -20,4 +20,5 @@ module.exports = function (users, subject, text, html) {
             "HTMLPart": 'Hallo' + (users.length === 1 ? (' ' + users[0].name) : '') + ',<br><br>' + html + '<br><br>Viele Grüße,<br>das FSmed Berichte Team'
         }]
     })
+*/
 }
