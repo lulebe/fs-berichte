@@ -439,6 +439,7 @@ ul.selectionlist li {
 }
 
 .autocomplete-menu {
+  z-index: 10;
   position: relative;
 }
 .autocomplete-menu ul {

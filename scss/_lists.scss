@@ -54,6 +54,7 @@ ul {
   }
 
   .autocomplete-menu {
+    z-index: 10;
     position: relative;
     ul {
       position: absolute;

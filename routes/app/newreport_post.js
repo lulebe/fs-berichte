@@ -16,8 +16,9 @@ module.exports = async (req, res) => {
   else
     location = await ExamLocation.create({name: req.body.location})
   await exam.setExamLocation(location)
-  await Promise.all(Array.from({length: examType.subjectCount}, (_, i) => i + 1)
-    .map(i => storeReport(i, exam, req, res)))
+  for (let i = 1; i <= examType.subjectCount; i++) {
+    await storeReport(i, exam, req)
+  }
   res.redirect('/app/exam/'+exam.id)
 }
 
