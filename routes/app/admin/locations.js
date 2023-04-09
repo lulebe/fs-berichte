@@ -20,8 +20,8 @@ module.exports = async (req, res) => {
     ExamLocation.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 2, offset}) :
     ExamLocation.findAll({order: [['name', 'DESC']], limit: 2, offset})
   )
-  res.tmplOpts.Locations = allLocations.map(s => s.dataValues)
-  res.tmplOpts.Locations.forEach(s => {
+  res.tmplOpts.locations = allLocations.map(s => s.dataValues)
+  res.tmplOpts.locations.forEach(s => {
     s.createdAt = new Date(s.createdAt).toLocaleDateString()
   })
   res.tmplOpts.searchQuery = req.query.searchLocation

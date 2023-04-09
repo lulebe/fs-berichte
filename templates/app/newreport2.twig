@@ -1,0 +1,97 @@
+{% extends "base.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <section>
+      <h1>Protokoll anlegen</h1>
+      <form action="" method="POST">
+        <input type="hidden" name="examType" value="{{examType.id}}">
+        <div class="card" style="margin-bottom: 16px;">
+          <small>Prüfungsdatum</small><br>
+          <input type="date" name="date" id=""><br><br>
+          <div class="inputlabel">
+            <label>Prüfungsort (Klinik oder Institut)</label>
+            <input type="hidden" name="locationId">
+            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum">
+          </div><br>
+          <div class="inputlabel">
+            <label>Prüflinge insgesamt</label>
+            <input type="number" name="studentCount" min="1" max="10" step="1" value="2">
+          </div>
+        </div>
+        {% for subjectIndex in 1..examType.subjectCount %}
+          <div class="card" style="margin-bottom: 16px">
+            <h3>Prüfung {{subjectIndex}}</h3><br>
+            <div class="inputlabel">
+              <label>Fach</label>
+              <input type="hidden" name="subjectId{{subjectIndex}}">
+              <input type="text" name="subject{{subjectIndex}}" data-autocomplete="subject" placeholder="Anatomie">
+            </div><br>
+            <div class="inputlabel">
+              <label>Prüfer (Ganzer Name ohne Titel!)</label>
+              <input type="hidden" name="examinerId{{subjectIndex}}">
+              <input type="text" name="examiner{{subjectIndex}}" data-autocomplete="examiner" placeholder="Joachim Kirsch">
+            </div><br>
+            <small>Bericht</small>
+            <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..."></textarea>
+          </div>
+        {% endfor %}
+        <input type="submit" value="eintragen">
+      </form>
+    </section>
+  </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+<script type="text/javascript">
+  atData = {
+    examiner: new Fuse({{examiners | json_encode() | raw}}),
+    subject: new Fuse({{subjects | json_encode() | raw}}),
+    location: new Fuse({{locations | json_encode() | raw}})
+  }
+
+  const testSubjects = new Fuse([{id: 1, name: "Anatomie"}, {id: 2, name: "Anästhesie"}], {keys: ['name']})
+
+  let attachedField = null
+  const autocompleteMenu = document.createElement('div')
+  const autocompleteList = document.createElement('ul')
+  autocompleteList.addEventListener('mousedown', e => {
+    attachedField.value = e.target.textContent
+    attachedField.previousElementSibling.value = e.target.dataset.id
+  })
+  autocompleteMenu.classList.add('autocomplete-menu')
+  autocompleteMenu.appendChild(autocompleteList)
+
+  autocompleteFields = document.querySelectorAll('[data-autocomplete]')
+  for (let i = 0; i < autocompleteFields.length; i++) {
+    const autocompleteField = autocompleteFields[i];
+    autocompleteField.addEventListener('blur', hideAutocomplete)
+    autocompleteField.addEventListener('focus', showAutocomplete)
+    autocompleteField.addEventListener('input', showAutocomplete)
+  }
+
+  function hideAutocomplete () {
+    autocompleteMenu.remove()
+    attachedField = null
+  }
+
+  function showAutocomplete (e) {
+    hideAutocomplete()
+    if (e.target.value.length < 2) {
+      return
+    }
+    attachedField = e.target
+    fillMenu(e.target.value, atData[e.target.dataset.autocomplete])
+    e.target.parentElement.appendChild(autocompleteMenu)
+  }
+
+  function fillMenu (text, list) {
+    const listelems = list.search(text).map(result => `<li data-id="${result.item.id}">${result.item.name}</li>`).join('')
+    autocompleteList.innerHTML = listelems
+  }
+  
+</script>
+{% endblock %}

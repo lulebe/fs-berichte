@@ -20,7 +20,8 @@ const User = sequelize.define('User', {
     allowNull: false,
     set (val) {
       this.setDataValue('email', val.toLowerCase())
-    }
+    },
+    unique: true
   },
   activated: {
     type: DataTypes.BOOLEAN,
@@ -47,7 +48,8 @@ const User = sequelize.define('User', {
 const Subject = sequelize.define('Subject', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 })
 
@@ -55,7 +57,8 @@ const Subject = sequelize.define('Subject', {
 const Examiner = sequelize.define('Examiner', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 })
 
@@ -63,7 +66,8 @@ const Examiner = sequelize.define('Examiner', {
 const ExamLocation = sequelize.define('ExamLocation', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   }
 })
 
@@ -77,7 +81,8 @@ const Exam = sequelize.define('Exam', {
 const ExamType = sequelize.define('ExamType', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   subjectCount: {
     type: DataTypes.INTEGER,

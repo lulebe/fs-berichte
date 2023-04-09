@@ -6,7 +6,7 @@ const { Examiner } = require.main.require('./db/db')
 const filename = require('path').parse(__filename).name
 
 module.exports = async (req, res) => {
-  const searchTerm = req.query.searchExaminer ? '%'+req.query.searchExaminer.toLowerCase()+'%' : null
+  const searchTerm = req.query.searchExaminer ? '%'+req.query.searchExaminer+'%' : null
   const ExaminerCount = await (
     (searchTerm) ?
     Examiner.count({where: {name: {[Op.like]: searchTerm}}}) :
@@ -20,8 +20,8 @@ module.exports = async (req, res) => {
     Examiner.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 2, offset}) :
     Examiner.findAll({order: [['name', 'DESC']], limit: 2, offset})
   )
-  res.tmplOpts.Examiners = allExaminers.map(s => s.dataValues)
-  res.tmplOpts.Examiners.forEach(s => {
+  res.tmplOpts.examiners = allExaminers.map(s => s.dataValues)
+  res.tmplOpts.examiners.forEach(s => {
     s.createdAt = new Date(s.createdAt).toLocaleDateString()
   })
   res.tmplOpts.searchQuery = req.query.searchExaminer

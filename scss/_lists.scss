@@ -41,3 +41,34 @@ ul {
       }
     }
   }
+
+  ul.selectionlist {
+    font-weight: bold;
+    text-align: center;
+    li {
+      background-color: white;
+      box-shadow: $shadow-s;
+      border-radius: 8px;
+      margin: 4px;
+    }
+  }
+
+  .autocomplete-menu {
+    position: relative;
+    ul {
+      position: absolute;
+      width: calc(100% - 32px);
+      top: -24px;
+      left: 16px;
+      box-shadow: $shadow-m;
+      li {
+        padding: 0 16px;
+        line-height: 1.5rem;
+        cursor: pointer;
+        background-color: white;
+        &:hover {
+          background-color: lightgrey;
+        }
+      }
+    }
+  }

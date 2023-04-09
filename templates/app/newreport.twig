@@ -1,0 +1,18 @@
+{% extends "base.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <section>
+      <h1>Protokoll anlegen</h1>
+      <ul class="selectionlist">
+      {% for et in examTypes %}
+      <li>
+        <a href="newreport/{{et.id}}" class="main-text">{{et.name}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    </section>
+  </div>
+{% endblock %}

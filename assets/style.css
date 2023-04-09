@@ -50,7 +50,7 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   padding: 8px 16px;
   font-size: 1rem;
   border: 1px solid #aaa;
-  border-radius: 50px;
+  border-radius: 16px;
   outline: none;
   background: white;
 }
@@ -106,12 +106,14 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
 textarea {
   display: block;
   width: 100%;
-  height: 150px;
+  height: 250px;
   border: 1px solid #aaa;
   padding: 12px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 16px;
+  outline: none;
+  resize: vertical;
 }
 textarea:focus {
   border-color: #3d84c0;
@@ -395,6 +397,37 @@ ul li:nth-child(odd) {
 }
 ul li.endpad {
   padding-right: 12px;
+}
+
+ul.selectionlist {
+  font-weight: bold;
+  text-align: center;
+}
+ul.selectionlist li {
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  margin: 4px;
+}
+
+.autocomplete-menu {
+  position: relative;
+}
+.autocomplete-menu ul {
+  position: absolute;
+  width: calc(100% - 32px);
+  top: -24px;
+  left: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.autocomplete-menu ul li {
+  padding: 0 16px;
+  line-height: 1.5rem;
+  cursor: pointer;
+  background-color: white;
+}
+.autocomplete-menu ul li:hover {
+  background-color: lightgrey;
 }
 
 .wrapper {
