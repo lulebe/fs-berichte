@@ -54,8 +54,7 @@ async function renderExamPartially (id, doc, query, first) {
     const description = se.Examiner.name + " (" + exam.ExamLocation.name + ") - " + se.Subject.name
     doc.outline.addItem(examDate + ": " + description)
     doc.font('Helvetica').fontSize(11).text("Note: " + (exam.grade || ""))
-    doc.font('Helvetica-Bold').fontSize(11).text("Kommentar")
-    doc.font('Helvetica').fontSize(11).text(exam.comment ? exam.comment.replace(/\r\n|\r/g, '\n') : "")
+    doc.text(exam.comment ? exam.comment.replace(/\r\n|\r/g, '\n') : "")
     doc.moveDown()
     doc.font('Helvetica-Bold').fontSize(11).text(description)
     doc.moveDown()
@@ -84,6 +83,7 @@ async function renderWholeExam (id, doc) {
   doc.moveTo(50, 180).lineTo(545, 180).stroke()
   doc.fontSize(18).text("Kommentar", 70, 200)
   doc.fontSize(11).text(exam.comment ? exam.comment.replace(/\r\n|\r/g, '\n') : "")
+  doc.moveDown()
   doc.moveDown()
   exam.SubjectExams.forEach((se, i) => {
     doc.fontSize(18).text(se.Subject.name)
