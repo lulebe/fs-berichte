@@ -1,4 +1,5 @@
-const { Op } = require('sequelize')
+const sequelize = require('sequelize')
+const Op = sequelize.Op
 
 const tmpl = requiremain('./templates')
 const { ExamLocation } = requiremain('./db/db')
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
   const searchTerm = req.query.searchLocation ? '%'+req.query.searchLocation.toLowerCase()+'%' : null
   const LocationCount = await (
     (searchTerm) ?
-    ExamLocation.count({where: {name: {[Op.like]: searchTerm}}}) :
+    ExamLocation.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
     ExamLocation.count()
   )
   res.tmplOpts.pageIndex = req.query.page || 1
@@ -17,7 +18,7 @@ module.exports = async (req, res) => {
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allLocations = await (
     (searchTerm) ?
-    ExamLocation.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 50, offset}) :
+    ExamLocation.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
     ExamLocation.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.locations = allLocations.map(s => s.dataValues)

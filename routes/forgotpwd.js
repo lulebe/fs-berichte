@@ -14,13 +14,13 @@ module.exports = async (req, res) => {
   const pw = generator.generate({length: 10, numbers: true})
   foundUser.password = await bcrypt.hash(pw, await bcrypt.genSalt(config.SALT_ROUNDS))
   await foundUser.save()
-  await sendEmail(foundUser.email, foundUser.fullName, pw)
+  await sendEmail(foundUser.email, pw)
   res.redirect('/?status=2')
 }
 
-function sendEmail (email, name, pw) {
+function sendEmail (email, pw) {
   return mailer(
-    [{email, name}],
+    email,
     'Passwort zurückgesetzt',
     'Dein neues FSmed Berichte Passwort lautet:\n\n' + pw + '\n\n Du solltest es unter "Profil" ändern.',
     'Dein neues FSmed Berichte Passwort lautet:<br><pre>' + pw + '</pre><br><br>Du solltest es unter "Profil" ändern.'

@@ -1,24 +1,23 @@
-// TODO: implement mailer
-
-//const nodemj = require ('node-mailjet')
+const nodemailer = require('nodemailer')
 
 const config = require('./config')
 
-//const mailjet = nodemj.connect(config.MJ_APIKEY_PUBLIC, config.MJ_APIKEY_PRIVATE)
+const transporter = nodemailer.createTransport({
+host: config.MAIL_HOST,
+port: 465,
+secure: true,
+auth: {
+  user: config.MAIL_USER,
+  pass: config.MAIL_PASSWORD,
+},
+})
 
-module.exports = function (users, subject, text, html) {
-  const to = users.map(u => ({"Email": u.email, "Name": u.name}))
-  /*return mailjet.post("send", {'version': 'v3.1'}).request({
-        "Messages":[{
-            "From": {
-                "Email": "lehre@fsmed-hd.de",
-                "Name": "FSmed Berichte"
-            },
-            "To": to,
-            "Subject": subject,
-            "TextPart": 'Hallo' + (users.length === 1 ? (' ' + users[0].name) : '') + ',\n\n' + text + '\n\nViele Grüße,\ndas FSmed Berichte Team',
-            "HTMLPart": 'Hallo' + (users.length === 1 ? (' ' + users[0].name) : '') + ',<br><br>' + html + '<br><br>Viele Grüße,<br>das FSmed Berichte Team'
-        }]
-    })
-*/
+module.exports = async function (email, subject, text, html) {
+  let mailStatus = await transporter.sendMail({
+    from: config.MAIL_SENDER,
+    to: email,
+    subject,
+    text: 'Hallo,\n\n' + text + '\n\nViele Grüße,\ndas FSmed Berichte Team',
+    html: 'Hallo,<br><br>' + html + '<br><br>Viele Grüße,<br>das FSmed Berichte Team'
+  })
 }

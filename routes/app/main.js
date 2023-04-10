@@ -48,7 +48,6 @@ module.exports = async (req, res) => {
     r.readableDate = new Date(r.date).toLocaleDateString('de-DE')
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
-  console.log(JSON.stringify(results))
   res.tmplOpts.results = results
   res.tmplOpts.query = req.query
   res.tmplOpts.multiDLIds = results.map(r => r.id).join('-')

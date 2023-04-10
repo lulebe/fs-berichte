@@ -1,4 +1,5 @@
-const { Op } = require('sequelize')
+const sequelize = require('sequelize')
+const Op = sequelize.Op
 
 const tmpl = requiremain('./templates')
 const { Examiner } = requiremain('./db/db')
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
   const searchTerm = req.query.searchExaminer ? '%'+req.query.searchExaminer+'%' : null
   const ExaminerCount = await (
     (searchTerm) ?
-    Examiner.count({where: {name: {[Op.like]: searchTerm}}}) :
+    Examiner.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
     Examiner.count()
   )
   res.tmplOpts.pageIndex = req.query.page || 1
@@ -17,7 +18,7 @@ module.exports = async (req, res) => {
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allExaminers = await (
     (searchTerm) ?
-    Examiner.findAll({where: {name: {[Op.like]: searchTerm}}, order: [['name', 'DESC']], limit: 50, offset}) :
+    Examiner.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
     Examiner.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.examiners = allExaminers.map(s => s.dataValues)

@@ -36,10 +36,8 @@ module.exports = async (req, res) => {
 
 function sendActivationEmail (email) {
   const token = jwt.sign({data: email}, config.JWT_SECRET, { expiresIn: '24h' })
-  //TODO: remove
-  console.log(config.ROOT_URL + '/activate?token='+token)
   return mailer(
-    [{email, name: ""}],
+    email,
     'Aktivierungslink',
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token,
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
