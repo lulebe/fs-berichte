@@ -47,9 +47,9 @@ module.exports = async (req, res) => {
       }
     }
   } catch (e) {
-    res.send(e)
+    res.status(200).send(e)
   }
-  res.end()
+  res.send("ok")
 }
 
 async function importExaminers (examiners) {
