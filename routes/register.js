@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
   })
   if (userIsAuthorizedDomain) {
-    sendActivationEmail(req.body.email)
+    sendActivationEmail(user)
     res.redirect('/?status=6')
   } else {
     //show notification to contact for authorization
@@ -34,10 +34,10 @@ module.exports = async (req, res) => {
   }
 }
 
-function sendActivationEmail (email) {
-  const token = jwt.sign({data: email}, config.JWT_SECRET, { expiresIn: '24h' })
+function sendActivationEmail (user) {
+  const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '24h' })
   return mailer(
-    email,
+    user.email,
     'Aktivierungslink',
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token,
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'

@@ -13,6 +13,10 @@ auth: {
 })
 
 module.exports = async function (email, subject, text, html) {
+  if (config.MAIL_PASSWORD == "testpw") {
+    console.log(email, subject, text)
+    return true
+  }
   let mailStatus = await transporter.sendMail({
     from: config.MAIL_SENDER,
     to: email,
