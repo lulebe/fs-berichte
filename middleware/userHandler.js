@@ -6,7 +6,10 @@ module.exports = async function (req, res, next) {
     return res.redirect('/' + goto)
   }
   req.user = await User.findByPk(req.session.userId)
-  if (!req.user) return res.status(401).send()
+  if (!req.user) {
+    req.session.destroy()
+    return res.redirect('/')
+  }
   res.tmplOpts.isLoggedIn = true
   res.tmplOpts.user = req.user.dataValues
   res.tmplOpts.isAdmin = req.user.isAdmin
