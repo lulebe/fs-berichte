@@ -7,45 +7,48 @@ module.exports = async (req, res) => {
     tmpl.render('app/admin/import.twig', res.tmplOpts).then(rendered => res.end(rendered))
     return
   }
-  const oldData = requiremain('./olddata.json')
-  const examinerMap = await importExaminers(oldData.examiners)
-  const subjectMap = await importSubjects(oldData.subjects)
-  const locationMap = await importLocations(oldData.protocols)
-  const skipped = []
-  for (let i = 0; i < oldData.protocols.length; i++) {
-    const oldProtocol = oldData.protocols[i]
-    oldProtocol.pdate = oldProtocol.pdate.replace(',', '.')
-    if (oldProtocol.pdate.length == 10)
-      oldProtocol.pdate = oldProtocol.pdate.split('.').reverse().join('/')
-    if (isNaN(new Date(oldProtocol.pdate).getTime())) {
-      console.log(oldProtocol.pdate)
-      return
-    }
-    const oldSubjectProtocols = oldData.protocol_examiner.filter(pe => pe.protocol == oldProtocol.id)
-    const isM1 = oldSubjectProtocols[0].subject < 5
-    const newProtocol = await Exam.create({
-      date: new Date(oldProtocol.pdate),
-      grade: oldProtocol.grades,
-      comment: oldProtocol.comments + '\n\n' + oldProtocol.freetext,
-      UserId: 7, //TODO:
-      ExamTypeId: isM1 ? 1 : 2, //TODO:
-      ExamLocationId: oldProtocol.plocation ? locationMap[oldProtocol.plocation] : null
-    })
-    for (let j = 0; j < oldSubjectProtocols.length; j++) {
-      const sp = oldSubjectProtocols[j]
-      if (!subjectMap[sp.subject] || !examinerMap[sp.examiner] || !sp.topics) {
-        skipped.push(sp.id)
-        continue
+  try {
+    const oldData = requiremain('./olddata.json')
+    const examinerMap = await importExaminers(oldData.examiners)
+    const subjectMap = await importSubjects(oldData.subjects)
+    const locationMap = await importLocations(oldData.protocols)
+    const skipped = []
+    for (let i = 0; i < oldData.protocols.length; i++) {
+      const oldProtocol = oldData.protocols[i]
+      oldProtocol.pdate = oldProtocol.pdate.replace(',', '.')
+      if (oldProtocol.pdate.length == 10)
+        oldProtocol.pdate = oldProtocol.pdate.split('.').reverse().join('/')
+      if (isNaN(new Date(oldProtocol.pdate).getTime())) {
+        console.log(oldProtocol.pdate)
+        return
       }
-      const subjectExam = await SubjectExam.create({
-        report: sp.topics,
-        ExamId: newProtocol.id,
-        SubjectId: subjectMap[sp.subject],
-        ExaminerId: examinerMap[sp.examiner]
+      const oldSubjectProtocols = oldData.protocol_examiner.filter(pe => pe.protocol == oldProtocol.id)
+      const isM1 = oldSubjectProtocols[0].subject < 5
+      const newProtocol = await Exam.create({
+        date: new Date(oldProtocol.pdate),
+        grade: oldProtocol.grades,
+        comment: oldProtocol.comments + '\n\n' + oldProtocol.freetext,
+        UserId: 7, //TODO:
+        ExamTypeId: isM1 ? 1 : 2, //TODO:
+        ExamLocationId: oldProtocol.plocation ? locationMap[oldProtocol.plocation] : null
       })
+      for (let j = 0; j < oldSubjectProtocols.length; j++) {
+        const sp = oldSubjectProtocols[j]
+        if (!subjectMap[sp.subject] || !examinerMap[sp.examiner] || !sp.topics) {
+          skipped.push(sp.id)
+          continue
+        }
+        const subjectExam = await SubjectExam.create({
+          report: sp.topics,
+          ExamId: newProtocol.id,
+          SubjectId: subjectMap[sp.subject],
+          ExaminerId: examinerMap[sp.examiner]
+        })
+      }
     }
+  } catch (e) {
+    res.send(e)
   }
-  console.log('skipped', JSON.stringify(skipped))
   res.end()
 }
 
