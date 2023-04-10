@@ -4,7 +4,8 @@
 
 {% block content %}
   <div class="wrapper">
-    {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
+    {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i>Passwort wurde geändert.</section><br>{% endif %}
+    {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i>Der Nutzer ist {% if viewedUser.isAdmin %}nun{% else %}nicht mehr{% endif %} Administrator.</section><br>{% endif %}
     <section class="card">
       <h1>{{viewedUser.email}}</h1>
       <h3>Passwort ändern</h3>
@@ -21,6 +22,13 @@
         </div>
         <input type="submit" value="Passwort ändern">
       </form>
+      <h3>Adminrechte</h3>
+      {% if viewedUser.isAdmin %}{{viewedUser.email}} ist ein <strong>Administrator</strong>.{% endif %}
+      <form method="POST" onsubmit="return confirm('Bist du sicher, {{viewedUser.email}} die Adminrechte zu {% if viewedUser.isAdmin %}entziehen{% else %}erteilen{% endif %}?')">
+        <input type="hidden" name="toggleAdmin" value="yes">
+        <button type="submit" class="btn iconbtn">Adminrechte {% if viewedUser.isAdmin %}entziehen{% else %}erteilen{% endif %}</button>
+      </form>
+      
       <h3>Account löschen</h3>
       <p style="color: red;">
         <i class="material-icons">warning</i> Wenn du diesen Account löschst, werden dessen Berichte ebenfalls unwiderruflich gelöscht!

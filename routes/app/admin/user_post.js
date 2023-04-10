@@ -11,6 +11,11 @@ module.exports = async (req, res, next) => {
     await req.user.save()
     res.tmplOpts.pwChanged = true
   }
+  if (req.body.toggleAdmin) {
+    user.isAdmin = !user.isAdmin
+    await user.save()
+    res.tmplOpts.adminChanged = true
+  }
   if (req.body.deleteAccount == "yes") {
     await user.destroy()
     return res.redirect('/app/admin/users')

@@ -20,4 +20,5 @@ module.exports = async function (email, subject, text, html) {
     text: 'Hallo,\n\n' + text + '\n\nViele Grüße,\ndas FSmed Berichte Team',
     html: 'Hallo,<br><br>' + html + '<br><br>Viele Grüße,<br>das FSmed Berichte Team'
   })
+  return mailStatus
 }
