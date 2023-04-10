@@ -318,7 +318,7 @@ nav#admin-tabs .tab:hover {
   background: white;
   padding: 16px 16px 16px 16px;
 }
-.card > h3 {
+.card > h3:first-child {
   margin: 0;
 }
 .card.selectable {

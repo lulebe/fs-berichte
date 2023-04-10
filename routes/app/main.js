@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
 
   //results
   sqlquery.order = [['id', 'DESC']]
-  sqlquery.limit = 100
+  sqlquery.limit = 50
   sqlquery.offset = 0
   const results = await Exam.findAll(sqlquery)
   results.forEach(r => {

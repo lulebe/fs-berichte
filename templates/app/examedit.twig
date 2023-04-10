@@ -1,53 +1,53 @@
 {% extends "base.twig" %}
 
-{% block title %}Eintragen{% endblock %}
+{% block title %}Bearbeiten{% endblock %}
 
 {% block content %}
   <div class="wrapper">
     <section>
-      <h1>Protokoll anlegen</h1>
+      <h1>Protokoll bearbeiten</h1>
       <p style="color: red"><strong>Bitte nutzt die vorgeschlagenen Orte, Fächer und Prüfer, damit es nicht 10 verschiedene Schreibweisen des gleichen gibt!</strong></p>
       <form action="" method="POST">
-        <input type="hidden" name="examType" value="{{examType.id}}">
+        <input type="hidden" name="exam.ExamType" value="{{exam.ExamType.id}}">
         <div class="card" style="margin-bottom: 16px;">
           <small>Prüfungsdatum</small><br>
-          <input type="date" name="date" id=""><br><br>
+          <input type="date" name="date" id="" value="{{inputformatdate}}"><br><br>
           <div class="inputlabel">
             <label>Prüfungsort (Klinik oder Institut)</label>
-            <input type="hidden" name="locationId">
-            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum" required minlength="3">
+            <input type="hidden" name="locationId" value="{{exam.ExamLocationId}}">
+            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum" required minlength="3" value="{{exam.ExamLocation.name}}">
           </div><br>
           <div class="inputlabel">
             <label>Prüflinge insgesamt</label>
-            <input type="number" name="studentCount" required min="1" max="10" step="1" value="2">
+            <input type="number" name="studentCount" required min="1" max="10" step="1" value="{{exam.studentCount}}">
           </div><br>
           <div class="inputlabel">
             <label>Note (bei Bedarf freilassen)</label>
-            <input type="text" name="grade" placeholder="noch nicht bekannt">
+            <input type="text" name="grade" placeholder="noch nicht bekannt" value="{{exam.grade}}">
           </div><br>
           <div class="inputlabel">
             <label>Allgemeines</label>
-            <textarea name="comment" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum..."></textarea>
+            <textarea name="comment" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum...">{{exam.comment}}</textarea>
           </div>
         </div>
-        {% for subjectIndex in 1..examType.subjectCount %}
+        {% for subjectExam in exam.SubjectExams %}
           <div class="card" style="margin-bottom: 16px">
-            <h3>Prüfung {{subjectIndex}}</h3><br>
+            <h3>Prüfung {{loop.index}}</h3><br>
             <div class="inputlabel">
               <label>Fach</label>
-              <input type="hidden" name="subjectId{{subjectIndex}}">
-              <input type="text" name="subject{{subjectIndex}}" data-autocomplete="subject" placeholder="Anatomie" required minlength="3">
+              <input type="hidden" name="subjectId{{subjectExam.id}}" value="{{subjectExam.SubjectId}}">
+              <input type="text" name="subject{{subjectExam.id}}" data-autocomplete="subject" placeholder="Anatomie" required minlength="3" value="{{subjectExam.Subject.name}}">
             </div><br>
             <div class="inputlabel">
               <label>Prüfer (Ganzer Name ohne Titel!)</label>
-              <input type="hidden" name="examinerId{{subjectIndex}}">
-              <input type="text" name="examiner{{subjectIndex}}" data-autocomplete="examiner" placeholder="Joachim Kirsch" required minlength="3">
+              <input type="hidden" name="examinerId{{subjectExam.id}}" value="{{subjectExam.ExaminerId}}">
+              <input type="text" name="examiner{{subjectExam.id}}" data-autocomplete="examiner" placeholder="Joachim Kirsch" required minlength="3" value="{{subjectExam.Examiner.name}}">
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
+            <textarea name="report{{subjectExam.id}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30">{{subjectExam.report}}</textarea>
           </div>
         {% endfor %}
-        <button type="submit" class="fullpagesubmit">eintragen</button>
+        <button type="submit" class="fullpagesubmit">Änderungen speichern</button>
       </form>
     </section>
     <div style="height: 64px">&nbsp;</div>

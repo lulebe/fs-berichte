@@ -5,8 +5,10 @@ module.exports = async function (req, res, next) {
     const goto = req.originalUrl != '/app/logout' ? '?goto=' + encodeURIComponent(req.originalUrl) : ''
     return res.redirect('/' + goto)
   }
-  res.tmplOpts.isLoggedIn = true
   req.user = await User.findByPk(req.session.userId)
+  if (!req.user) return res.status(401).send()
+  res.tmplOpts.isLoggedIn = true
   res.tmplOpts.user = req.user.dataValues
+  res.tmplOpts.isAdmin = req.user.isAdmin
   next()
 }

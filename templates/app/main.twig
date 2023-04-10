@@ -90,7 +90,7 @@
   }
 
   function fillMenu (text, list) {
-    const listelems = list.search(text).map(result => `<li data-id="${result.item.id}">${result.item.name}</li>`).join('')
+    const listelems = list.search(text).slice(0, 8).map(result => `<li data-id="${result.item.id}">${result.item.name}</li>`).join('')
     autocompleteList.innerHTML = listelems
   }
   

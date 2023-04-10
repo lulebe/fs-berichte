@@ -1,3 +1,4 @@
+const sequelize = require('sequelize')
 const { ExamType, Subject, ExamLocation, Examiner } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
@@ -10,11 +11,7 @@ module.exports = async (req, res) => {
     comment: req.body.comment,
     ExamTypeId: examType.id
   })
-  let location = null
-  if (req.body.locationId)
-    location = await ExamLocation.findByPk(req.body.locationId)
-  else
-    location = await ExamLocation.create({name: req.body.location})
+  const location = await getOrCreateMetadata(ExamLocation, req.body.locationId, req.body.location)
   await exam.setExamLocation(location)
   for (let i = 1; i <= examType.subjectCount; i++) {
     await storeReport(i, exam, req)
@@ -23,19 +20,24 @@ module.exports = async (req, res) => {
 }
 
 async function storeReport (i, exam, req) {
-  let examiner = null
-  if (req.body['examinerId'+i])
-    examiner = await Examiner.findByPk(req.body['examinerId'+i])
-  else
-    examiner = await Examiner.create({name: req.body['examiner'+i]})
-  let subject = null
-  if (req.body['subjectId'+i])
-    subject = await Subject.findByPk(req.body['subjectId'+i])
-  else
-    subject = await Subject.create({name: req.body['subject'+i]})
+  const examiner = await getOrCreateMetadata(Examiner, req.body['examinerId'+i], req.body['examiner'+i])
+  const subject = await getOrCreateMetadata(Subject, req.body['subjectId'+i], req.body['subject'+i])
   const report = await exam.createSubjectExam({
     report: req.body['report'+i],
     SubjectId: subject.id,
     ExaminerId: examiner.id
   })
+}
+
+async function getOrCreateMetadata (model, id, rawName) {
+  const name = rawName.trim()
+  if (parseInt(id)) return model.findByPk(parseInt(id))
+  const found = await model.findOne({
+    where: sequelize.where(
+      sequelize.fn('lower', sequelize.col('name')), 
+      sequelize.fn('lower', name)
+    )
+  })
+  if (found) return found
+  return model.create({name})
 }
