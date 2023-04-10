@@ -6,7 +6,7 @@
   <div class="wrapper">
     {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
     <section class="card">
-      <h1>{{user.email}}</h1>
+      <h1>{{viewedUser.email}}</h1>
       <h3>Passwort ändern</h3>
       <form method="POST">
         <div class="pwinput" id="pw-new">
@@ -33,8 +33,6 @@
     </section>
     <section>
       <h1>Berichte</h1>
-      {% if reports %}
-      {% endif %}
       <ul>
         {% for result in reports %}
           <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>

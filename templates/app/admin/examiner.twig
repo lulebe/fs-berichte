@@ -1,0 +1,62 @@
+{% extends "base.twig" %}
+
+{% block title %}Prüfer{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <section class="card">
+      <h1>Name ändern</h1>
+      <form method="POST">
+        <div class="inputlabel">
+            <label>Name</label>
+            <input type="text" name="newname" placeholder="Kim Könner" required minlength="3" value="{{examiner.name}}">
+          </div><br>
+      </form>
+      <input type="submit" value="Name ändern">
+    </section>
+    <section class="card">
+      <h1>Zusammenführen</h1>
+      Um alle mit diesem Prüfer verknüpften Berichte einem anderen Prüfer zuzuweisen.<br>
+      <form method="POST" onsubmit="return idCheck()">
+        <div class="inputlabel">
+          <label>Zusammenführen mit</label>
+          <input type="hidden" id="joinid" name="joinId" required>
+          <input type="text" name="join" data-autocomplete="examiner" placeholder="Name" required minlength="3">
+        </div><br>
+        <input type="submit" value="zusammenführen">
+      </form>
+      <h3>Prüfer löschen</h3>
+      <p style="color: red;">
+        <i class="material-icons">warning</i> Wenn du diesen Prüfer löschst, werden dessen Berichte ebenfalls unwiderruflich gelöscht!
+      </p>
+      <form method="POST" onsubmit="return confirm('Soll der Prüfer wirklich gelöscht werden?')">
+        <input type="hidden" name="delete" value="yes">
+        <button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> Prüfer löschen</button>
+      </form>
+    </section>
+    <section>
+      <h1>Berichte</h1>
+      <ul>
+        {% for result in reports %}
+          <li><a href="/app/exam/{{result.Exam.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.Exam.ExamType.name}}</strong>: {{result.Subject.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+<script type="text/javascript">
+  atData = {
+    examiner: new Fuse({{examiners | json_encode() | raw}}, {keys: ['name']})
+  }
+
+  function idCheck () {
+    if (document.getElementById('joinid').value) return true
+    alert('Wähle bitte einen bestehenden Namen aus.')
+    return false
+  }
+</script>
+<script src="/assets/autocomplete.js"></script>
+{% endblock %}

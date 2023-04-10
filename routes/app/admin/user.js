@@ -13,6 +13,6 @@ module.exports = async (req, res) => {
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
   res.tmplOpts.reports = results
-  res.tmplOpts.user = await User.findByPk(req.params.id)
+  res.tmplOpts.viewedUser = await User.findByPk(req.params.id)
   tmpl.render('app/admin/user.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

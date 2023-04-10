@@ -1,0 +1,26 @@
+{% extends "base.twig" %}
+
+{% block title %}Prüfungsart{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <section class="card">
+      <h1>Name ändern</h1>
+      <form method="POST">
+        <div class="inputlabel">
+            <label>Name</label>
+            <input type="text" name="newname" placeholder="Prüfung" required minlength="3" value="{{location.name}}">
+          </div><br>
+      </form>
+      <input type="submit" value="Name ändern">
+    </section>
+    <section>
+      <h1>Berichte</h1>
+      <ul>
+        {% for result in reports %}
+          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+{% endblock %}
