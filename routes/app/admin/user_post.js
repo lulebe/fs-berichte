@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     await req.user.save()
     res.tmplOpts.pwChanged = true
   }
-  if (req.body.toggleAdmin) {
+  if (req.body.toggleAdmin == "yes") {
     user.isAdmin = !user.isAdmin
     await user.save()
     res.tmplOpts.adminChanged = true

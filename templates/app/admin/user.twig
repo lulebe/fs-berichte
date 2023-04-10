@@ -4,8 +4,8 @@
 
 {% block content %}
   <div class="wrapper">
-    {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i>Passwort wurde geändert.</section><br>{% endif %}
-    {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i>Der Nutzer ist {% if viewedUser.isAdmin %}nun{% else %}nicht mehr{% endif %} Administrator.</section><br>{% endif %}
+    {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i> Passwort wurde geändert.</section><br>{% endif %}
+    {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i> Der Nutzer ist {% if viewedUser.isAdmin %}nun{% else %}nicht mehr{% endif %} Administrator.</section><br>{% endif %}
     <section class="card">
       <h1>{{viewedUser.email}}</h1>
       <h3>Passwort ändern</h3>
