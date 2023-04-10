@@ -44,7 +44,6 @@ async function renderExamPartially (id, doc, query, first) {
   const examDate = new Date(exam.date).toLocaleDateString('de-DE')
   let firstDone = false
   exam.SubjectExams.forEach((se, i) => {
-    console.log(shouldInclude(se, query))
     if (!shouldInclude(se, query)) return
     if (first && !firstDone)
       doc.fontSize(18).text(examDate, 70, 200)

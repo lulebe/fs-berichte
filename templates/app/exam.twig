@@ -12,7 +12,7 @@
       {% if user.id == exam.UserId or isAdmin %}<a href="{{exam.id}}/delete" class="btn important" onclick="return confirm('Diesen Bericht wirklich löschen?')"><i class="material-icons">delete</i> löschen</a>{% endif %}
       <h4>{{exam.ExamLocation.name}}</h4>
       <h4>Note: {{exam.grade}}</h4>
-      <p>{{exam.comment}}</p>
+      <p>{{exam.comment | nl2br}}</p>
       {% for report in exam.SubjectExams %}
         <div class="card" style="margin-bottom: 16px">
           <h3>{{report.Subject.name}}</h3>
