@@ -303,10 +303,6 @@ nav#admin-tabs .tab {
 }
 nav#admin-tabs .tab.active {
   border-bottom: 3px solid orange;
-  cursor: default;
-}
-nav#admin-tabs .tab.active:hover {
-  background: none;
 }
 nav#admin-tabs .tab:hover {
   background: rgba(0, 0, 0, 0.1);

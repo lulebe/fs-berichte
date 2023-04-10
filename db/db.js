@@ -76,7 +76,7 @@ const Exam = sequelize.define('Exam', {
   date: DataTypes.DATE,
   studentCount: DataTypes.INTEGER,
   grade: DataTypes.STRING,
-  comment: DataTypes.TEXT
+  comment: DataTypes.TEXT('long')
 })
 
 //Physikum, M3 etc
@@ -95,7 +95,7 @@ const ExamType = sequelize.define('ExamType', {
 //Bericht über einzelnes Fach
 const SubjectExam = sequelize.define('SubjectExam', {
   report: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT('long'),
     allowNull: false
   }
 })

@@ -12,5 +12,6 @@ module.exports = async (req, res) => {
   })
   res.tmplOpts.reports = reports
   res.tmplOpts.subject = await Subject.findByPk(req.params.id)
+  res.tmplOpts.activeAdminTab = "subjects"
   tmpl.render('app/admin/subject.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

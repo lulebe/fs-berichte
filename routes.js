@@ -58,3 +58,6 @@ adminRouter.get('/examtype/:id', require('./routes/app/admin/examtype'))
 adminRouter.post('/examtype/:id', require('./routes/app/admin/examtype_post'))
 adminRouter.get('/createexamtype', require('./routes/app/admin/createexamtype'))
 adminRouter.post('/createexamtype', require('./routes/app/admin/createexamtype_post'))
+
+adminRouter.get('/import', require('./routes/app/admin/import'))
+adminRouter.post('/import', require('./routes/app/admin/import'))

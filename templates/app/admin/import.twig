@@ -1,0 +1,8 @@
+{% extends "app/admin/base.twig" %}
+
+{% block admincontent %}
+  <form method="POST">
+    <input type="hidden" name="import" value="yes">
+    <input type="submit" value="einfügen">
+  </form>
+{% endblock %}

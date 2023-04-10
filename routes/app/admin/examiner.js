@@ -12,5 +12,6 @@ module.exports = async (req, res) => {
   })
   res.tmplOpts.reports = reports
   res.tmplOpts.examiner = await Examiner.findByPk(req.params.id)
+  res.tmplOpts.activeAdminTab = "examiners"
   tmpl.render('app/admin/examiner.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

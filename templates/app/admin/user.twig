@@ -1,12 +1,8 @@
-{% extends "base.twig" %}
+{% extends "app/admin/base.twig" %}
 
-{% block title %}Nutzer{% endblock %}
-
-{% block content %}
-  <div class="wrapper">
+{% block admincontent %}
     {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i> Passwort wurde geändert.</section><br>{% endif %}
     {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i> Der Nutzer ist {% if viewedUser.isAdmin %}nun{% else %}nicht mehr{% endif %} Administrator.</section><br>{% endif %}
-    <section class="card">
       <h1>{{viewedUser.email}}</h1>
       <h3>Passwort ändern</h3>
       <form method="POST">
@@ -38,16 +34,14 @@
         <button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> Account löschen</button>
       </form>
       
-    </section>
-    <section>
+    <p>
       <h1>Berichte</h1>
       <ul>
         {% for result in reports %}
           <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}
       </ul>
-    </section>
-  </div>
+    </p>
 {% endblock %}
 
 {% block js %}

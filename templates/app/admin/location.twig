@@ -1,10 +1,6 @@
-{% extends "base.twig" %}
+{% extends "app/admin/base.twig" %}
 
-{% block title %}Ort{% endblock %}
-
-{% block content %}
-  <div class="wrapper">
-    <section class="card">
+{% block admincontent %}
       <h1>Name ändern</h1>
       <form method="POST">
         <div class="inputlabel">
@@ -13,8 +9,6 @@
           </div><br>
       </form>
       <input type="submit" value="Name ändern">
-    </section>
-    <section class="card">
       <h1>Zusammenführen</h1>
       Um alle mit diesem Ort verknüpften Berichte einem anderen Ort zuzuweisen.<br>
       <form method="POST" onsubmit="return idCheck()">
@@ -33,16 +27,14 @@
         <input type="hidden" name="delete" value="yes">
         <button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> Ort löschen</button>
       </form>
-    </section>
-    <section>
-      <h1>Berichte</h1>
-      <ul>
-        {% for result in reports %}
-          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
-        {% endfor %}
-      </ul>
-    </section>
-  </div>
+      <p>
+        <h1>Berichte</h1>
+        <ul>
+          {% for result in reports %}
+            <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+          {% endfor %}
+        </ul>
+      </p>
 {% endblock %}
 
 {% block js %}

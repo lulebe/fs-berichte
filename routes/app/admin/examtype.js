@@ -11,5 +11,6 @@ module.exports = async (req, res) => {
   })
   res.tmplOpts.reports = reports
   res.tmplOpts.examtype = await ExamType.findByPk(req.params.id)
+  res.tmplOpts.activeAdminTab = "examtypes"
   tmpl.render('app/admin/examtype.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

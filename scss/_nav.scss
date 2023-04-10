@@ -109,10 +109,6 @@ header#top-bar {
       text-align: center;
       &.active {
         border-bottom: 3px solid orange;
-        cursor: default;
-        &:hover {
-          background: none;
-        }
       }
       &:hover {
         background: rgba(0,0,0,0.1);

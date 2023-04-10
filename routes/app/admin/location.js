@@ -13,5 +13,6 @@ module.exports = async (req, res) => {
   })
   res.tmplOpts.reports = reports
   res.tmplOpts.location = await ExamLocation.findByPk(req.params.id)
+  res.tmplOpts.activeAdminTab = "locations"
   tmpl.render('app/admin/location.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
