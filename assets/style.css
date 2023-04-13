@@ -53,6 +53,7 @@ button.important:hover, input[type=submit].important:hover, .btn.important:hover
 button.iconbtn, input[type=submit].iconbtn, .btn.iconbtn {
   line-height: 38px;
   padding: 0 24px;
+  display: inline-block;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
