@@ -1,5 +1,6 @@
 const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation } = requiremain('./db/db')
 
