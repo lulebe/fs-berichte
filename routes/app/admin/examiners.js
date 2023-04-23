@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allExaminers = await (
     (searchTerm) ?
-    Examiner.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
-    Examiner.findAll({order: [['name', 'DESC']], limit: 50, offset})
+    Examiner.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'ASC']], limit: 50, offset}) :
+    Examiner.findAll({order: [['name', 'ASC']], limit: 50, offset})
   )
   res.tmplOpts.examiners = allExaminers.map(s => s.dataValues)
   res.tmplOpts.examiners.forEach(s => {
