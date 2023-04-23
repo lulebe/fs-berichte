@@ -29,5 +29,9 @@ function makeMsg (code) {
       return "Bitte bestätige die E-Mail, die du von uns erhalten hast! Falls du auch 10 Minuten nach Registrierung keine E-Mail erhalten hast, registriere dich erneut."
     case 7:
       return "Du kannst dich nun einloggen!"
+    case 8:
+      return "Bitte gib eine Begründung zur Freischaltung für unsere Admins an :)"
+    case 9:
+      return "Unsere Admins haben deine Anfrage erhalten, du wirst eine E-Mail erhalten, wenn du freigeschaltet wurdest."
   }
 }

@@ -22,7 +22,7 @@
       <ul>
         {% for auth in pendingAuths %}
           <li>
-            <div class="main-text small">{{auth.email}}</div>
+            <div class="main-text small">{{auth.email}} ({{auth.authReason}})</div>
             <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
             <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
           </li>

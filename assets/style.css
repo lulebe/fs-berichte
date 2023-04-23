@@ -402,9 +402,11 @@ ul li a.main-text:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 ul li .end-btn {
-  display: inline-block;
+  display: inline-flex;
   flex-grow: unset;
-  width: 48px;
+  width: 64px;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   background: none;
   border: none;
@@ -416,6 +418,9 @@ ul li .end-btn.danger {
 }
 ul li .end-btn:hover {
   background: rgba(0, 0, 0, 0.1);
+}
+ul li .end-btn .material-icons {
+  top: 0;
 }
 ul li:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);

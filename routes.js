@@ -12,7 +12,6 @@ router.use((req, res, next) => {
 })
 
 router.get('/', require('./routes/index'))
-router.get('/nonAuthorizedEmail', require('./routes/nonauthmail'))
 router.get('/activate', require('./routes/activate'))
 router.post('/login', require('./routes/login'))
 router.post('/register', require('./routes/register'))

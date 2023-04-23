@@ -9,9 +9,15 @@
   <div style="padding: 16px;">
     <section class="login-area card">
       <h3>Autorisierung erforderlich</h3>
-      Bitte kontaktiere <a href="mailto:lehre@fsmed-hd.de">lehre@fsmed-hd.de</a>
-      von der bei der Registrierung angegebenen Mailadresse ({{ email }})
-      aus und beschreibe kurz, weshalb du Zugriff auf die Seite benötigst.
+      Bitte erkläre uns kurz, weshalb du Zugriff benötigst.
+      <form action="nonauthmail" method="post">
+        <input type="hidden" name="password" value="{{password}}">
+        <input type="email" name="email" value="{{email}}">
+        <textarea name="reason" placeholder="warum möchtest du Zugriff?">
+
+        </textarea>
+        <button type="submit">Zugriff anfragen</button>
+      </form>
     </section>
     
     <section class="login-area" style="text-align: center">

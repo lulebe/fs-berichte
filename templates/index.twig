@@ -17,13 +17,13 @@
           <i class="material-icons on">visibility</i>
           <i class="material-icons off">visibility_off</i>
         </div>
-        <input type="submit" value="einloggen">
+        <input type="submit" value="einloggen" class="btn important">
       </form>
     </section>
     <section class="login-area card">
       <h3>Registrierung</h3>
       Nutze zur Registrierung deine <strong>@stud.uni-heidelberg.de</strong> Adresse.
-      Falls du keine besitzt, melde dich im Anschluss bei lehre@fsmed-hd.de, um dich freischalten zu lassen.
+      Falls du keine besitzt, gib einen Grund an, weshalb du Zugriff benötigst, um dich freischalten zu lassen.
       <form action="/register{{loginGoto}}" method="POST">
         <input type="email" name="email" placeholder="E-Mail">
         <div class="pwinput" id="pw-reg">
@@ -36,6 +36,9 @@
           <i class="material-icons on">visibility</i>
           <i class="material-icons off">visibility_off</i>
         </div>
+        <small>Weshalb benötigst du Zugriff (nur ohne stud.uni-heidelberg.de Adresse notwendig)</small>
+        <textarea name="reason" style="height: 5rem;" placeholder="Begründung zur Freischaltung"></textarea>
+        <br>
         <input type="submit" value="registrieren">
       </form>
     </section>

@@ -20,17 +20,28 @@ module.exports = async (req, res) => {
   
 
   const userIsAuthorizedDomain = req.body.email.endsWith('@' + config.AUTHORIZED_DOMAIN)
-  const user = await User.create({
-    email: req.body.email,
-    authorized: userIsAuthorizedDomain,
-    password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
-  })
   if (userIsAuthorizedDomain) {
+    const user = await User.create({
+      email: req.body.email,
+      authorized: userIsAuthorizedDomain,
+      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
+    })
     sendActivationEmail(user)
     res.redirect('/?status=6')
   } else {
-    //show notification to contact for authorization
-    res.redirect('/nonAuthorizedEmail?email='+encodeURIComponent(req.body.email))
+    if (!req.body.reason) {
+      return res.redirect('/?status=8')
+    }
+    //create user
+    const user = await User.create({
+      email: req.body.email,
+      authorized: userIsAuthorizedDomain,
+      authReason: req.body.reason,
+      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
+    })
+    //send admin email
+    sendAdminEmail (user, req.body.reason)
+    return res.redirect('/?status=9')
   }
 }
 
@@ -41,5 +52,14 @@ function sendActivationEmail (user) {
     'Aktivierungslink',
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token,
     'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
+  )
+}
+
+function sendAdminEmail (user, reason) {
+  return mailer(
+    config.ADMIN_EMAIL,
+    'Berichte Freischaltungsanfrage',
+    'Der Nutzer ' + user.email + ' bittet um Freischaltung mit folgender Begründung:\n\n' + reason + '\n\n Er kann unter ' + config.ROOT_URL + '/app/admin/users freigeschaltet werden.',
+    'Der Nutzer <pre>' + user.email + '</pre> bittet um Freischaltung mit folgender Begründung:<br><br>' + reason + '<br><br> Er kann unter <a href="' + config.ROOT_URL + '/app/admin/users">' + config.ROOT_URL + '/app/admin/users</a> freigeschaltet werden.'
   )
 }
