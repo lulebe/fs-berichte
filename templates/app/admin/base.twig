@@ -19,10 +19,13 @@
     <section class="grid-col right card">
       <h1 class="mtop0">ausstehende Autorisierungen</h1>
       {% if pendingAuths %}
-      <ul>
+      <ul class="pending-auths">
         {% for auth in pendingAuths %}
           <li>
-            <div class="main-text small">{{auth.email}} ({{auth.authReason}})</div>
+            <div class="main-text small">
+              {{auth.email}}
+              <div class="second-line">{{auth.authReason}}</div>
+            </div>
             <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
             <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
           </li>

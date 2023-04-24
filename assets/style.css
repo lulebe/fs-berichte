@@ -395,6 +395,11 @@ ul li .main-text {
   color: black;
   flex-grow: 1;
 }
+ul li .main-text .second-line {
+  line-height: 1rem;
+  color: #555;
+  padding-bottom: 12px;
+}
 ul li a.main-text {
   padding-right: 12px;
 }
@@ -402,11 +407,9 @@ ul li a.main-text:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 ul li .end-btn {
-  display: inline-flex;
+  display: inline-block;
   flex-grow: unset;
-  width: 64px;
-  justify-content: center;
-  align-items: center;
+  width: 48px;
   text-align: center;
   background: none;
   border: none;
@@ -418,9 +421,6 @@ ul li .end-btn.danger {
 }
 ul li .end-btn:hover {
   background: rgba(0, 0, 0, 0.1);
-}
-ul li .end-btn .material-icons {
-  top: 0;
 }
 ul li:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.05);

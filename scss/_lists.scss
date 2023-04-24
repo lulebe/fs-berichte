@@ -7,6 +7,11 @@ ul {
         padding-left: 12px;
         color: black;
         flex-grow: 1;
+        .second-line {
+          line-height: 1rem;
+          color: #555;
+          padding-bottom: 12px;
+        }
       }
       a.main-text {
         &:hover {
@@ -15,11 +20,9 @@ ul {
         padding-right: 12px;
       }
       .end-btn {
-        display: inline-flex;
+        display: inline-block;
         flex-grow: unset;
-        width: 64px;
-        justify-content: center;
-        align-items: center;
+        width: 48px;
         text-align: center;
         background: none;
         border: none;
@@ -30,9 +33,6 @@ ul {
         }
         &:hover {
           background: rgba(0,0,0,0.1);
-        }
-        .material-icons {
-          top: 0;
         }
       }
       line-height: 48px;
