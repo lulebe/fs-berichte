@@ -4,12 +4,15 @@ const adminRouter = require('express').Router()
 
 const { User } = require('./db/db')
 
+const htmlType = require('./middleware/html')
+
 module.exports = router
 
 router.use((req, res, next) => {
   res.tmplOpts = {isLoggedIn: false}
   next()
 })
+router.use(htmlType)
 
 router.get('/', require('./routes/index'))
 router.get('/activate', require('./routes/activate'))
