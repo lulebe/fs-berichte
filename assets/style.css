@@ -30,30 +30,44 @@ a:hover {
 }
 
 button, input[type=submit], .btn {
-  border-radius: 50px;
-  border: 1px solid #296ea7;
+  border-radius: 6px;
+  border: none;
+  border-bottom: 3px solid #014178;
   font-size: 1rem;
   padding: 6px 12px;
-  background: white;
+  background: #296ea7;
   outline: none;
   cursor: pointer;
+  color: white;
 }
 button:hover, input[type=submit]:hover, .btn:hover {
   color: white;
-  background: #296ea7;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
+}
+button:active, input[type=submit]:active, .btn:active {
+  box-shadow: none;
+  background-color: #014178;
 }
 button.important, input[type=submit].important, .btn.important {
-  color: #c10b1d;
-  border-color: #c10b1d;
-}
-button.important:hover, input[type=submit].important:hover, .btn.important:hover {
-  color: white;
   background: #c10b1d;
+  border-bottom-color: #8f111e;
+}
+button.important:active, input[type=submit].important:active, .btn.important:active {
+  background-color: #8f111e;
 }
 button.iconbtn, input[type=submit].iconbtn, .btn.iconbtn {
   line-height: 38px;
   padding: 0 24px;
   display: inline-block;
+}
+button:visited, input[type=submit]:visited, .btn:visited {
+  color: white;
+}
+
+select {
+  height: 32px;
+  padding: 0 16px;
+  margin: 4px 0;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
@@ -288,7 +302,7 @@ nav#mobile-nav {
     color: #296ea7;
   }
 }
-nav#admin-tabs {
+nav#subtabs {
   display: flex;
   flex-direction: row;
   background: white;
@@ -297,15 +311,15 @@ nav#admin-tabs {
   margin-bottom: 16px;
   justify-content: space-evenly;
 }
-nav#admin-tabs .tab {
+nav#subtabs .tab {
   flex-grow: 1;
   padding: 16px 0;
   text-align: center;
 }
-nav#admin-tabs .tab.active {
+nav#subtabs .tab.active {
   border-bottom: 3px solid orange;
 }
-nav#admin-tabs .tab:hover {
+nav#subtabs .tab:hover {
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -349,7 +363,13 @@ nav#admin-tabs .tab:hover {
   color: white;
   font-size: 3rem;
   text-align: center;
-  line-height: 200px;
+  line-height: 150px;
+}
+#splash > p {
+  line-height: initial;
+  font-size: initial;
+  padding-bottom: 35px;
+  margin: 0;
 }
 
 @media (max-width: 440px) {
@@ -359,7 +379,7 @@ nav#admin-tabs .tab:hover {
   }
 }
 .login-area {
-  margin: 48px auto;
+  margin: 24px auto;
   width: 100%;
   max-width: 480px;
 }

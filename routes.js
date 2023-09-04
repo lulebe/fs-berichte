@@ -4,7 +4,6 @@ const adminRouter = require('express').Router()
 
 const { User } = require('./db/db')
 
-const htmlType = require('./middleware/html')
 
 module.exports = router
 
@@ -12,7 +11,6 @@ router.use((req, res, next) => {
   res.tmplOpts = {isLoggedIn: false}
   next()
 })
-router.use(htmlType)
 
 router.get('/', require('./routes/index'))
 router.get('/activate', require('./routes/activate'))
@@ -43,6 +41,9 @@ appRouter.get('/logout', require('./routes/app/logout'))
 appRouter.get('/profile', require('./routes/app/profile'))
 appRouter.post('/profile', [require('./routes/app/profile_post')], require('./routes/app/profile'))
 appRouter.post('/deleteAccount', require('./routes/app/deleteAccount'))
+
+//research area
+appRouter.get('/mainresearch', require('./routes/app/mainresearch'))
 
 adminRouter.use(require('./middleware/admin/pendingAuths'))
 adminRouter.get('/users', require('./routes/app/admin/users'))

@@ -5,7 +5,13 @@
     color: white;
     font-size: 3rem;
     text-align: center;
-    line-height: 200px;
+    line-height: 150px;
+    > p {
+      line-height: initial;
+      font-size: initial;
+      padding-bottom: 35px;
+      margin: 0;
+    }
   }
   @media (max-width: 440px) {
     #splash {
@@ -15,7 +21,7 @@
   }
   
   .login-area {
-    margin: 48px auto;
+    margin: 24px auto;
     width: 100%;
     max-width: 480px;
   }

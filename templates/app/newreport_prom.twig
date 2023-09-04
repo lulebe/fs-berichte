@@ -6,7 +6,70 @@
   <div class="wrapper">
     <section>
       <h1>Arbeitsgruppenbericht anlegen</h1>
-      
+      <p style="color: red"><strong>Bitte formuliert eure Kritik sachlich und respektvoll!</strong></p>
+      <form action="" method="POST">
+        <div class="card" style="margin-bottom: 16px;">
+          <h3>Allgemeines</h3><br>
+          <div class="inputlabel">
+            <label>Fachrichtung</label>
+            <input type="text" name="subject" placeholder="Neurophysiologie" required minlength="3">
+          </div><br>
+          <div class="inputlabel">
+            <label>Doktorvater/-mutter / Chef</label>
+            <input type="text" name="head" placeholder="Joachim Kirsch" required minlength="3">
+            <small>Bitte keine Titel angeben, da sich diese häufig ändern.</small>
+          </div><br>
+          <div class="inputlabel">
+            <label>Betreuer:in</label>
+            <input type="text" name="supervisor" placeholder="Tom Müller" required minlength="3">
+            <small>Bitte keine Titel angeben, da sich diese häufig ändern.</small>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Umfang</h3><br>
+          <div class="inputlabel">
+            <label>Art der Arbeit</label><br>
+            <select name="type">
+              <option value="1">Doktorarbeit</option>
+              <option value="2">Praktikum</option>
+              <option value="3">HiWi-Job</option>
+              <option value="4">sonstiges</option>
+            </select>
+            <input type="text" name="typetext" placeholder="Anmerkungen">
+          </div><br>
+          <div class="inputlabel">
+            <label>Art der Arbeit</label><br>
+            <select name="type">
+              <option value="1">Doktorarbeit</option>
+              <option value="2">Praktikum</option>
+              <option value="3">HiWi-Job</option>
+              <option value="4">sonstiges</option>
+            </select>
+            <input type="text" name="typetext" placeholder="Anmerkungen">
+          </div><br>
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Team</h3><br>
+          
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Planung</h3><br>
+          
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Aufgaben</h3><br>
+          
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Förderung</h3><br>
+          
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Sonstiges</h3><br>
+          
+        </div>
+        <button type="submit" class="fullpagesubmit">eintragen</button>
+      </form>
     </section>
     <div style="height: 64px">&nbsp;</div>
   </div>
