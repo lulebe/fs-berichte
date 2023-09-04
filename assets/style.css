@@ -120,6 +120,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
   left: 25%;
   width: 50%;
   line-height: 64px;
+  font-size: 20px;
   padding: 0;
   border-radius: 0;
   border-top-left-radius: 16px;
@@ -127,6 +128,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
   background: #014178;
   color: white;
   font-weight: bold;
+}
+.fullpagesubmit:hover {
+  font-size: 25px;
+  background-color: #296ea7;
 }
 
 .search-block {
