@@ -23,50 +23,124 @@
             <label>Betreuer:in</label>
             <input type="text" name="supervisor" placeholder="Tom Müller" required minlength="3">
             <small>Bitte keine Titel angeben, da sich diese häufig ändern.</small>
+          </div><br>
+          <div class="inputquestion">In welchem Bereich warst du?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="area" id="iarea1" value="1"><label for="iarea1">Grundlagenforschung</label></div>
+            <div class="grouper"><input type="radio" name="area" id="iarea2" value="2"><label for="iarea2">klinisch-experimentell</label></div>
+            <div class="grouper"><input type="radio" name="area" id="iarea3" value="3"><label for="iarea3">klinisch</label></div>
+            <div class="grouper"><input type="radio" name="area" id="iarea4" value="4"><label for="iarea4">Literatur</label></div>
           </div>
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Umfang</h3><br>
-          <div class="inputlabel">
-            <label>Art der Arbeit</label><br>
-            <select name="type">
-              <option value="1">Doktorarbeit</option>
-              <option value="2">Praktikum</option>
-              <option value="3">HiWi-Job</option>
-              <option value="4">sonstiges</option>
-            </select>
-            <input type="text" name="typetext" placeholder="Anmerkungen">
-          </div><br>
-          <div class="inputlabel">
-            <label>Art der Arbeit</label><br>
-            <select name="type">
-              <option value="1">Doktorarbeit</option>
-              <option value="2">Praktikum</option>
-              <option value="3">HiWi-Job</option>
-              <option value="4">sonstiges</option>
-            </select>
-            <input type="text" name="typetext" placeholder="Anmerkungen">
-          </div><br>
+          <div class="inputquestion">Art der Arbeit</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="work" id="iwork1" value="1"><label for="iwork1">Doktorarbeit</label></div>
+            <div class="grouper"><input type="radio" name="work" id="iwork2" value="2"><label for="iwork2">Praktikum</label></div>
+            <div class="grouper"><input type="radio" name="work" id="iwork3" value="3"><label for="iwork3">HiWi-Job</label></div>
+            <div class="grouper"><input type="radio" name="work" id="iwork4" value="4"><label for="iwork4">sonstiges</label></div>
+          </div>
+          <div class="inputquestion">Wie lange warst du (in Vollzeit) dort?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="duration" id="iduration1" value="1"><label for="iduration1">unter 4 Monate</label></div>
+            <div class="grouper"><input type="radio" name="duration" id="iduration2" value="2"><label for="iduration2">unter 9 Monate</label></div>
+            <div class="grouper"><input type="radio" name="duration" id="iduration3" value="3"><label for="iduration3">unter 1,5 Jahre</label></div>
+            <div class="grouper"><input type="radio" name="duration" id="iduration4" value="4"><label for="iduration4">über 1,5 Jahre</label></div>
+          </div>
+          <input type="text" name="worktext" id="iworktext" placeholder="Anmerkungen">
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Team</h3><br>
-          
+          <div class="inputquestion">Gibt es ...?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="checkbox" name="teamjournalclub" id="iteamjournalclub"><label for="iteamjournalclub">Journal Clubs</label></div>
+            <div class="grouper"><input type="checkbox" name="teamlabmeeting" id="iteamlabmeeting"><label for="iteamlabmeeting">Lab/Team meetings</label></div>
+            <div class="grouper"><input type="checkbox" name="teamjointwork" id="iteamjointwork"><label for="iteamjointwork">Zusammenarbeit bei Problemen etc.</label></div>
+          </div>
+          <div class="inputlabel">
+            <label>Gab es weitere Veranstaltungen, wie sah die Zusammenarbeit aus?</label>
+            <textarea name="teamtext" class="short"></textarea>
+          </div>
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Planung</h3><br>
-          
+          <div class="inputquestion">Wie gut war die Planung und wie gut funktionierte sie?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="plan" id="iplan1" value="1"><label for="iplan1">sehr gut</label></div>
+            <div class="grouper"><input type="radio" name="plan" id="iplan2" value="2"><label for="iplan2">in Ordnung</label></div>
+            <div class="grouper"><input type="radio" name="plan" id="iplan3" value="3"><label for="iplan3">mäßig</label></div>
+            <div class="grouper"><input type="radio" name="plan" id="iplan4" value="4"><label for="iplan4">schlecht</label></div>
+          </div>
+          <div class="inputlabel">
+            <label>Anmerkungen zur Planung und Einhaltung</label>
+            <textarea name="plantext" class="short"></textarea>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom: 16px">
+          <h3>Betreuung</h3><br>
+          <div class="inputquestion">Wie gut war die Einarbeitung?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="intro" id="iintro1" value="1"><label for="iintro1">sehr gut</label></div>
+            <div class="grouper"><input type="radio" name="intro" id="iintro2" value="2"><label for="iintro2">in Ordnung</label></div>
+            <div class="grouper"><input type="radio" name="intro" id="iintro3" value="3"><label for="iintro3">mäßig</label></div>
+            <div class="grouper"><input type="radio" name="intro" id="iintro4" value="4"><label for="iintro4">schlecht</label></div>
+          </div>
+          <div class="inputquestion">Wie gut war die Betreuung bei Problemen?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="help" id="ihelp1" value="1"><label for="ihelp1">sehr gut</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp2" value="2"><label for="ihelp2">in Ordnung</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp3" value="3"><label for="ihelp3">mäßig</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp4" value="4"><label for="ihelp4">schlecht</label></div>
+          </div>
+          <div class="inputlabel">
+            <label>Anmerkungen zur Einarbeitung und Betreuung</label>
+            <textarea name="plantext" class="short"></textarea>
+          </div>
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Aufgaben</h3><br>
-          
+          <div class="inputlabel">
+            <label>Welche täglichen Aufgaben hattest du?</label>
+            <textarea name="taskstext" class="short"></textarea>
+          </div><br>
+          <div class="inputquestion">Hattest du Schwierigkeiten, einen Platz an deinem Mikroskop/Computer/Gerät... zu bekommen?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="help" id="ihelp1" value="1"><label for="ihelp1">nie</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp2" value="2"><label for="ihelp2">selten</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp3" value="3"><label for="ihelp3">öfters</label></div>
+            <div class="grouper"><input type="radio" name="help" id="ihelp4" value="4"><label for="ihelp4">immer</label></div>
+          </div>
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Förderung</h3><br>
-          
+          <div class="inputquestion">Gibt es ...?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="checkbox" name="supportcash" id="isupportcash"><label for="isupportcash">Bezahlung</label></div>
+            <div class="grouper"><input type="checkbox" name="supportstipendium" id="isupportstipendium"><label for="isupportstipendium">Möglichkeiten für Stipendien</label></div>
+            <div class="grouper"><input type="checkbox" name="supportkongress" id="isupportkongress"><label for="isupportkongress">Angebote für Kongresse etc.</label></div>
+          </div>
+          <input type="text" name="supporttext" id="isupporttext" placeholder="Anmerkungen">
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Sonstiges</h3><br>
-          
+          <div class="inputquestion">Wie schätzt du den Anspruch der Arbeit dort ein?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="level" id="ilevel1" value="1"><label for="ilevel1">einfach</label></div>
+            <div class="grouper"><input type="radio" name="level" id="ilevel2" value="2"><label for="ilevel2">mittel</label></div>
+            <div class="grouper"><input type="radio" name="level" id="ilevel3" value="3"><label for="ilevel3">anspruchsvoll</label></div>
+          </div>
+          <div class="inputquestion">Wie frei/geleitet warst du?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="freedom" id="ifreedom1" value="1"><label for="ifreedom1">stark geleitet</label></div>
+            <div class="grouper"><input type="radio" name="freedom" id="ifreedom2" value="2"><label for="ifreedom2">eher geleitet</label></div>
+            <div class="grouper"><input type="radio" name="freedom" id="ifreedom3" value="3"><label for="ifreedom3">eher frei</label></div>
+            <div class="grouper"><input type="radio" name="freedom" id="ifreedom4" value="4"><label for="ifreedom4">sehr frei</label></div>
+          </div>
+          <div class="inputlabel">
+            <label>Was möchtest du sonst noch loswerden?</label>
+            <textarea name="othertext" class="short"></textarea>
+          </div>
         </div>
         <button type="submit" class="fullpagesubmit">eintragen</button>
       </form>
