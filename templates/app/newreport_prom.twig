@@ -48,7 +48,10 @@
             <div class="grouper"><input type="radio" name="duration" id="iduration3" value="3"><label for="iduration3">unter 1,5 Jahre</label></div>
             <div class="grouper"><input type="radio" name="duration" id="iduration4" value="4"><label for="iduration4">über 1,5 Jahre</label></div>
           </div>
-          <input type="text" name="worktext" id="iworktext" placeholder="Anmerkungen">
+          <div class="inputlabel">
+            <label>Anmerkungen</label>
+            <input type="text" name="timetext" placeholder="Vollzeit/Teilzeitverhältnis etc.">
+          </div><br>
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Team</h3><br>
@@ -65,7 +68,7 @@
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Planung</h3><br>
-          <div class="inputquestion">Wie gut war die Planung und wie gut funktionierte sie?</div>
+          <div class="inputquestion">Wie gut war die Planung und deren Umsetzungs?</div>
           <div class="radiorow">
             <div class="grouper"><input type="radio" name="plan" id="iplan1" value="1"><label for="iplan1">sehr gut</label></div>
             <div class="grouper"><input type="radio" name="plan" id="iplan2" value="2"><label for="iplan2">in Ordnung</label></div>
@@ -118,19 +121,20 @@
           <div class="radiorow">
             <div class="grouper"><input type="checkbox" name="supportcash" id="isupportcash"><label for="isupportcash">Bezahlung</label></div>
             <div class="grouper"><input type="checkbox" name="supportstipendium" id="isupportstipendium"><label for="isupportstipendium">Möglichkeiten für Stipendien</label></div>
+            <div class="grouper"><input type="checkbox" name="supportpublications" id="isupportpublications"><label for="isupportpublications">gute Publikationsmöglichkeiten</label></div>
             <div class="grouper"><input type="checkbox" name="supportkongress" id="isupportkongress"><label for="isupportkongress">Angebote für Kongresse etc.</label></div>
           </div>
           <input type="text" name="supporttext" id="isupporttext" placeholder="Anmerkungen">
         </div>
         <div class="card" style="margin-bottom: 16px">
           <h3>Sonstiges</h3><br>
-          <div class="inputquestion">Wie schätzt du den Anspruch der Arbeit dort ein?</div>
+          <div class="inputquestion">Wie aufwändig war deine Arbeit?</div>
           <div class="radiorow">
             <div class="grouper"><input type="radio" name="level" id="ilevel1" value="1"><label for="ilevel1">einfach</label></div>
             <div class="grouper"><input type="radio" name="level" id="ilevel2" value="2"><label for="ilevel2">mittel</label></div>
             <div class="grouper"><input type="radio" name="level" id="ilevel3" value="3"><label for="ilevel3">anspruchsvoll</label></div>
           </div>
-          <div class="inputquestion">Wie frei/geleitet warst du?</div>
+          <div class="inputquestion">Wie frei / geleitet warst du?</div>
           <div class="radiorow">
             <div class="grouper"><input type="radio" name="freedom" id="ifreedom1" value="1"><label for="ifreedom1">stark geleitet</label></div>
             <div class="grouper"><input type="radio" name="freedom" id="ifreedom2" value="2"><label for="ifreedom2">eher geleitet</label></div>
