@@ -5,6 +5,7 @@
 {% block content %}
   <section id="splash">
     FSmed Berichte
+    <p>Gedankenprotokolle von mündlichen Examen und Prüfungen, sowie Berichte über Arbeitsgruppen.</p>
   </section>
   <div style="padding: 16px;">
   {% if hasError %}<section class="login-area card" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
@@ -25,7 +26,7 @@
       Nutze zur Registrierung deine <strong>@stud.uni-heidelberg.de</strong> Adresse.
       Falls du keine besitzt, gib einen Grund an, weshalb du Zugriff benötigst, um dich freischalten zu lassen.
       <form action="/register{{loginGoto}}" method="POST">
-        <input type="email" name="email" placeholder="E-Mail">
+        <input type="email" name="email" id="regemail-inp" placeholder="E-Mail">
         <div class="pwinput" id="pw-reg">
           <input type="password" name="password" placeholder="Passwort">
           <i class="material-icons on">visibility</i>
@@ -36,8 +37,8 @@
           <i class="material-icons on">visibility</i>
           <i class="material-icons off">visibility_off</i>
         </div>
-        <small>Weshalb benötigst du Zugriff (nur ohne stud.uni-heidelberg.de Adresse notwendig)</small>
-        <textarea name="reason" style="height: 5rem;" placeholder="Begründung zur Freischaltung"></textarea>
+        <small class="nohd" style="display: block;">Weshalb benötigst du Zugriff (nur bei Registrierung ohne stud.uni-heidelberg.de Adresse notwendig)</small>
+        <textarea class="nohd" name="reason" style="height: 5rem; display: block;" placeholder="Begründung zur Freischaltung, wenn du von einer anderen Uni kommst"></textarea>
         <br>
         <input type="submit" value="registrieren">
       </form>
@@ -79,5 +80,18 @@
   makePWVisibilityToggle('pw-login')
   makePWVisibilityToggle('pw-reg')
   makePWVisibilityToggle('pw-reg-repeat')
+
+  const nohdElements = document.querySelectorAll('.nohd')
+  document.getElementById('regemail-inp').addEventListener('input', e => {
+    if (e.target.value.endsWith('@stud.uni-heidelberg.de') || !e.target.value.includes('@')) {
+      for (let i = 0; i < nohdElements.length; i++) {
+        nohdElements[i].style.display = 'none'
+      }
+    } else {
+      for (let i = 0; i < nohdElements.length; i++) {
+        nohdElements[i].style.display = 'block'
+      }
+    }
+  })
 </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 $primary-color: #296ea7;
 $accent-color: #c10b1d;
+$accent-color-dark: #8f111e;
 $primary-color-dark: #014178;
 
 $shadow-xs: 0 0px 1px rgba(0,0,0,0.3);
@@ -38,23 +39,29 @@ a {
 }
 
 button, input[type=submit], .btn {
-  border-radius: 50px;
-  border: 1px solid $primary-color;
+  display: inline-block;
+  border-radius: 6px;
+  border: none;
+  border-bottom: 3px solid $primary-color-dark;
   font-size: 1rem;
   padding: 6px 12px;
-  background: white;
+  background: $primary-color;
   outline: none;
   cursor: pointer;
+  color: white;
   &:hover {
     color: white;
-    background: $primary-color;
+    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
+  }
+  &:active {
+    box-shadow: none;
+    background-color: $primary-color-dark;
   }
   &.important {
-    color: $accent-color;
-    border-color: $accent-color;
-    &:hover {
-      color: white;
-      background: $accent-color;
+    background: $accent-color;
+    border-bottom-color: $accent-color-dark;
+    &:active {
+      background-color: $accent-color-dark;
     }
   }
   &.iconbtn {
@@ -62,6 +69,19 @@ button, input[type=submit], .btn {
     padding: 0 24px;
     display: inline-block;
   }
+  &:visited {
+    color: white;
+  }
+}
+
+select {
+  height: 32px;
+  padding: 0 16px;
+  margin: 4px 0;
+}
+
+input {
+  accent-color: $accent-color;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=tel], input[type=search] {
@@ -91,21 +111,29 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   }
 }
 
+.inputquestion {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
 .radiorow {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 -8px;
   .grouper {
-    text-align: center;
+    padding: 0 8px;
   }
   label {
-    display: block;
-    font-size: 24px;
+    display: inline-block;
+    font-size: 16px;
     margin-bottom: 8px;
+    transform: translate(0, -2px);
   }
-  input[type=radio] {
-    width: 32px;
-    height: 32px;
+  input[type=radio], input[type=checkbox] {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -116,6 +144,7 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   left: 25%;
   width: 50%;
   line-height: 64px;
+  font-size: 20px;
   padding: 0;
   border-radius: 0;
   border-top-left-radius: 16px;
@@ -123,6 +152,10 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   background: $primary-color-dark;
   color: white;
   font-weight: bold;
+  &:hover {
+    font-size: 25px;
+    background-color: $primary-color;
+  }
 }
 
 .search-block {
@@ -154,10 +187,14 @@ textarea {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   border-radius: 16px;
+  border-top-left-radius: 0;
   outline: none;
   resize: vertical;
   &:focus {
     border-color: $primary-color;
+  }
+  &.short {
+    height: 120px;
   }
 }
 
@@ -207,3 +244,4 @@ i.material-icons {
 @import "login";
 @import "lists";
 @import "layouts";
+@import "researchreport";

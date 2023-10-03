@@ -1,0 +1,63 @@
+.c3-1 {
+  background-color: #FF2C14;
+  color: white;
+}
+.c3-2 {
+  background-color: #FFB71C;
+  color: black;
+}
+.c3-3 {
+  background-color: #3c9015;
+  color: white;
+}
+
+.c4-1 {
+  background-color: #FF2C14;
+  color: white;
+}
+.c4-2 {
+  background-color: #F26907;
+  color: black;
+}
+.c4-3 {
+  background-color: #FFE608;
+  color: black;
+}
+.c4-4 {
+  background-color: #3c9015;
+  color: white;
+}
+
+
+.checkchip {
+  padding: 8px;
+  padding-top: 0;
+  display: inline-block;
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  &.yes {
+    background-color: #3c9015;
+  }
+  &.no {
+    background-color: #FF2C14;
+  }
+}
+
+.questionbox {
+  border: 1px solid grey;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  margin-bottom: 8px;
+  .question {
+    padding: 4px;
+    padding-bottom: 0px;
+    text-align: center;
+  }
+  .answer {
+    padding: 4px;
+    text-align: center;
+    font-weight: bold;
+  }
+}

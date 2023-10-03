@@ -5,7 +5,7 @@
 {% block content %}
   <div class="wrapper-2-col">
     <section class="grid-col left">
-      <nav id="admin-tabs">
+      <nav id="subtabs">
         <a href="/app/admin/users" class="tab {% if activeAdminTab == "users" %}active {% endif %}">Nutzer</a>
         <a href="/app/admin/examiners" class="tab {% if activeAdminTab == "examiners" %}active {% endif %}">Dozenten</a>
         <a href="/app/admin/locations" class="tab {% if activeAdminTab == "locations" %}active {% endif %}">Orte</a>
@@ -16,27 +16,39 @@
         {% block admincontent %}{% endblock %}
       </div>
     </section>
-    <section class="grid-col right card">
-      <h1 class="mtop0">ausstehende Autorisierungen</h1>
-      {% if pendingAuths %}
-      <ul class="pending-auths">
-        {% for auth in pendingAuths %}
-          <li>
-            <div class="main-text small">
-              {{auth.email}}
-              <div class="second-line">{{auth.authReason}}</div>
-            </div>
-            <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
-            <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
-          </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <div class="empty-status">
-        <i class="material-icons icon">checklist</i>
-        Derzeit warten keine Nutzer auf Autorisierung.
+    <section class="grid-col right">
+      <div class="card" style="margin-bottom: 16px">
+        <h1 class="mtop0">Promotionsberichte</h1>
+        {% if researchReportsPublic %}
+        <p>Die Promotionsberichte sind einsehbar.</p>
+        <a href="?setResearch=private" class="btn iconbtn"><i class="material-icons">lock</i> Sperren</a>
+        {% else %}
+        <p>Die Promotionsberichte sind <strong>nicht</strong> einsehbar.</p>
+        <a href="?setResearch=public" class="btn iconbtn"><i class="material-icons">lock_open</i> Freischalten</a>
+        {% endif %}
       </div>
-      {% endif %}
+      <div class="card">
+        <h1 class="mtop0">ausstehende Autorisierungen</h1>
+        {% if pendingAuths %}
+        <ul class="pending-auths">
+          {% for auth in pendingAuths %}
+            <li>
+              <div class="main-text small">
+                {{auth.email}}
+                <div class="second-line">{{auth.authReason}}</div>
+              </div>
+              <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
+              <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-status">
+          <i class="material-icons icon">checklist</i>
+          Derzeit warten keine Nutzer auf Autorisierung.
+        </div>
+        {% endif %}
+      </div>
     </section>
   </div>
 {% endblock %}

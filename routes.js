@@ -4,6 +4,7 @@ const adminRouter = require('express').Router()
 
 const { User } = require('./db/db')
 
+
 module.exports = router
 
 router.use((req, res, next) => {
@@ -24,6 +25,15 @@ router.use('/app', appRouter)
 appRouter.use('/admin', require('./middleware/onlyAdmin'))
 appRouter.use('/admin', adminRouter)
 
+
+//research area
+appRouter.get('/mainresearch', require('./routes/app/mainresearch'))
+appRouter.get('/newreport/promotion', require('./routes/app/newreport_prom'))
+appRouter.post('/newreport/promotion', require('./routes/app/newreport_prom_post'))
+appRouter.get('/research/:id', require('./routes/app/research'))
+appRouter.post('/research/:id/delete', require('./routes/app/deleteResearch'))
+
+//exams area
 appRouter.get('/main', require('./routes/app/main'))
 appRouter.get('/exam/:id', require('./routes/app/exam'))
 appRouter.get('/exam/:id/pdf', require('./routes/app/pdfsingle'))
@@ -39,7 +49,8 @@ appRouter.get('/profile', require('./routes/app/profile'))
 appRouter.post('/profile', [require('./routes/app/profile_post')], require('./routes/app/profile'))
 appRouter.post('/deleteAccount', require('./routes/app/deleteAccount'))
 
-adminRouter.use(require('./middleware/admin/pendingAuths'))
+
+adminRouter.use(require('./middleware/admin/quickSettings'))
 adminRouter.get('/users', require('./routes/app/admin/users'))
 adminRouter.get('/user/:id', require('./routes/app/admin/user'))
 adminRouter.post('/user/:id', [require('./routes/app/admin/user_post')], require('./routes/app/admin/user'))

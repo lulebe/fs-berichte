@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize')
+const { Sequelize, DataTypes, STRING } = require('sequelize')
 const session = require('express-session')
 const SequelizeStore = require("connect-session-sequelize")(session.Store)
 
@@ -104,6 +104,67 @@ const SubjectExam = sequelize.define('SubjectExam', {
   }
 })
 
+//Promotionsbericht
+const ResearchReport = sequelize.define('ResearchReport', {
+  subject: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  head: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  supervisor: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  area: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  work: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  duration: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  timetext: DataTypes.TEXT,
+  teamjournalclub: DataTypes.BOOLEAN,
+  teamlabmeeting: DataTypes.BOOLEAN,
+  teamjointwork: DataTypes.BOOLEAN,
+  teamtext: DataTypes.TEXT,
+  plan: DataTypes.INTEGER,
+  plantext: DataTypes.TEXT,
+  intro: DataTypes.INTEGER,
+  help: DataTypes.INTEGER,
+  helptext: DataTypes.TEXT,
+  taskstext: DataTypes.TEXT,
+  equipment: DataTypes.INTEGER,
+  supportcash: DataTypes.BOOLEAN,
+  supportstipendium: DataTypes.BOOLEAN,
+  supportpublications: DataTypes.BOOLEAN,
+  supportkongress: DataTypes.BOOLEAN,
+  supporttext: DataTypes.TEXT,
+  level: DataTypes.INTEGER,
+  freedom: DataTypes.INTEGER,
+  othertext: DataTypes.TEXT
+})
+
+//Einstellungen
+const Settings = sequelize.define('Settings', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: false
+  },
+  value: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+}, {timestamps: false})
+
 User.hasMany(Exam,
   {
     onDelete: 'CASCADE',
@@ -162,7 +223,18 @@ Examiner.hasMany(SubjectExam,
 )
 SubjectExam.belongsTo(Examiner)
 
+User.hasMany(ResearchReport,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+ResearchReport.belongsTo(User)
+
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Settings, sessionStore }

@@ -5,7 +5,7 @@ const Op = Sequelize.Op
 const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
-  //search autocomplete Date
+  //search autocomplete Data
   const data = await Promise.all([
     Subject.findAll({attributes: ['id', 'name']}),
     ExamLocation.findAll({attributes: ['id', 'name']}),

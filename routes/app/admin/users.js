@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     User.count({where: {email: {[Op.like]: searchTerm}}}) :
     User.count()
   )
-  res.tmplOpts.pageIndex = req.query.page || 1
+  res.tmplOpts.pageIndex = parseInt(req.query.page) || 1
   res.tmplOpts.pageCount = Math.ceil(userCount / 50)
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allUsers = await (

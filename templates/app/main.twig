@@ -4,33 +4,40 @@
 
 {% block content %}
   <div class="wrapper">
+    <nav id="subtabs">
+      <a href="#" class="tab active">Prüfungen</a>
+      <a href="/app/mainresearch" class="tab">Arbeitsgruppen</a>
+    </nav>
     <section>
-      <h1>Suche</h1>
-      <form method="GET">
-        Prüfungstyp:
-        <select name="examType" style="height: 32px; padding: 0 16px;">
-          <option value="0">alle</option>
-          {% for examType in examTypes %}
-            <option value="{{examType.id}}" {% if examType.id == query.examType %}selected{% endif %}>{{examType.name}}</option>
-          {% endfor %}
-        </select><br><br>
-        <div class="inputlabel">
-          <label>Ort der Prüfung (Klinikum, Institut)</label>
-          <input type="hidden" name="locationId" {% if query.locationId %}value="{{query.locationId}}"{% endif %}>
-          <input type="text" name="location" data-autocomplete="location" placeholder="z.B. Uniklinikum" minlength="3" {% if query.location %}value="{{query.location}}"{% endif %}>
-        </div><br>
-        <div class="inputlabel">
-          <label>Fach</label>
-          <input type="hidden" name="subjectId" {% if query.subjectId %}value="{{query.subjectId}}"{% endif %}>
-          <input type="text" name="subject" data-autocomplete="subject" placeholder="z.B. Anatomie" minlength="3" {% if query.subject %}value="{{query.subject}}"{% endif %}>
-        </div><br>
-        <div class="inputlabel">
-          <label>Dozent</label>
-          <input type="hidden" name="examinerId" {% if query.examinerId %}value="{{query.examinerId}}"{% endif %}>
-          <input type="text" name="examiner" data-autocomplete="examiner" placeholder="z.B. Joachim Kirsch" minlength="3" {% if query.examiner %}value="{{query.examiner}}"{% endif %}>
-        </div><br>
-        <button type="submit" class="important iconbtn"><i class="material-icons">search</i> suchen</button>
-      </form><br><br>
+      <div class="card">
+        <h1 style="margin-top: 0">Prüfungssuche</h1>
+        <form method="GET">
+          Prüfungstyp:
+          <select name="examType">
+            <option value="0">alle</option>
+            {% for examType in examTypes %}
+              <option value="{{examType.id}}" {% if examType.id == query.examType %}selected{% endif %}>{{examType.name}}</option>
+            {% endfor %}
+          </select><br><br>
+          <div class="inputlabel">
+            <label>Ort der Prüfung (Klinikum, Institut)</label>
+            <input type="hidden" name="locationId" {% if query.locationId %}value="{{query.locationId}}"{% endif %}>
+            <input type="text" name="location" data-autocomplete="location" placeholder="z.B. Uniklinikum" minlength="3" {% if query.location %}value="{{query.location}}"{% endif %}>
+          </div><br>
+          <div class="inputlabel">
+            <label>Fach</label>
+            <input type="hidden" name="subjectId" {% if query.subjectId %}value="{{query.subjectId}}"{% endif %}>
+            <input type="text" name="subject" data-autocomplete="subject" placeholder="z.B. Anatomie" minlength="3" {% if query.subject %}value="{{query.subject}}"{% endif %}>
+          </div><br>
+          <div class="inputlabel">
+            <label>Dozent</label>
+            <input type="hidden" name="examinerId" {% if query.examinerId %}value="{{query.examinerId}}"{% endif %}>
+            <input type="text" name="examiner" data-autocomplete="examiner" placeholder="z.B. Joachim Kirsch" minlength="3" {% if query.examiner %}value="{{query.examiner}}"{% endif %}>
+          </div><br>
+          <button type="submit" class="important iconbtn"><i class="material-icons">search</i> suchen</button>
+        </form>
+        </div>
+      <h1>Ergebnisse</h1>
       {% if results %}
       <a href="pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn"><i class="material-icons">save</i> alle als PDF speichern</a>
       {% endif %}
