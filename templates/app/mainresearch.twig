@@ -9,6 +9,7 @@
       <a href="#" class="tab active">Arbeitsgruppen</a>
     </nav>
     <section>
+    {% if researchReportsPublic %}
       <div class="card">
         <h1 style="margin-top: 0">Arbeitsgruppensuche</h1>
         <form method="GET">
@@ -30,9 +31,12 @@
       <h1>Ergebnisse</h1>
       <ul>
         {% for result in results %}
-          <li><a href="researchreport/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.subject}}</strong>: {{result.head}}</a></li>
+          <li><a href="research/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
         {% endfor %}
       </ul>
+      {% else %}
+      Oh, nope!
+      {% endif %}
     </section>
   </div>
 {% endblock %}

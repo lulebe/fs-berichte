@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     Examiner.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
     Examiner.count()
   )
-  res.tmplOpts.pageIndex = req.query.page || 1
+  res.tmplOpts.pageIndex = parseInt(req.query.page) || 1
   res.tmplOpts.pageCount = Math.ceil(ExaminerCount / 50)
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allExaminers = await (

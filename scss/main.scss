@@ -39,6 +39,7 @@ a {
 }
 
 button, input[type=submit], .btn {
+  display: inline-block;
   border-radius: 6px;
   border: none;
   border-bottom: 3px solid $primary-color-dark;
@@ -243,3 +244,4 @@ i.material-icons {
 @import "login";
 @import "lists";
 @import "layouts";
+@import "researchreport";

@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     Subject.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
     Subject.count()
   )
-  res.tmplOpts.pageIndex = req.query.page || 1
+  res.tmplOpts.pageIndex = parseInt(req.query.page) || 1
   res.tmplOpts.pageCount = Math.ceil(SubjectCount / 50)
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allSubjects = await (

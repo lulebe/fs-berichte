@@ -1,0 +1,200 @@
+{% extends "base.twig" %}
+
+{% block title %}Arbeitsgruppenbericht{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <section>
+      <h1>Bericht vom {{reportDate}}</h1>
+      {% if user.id == report.UserId or isAdmin %}<form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>{% endif %}
+    <br><br>
+    <div class="card" style="margin-bottom: 16px">
+      <h3>{{ report.work }}</h3>
+      {{ report.subject }} ({{ report.area }})<br>
+      Doktorvater/-mutter bzw Chef: {{ report.head}}<br>
+      Betreuer:in: {{ report.supervisor}}<br>
+      Vollzeit: {{ report.duration }} {% if report.timetext %}({{ report.timetext }}){% endif %}<br>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Team</h3><br>
+      {% if report.teamjournalclub %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Journal Clubs</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Journal Clubs</div>
+      {% endif %}
+      {% if report.teamlabmeeting %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Lab/Team meetings</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Lab/Team meetings</div>
+      {% endif %}
+      {% if report.teamjointwork %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Zusammenarbeit bei Problemen</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Zusammenarbeit bei Problemen</div>
+      {% endif %}
+      {% if report.teamtext %}
+        <p>{{report.teamtext}}</p>
+      {% endif %}
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Planung</h3><br>
+      {% if report.plan %}
+      <div class="questionbox">
+        <div class="question">Wie gut war die Planung und deren Umsetzung?</div>
+        {% if report.plan == 1 %}
+          <div class="answer c4-4">sehr gut</div>
+        {% endif %}
+        {% if report.plan == 2 %}
+          <div class="answer c4-3">in Ordnung</div>
+        {% endif %}
+        {% if report.plan == 3 %}
+          <div class="answer c4-2">mäßig</div>
+        {% endif %}
+        {% if report.plan == 4 %}
+          <div class="answer c4-1">schlecht</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if report.plantext %}
+        <p>{{report.plantext}}</p>
+      {% endif %}
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Betreuung</h3><br>
+      {% if report.intro %}
+      <div class="questionbox">
+        <div class="question">Wie gut war die Einarbeitung?</div>
+        {% if report.intro == 1 %}
+          <div class="answer c4-4">sehr gut</div>
+        {% endif %}
+        {% if report.intro == 2 %}
+          <div class="answer c4-3">in Ordnung</div>
+        {% endif %}
+        {% if report.intro == 3 %}
+          <div class="answer c4-2">mäßig</div>
+        {% endif %}
+        {% if report.intro == 4 %}
+          <div class="answer c4-1">schlecht</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if report.help %}
+      <div class="questionbox">
+        <div class="question">Wie gut war die Betreuung bei Problemen?</div>
+        {% if report.help == 1 %}
+          <div class="answer c4-4">sehr gut</div>
+        {% endif %}
+        {% if report.help == 2 %}
+          <div class="answer c4-3">in Ordnung</div>
+        {% endif %}
+        {% if report.help == 3 %}
+          <div class="answer c4-2">mäßig</div>
+        {% endif %}
+        {% if report.help == 4 %}
+          <div class="answer c4-1">schlecht</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if report.helptext %}
+        <p>{{report.helptext}}</p>
+      {% endif %}
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Aufgaben</h3><br>
+      {% if report.taskstext %}
+      <strong>Meine Aufgaben:</strong>
+      <p>{{report.taskstext}}</p>
+      {% endif %}
+      {% if report.equipment %}
+      <div class="questionbox">
+        <div class="question">Fehlende Ausstattung / keine Zeitslots an Equipment</div>
+        {% if report.equipment == 1 %}
+          <div class="answer c4-4">nie</div>
+        {% endif %}
+        {% if report.equipment == 2 %}
+          <div class="answer c4-3">selten</div>
+        {% endif %}
+        {% if report.equipment == 3 %}
+          <div class="answer c4-2">öfters</div>
+        {% endif %}
+        {% if report.equipment == 4 %}
+          <div class="answer c4-1">immer</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if report.plantext %}
+        <p>{{report.plantext}}</p>
+      {% endif %}
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Förderung</h3><br>
+      {% if report.supportcash %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Bezahlung</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Bezahlung</div>
+      {% endif %}
+      {% if report.supportstipendium %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Möglichkeiten für Stipendium</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Möglichkeiten für Stipendium</div>
+      {% endif %}
+      {% if report.supportpublications %}
+        <div class="checkchip yes"><i class="material-icons">check</i>gute Publikationsmöglichkeiten</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>gute Publikationsmöglichkeiten</div>
+      {% endif %}
+      {% if report.supportkongress %}
+        <div class="checkchip yes"><i class="material-icons">check</i>Angebote für Kongresse etc.</div>
+      {% else %}
+        <div class="checkchip no"><i class="material-icons">cancel</i>Angebote für Kongresse etc.</div>
+      {% endif %}
+      {% if report.supporttext %}
+        <p>{{report.supporttext}}</p>
+      {% endif %}
+    </div>
+
+    <div class="card" style="margin-bottom: 16px">
+      <h3>Sonstiges</h3><br>
+      {% if report.level %}
+      <div class="questionbox">
+        <div class="question">Aufwand</div>
+        {% if report.level == 1 %}
+          <div class="answer">einfach</div>
+        {% endif %}
+        {% if report.level == 2 %}
+          <div class="answer">mittel</div>
+        {% endif %}
+        {% if report.level == 3 %}
+          <div class="answer">anspruchsvoll</div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if report.freedom %}
+      <div class="questionbox">
+        <div class="question">Wie frei / geleitet warst du?</div>
+        {% if report.freedom == 1 %}
+          <div class="answer">stark geleitet</div>
+        {% endif %}
+        {% if report.freedom == 2 %}
+          <div class="answer">eher geleitet</div>
+        {% endif %}
+        {% if report.freedom == 3 %}
+          <div class="answer">eher frei</div>
+        {% endif %}
+        {% if report.freedom == 4 %}
+          <div class="answer">sehr frei</div>
+        {% endif %}
+      </div>{% endif %}
+      {% if report.othertext %}
+        <p>{{report.othertext}}</p>
+      {% endif %}
+    </div>
+    
+    </section>
+  </div>
+{% endblock %}

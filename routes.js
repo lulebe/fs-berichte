@@ -25,6 +25,15 @@ router.use('/app', appRouter)
 appRouter.use('/admin', require('./middleware/onlyAdmin'))
 appRouter.use('/admin', adminRouter)
 
+
+//research area
+appRouter.get('/mainresearch', require('./routes/app/mainresearch'))
+appRouter.get('/newreport/promotion', require('./routes/app/newreport_prom'))
+appRouter.post('/newreport/promotion', require('./routes/app/newreport_prom_post'))
+appRouter.get('/research/:id', require('./routes/app/research'))
+appRouter.post('/research/:id/delete', require('./routes/app/deleteResearch'))
+
+//exams area
 appRouter.get('/main', require('./routes/app/main'))
 appRouter.get('/exam/:id', require('./routes/app/exam'))
 appRouter.get('/exam/:id/pdf', require('./routes/app/pdfsingle'))
@@ -33,8 +42,6 @@ appRouter.get('/exam/:id/edit', require('./routes/app/examedit'))
 appRouter.post('/exam/:id/edit', require('./routes/app/examedit_post'))
 appRouter.post('/exam/:id/delete', require('./routes/app/deleteReport'))
 appRouter.get('/newreport', require('./routes/app/newreport'))
-appRouter.get('/newreport/promotion', require('./routes/app/newreport_prom'))
-appRouter.post('/newreport/promotion', require('./routes/app/newreport_prom_post'))
 appRouter.get('/newreport/:examType', require('./routes/app/newreport2'))
 appRouter.post('/newreport/:examType', require('./routes/app/newreport_post'))
 appRouter.get('/logout', require('./routes/app/logout'))
@@ -42,10 +49,8 @@ appRouter.get('/profile', require('./routes/app/profile'))
 appRouter.post('/profile', [require('./routes/app/profile_post')], require('./routes/app/profile'))
 appRouter.post('/deleteAccount', require('./routes/app/deleteAccount'))
 
-//research area
-appRouter.get('/mainresearch', require('./routes/app/mainresearch'))
 
-adminRouter.use(require('./middleware/admin/pendingAuths'))
+adminRouter.use(require('./middleware/admin/quickSettings'))
 adminRouter.get('/users', require('./routes/app/admin/users'))
 adminRouter.get('/user/:id', require('./routes/app/admin/user'))
 adminRouter.post('/user/:id', [require('./routes/app/admin/user_post')], require('./routes/app/admin/user'))

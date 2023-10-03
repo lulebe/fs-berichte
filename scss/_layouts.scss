@@ -4,6 +4,9 @@
   padding: 16px;
   max-width: 800px;
   margin: 0 auto;
+  &.narrow {
+    max-width: 600px;
+  }
 }
 
 .wrapper-2-col {
