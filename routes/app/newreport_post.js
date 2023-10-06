@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
 }
 
 async function storeReport (i, exam, req) {
-  const examiner = await getOrCreateMetadata(Examiner, req.body['examinerId'+i], req.body['examiner'+i])
+  const examiner = await getOrCreateMetadata(Examiner, req.body['examinerId'+i], fixExaminerName(req.body['examiner'+i]))
   const subject = await getOrCreateMetadata(Subject, req.body['subjectId'+i], req.body['subject'+i])
   const report = await exam.createSubjectExam({
     report: req.body['report'+i],
@@ -40,4 +40,19 @@ async function getOrCreateMetadata (model, id, rawName) {
   })
   if (found) return found
   return model.create({name})
+}
+
+function fixExaminerName (name) {
+  let name = name.replaceAll('Dr', '')
+  name = name.replaceAll('Prof', '')
+  name = name.replaceAll('Med', '')
+  name = name.replaceAll('dr', '')
+  name = name.replaceAll('prof', '')
+  name = name.replaceAll('med', '')
+  name = name.replaceAll('PD', '')
+  name = name.replaceAll('pd', '')
+  name = name.replaceAll('Pd', '')
+  name = name.replaceAll('.', '')
+  name = name.trim()
+  return name
 }
