@@ -90,6 +90,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
   border-color: #296ea7;
 }
 
+input:invalid {
+  border: 1px solid red;
+}
+
 .inputlabel label {
   font-size: 0.85rem;
   padding: 0;
@@ -124,6 +128,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, inp
 .radiorow input[type=radio], .radiorow input[type=checkbox] {
   width: 16px;
   height: 16px;
+}
+.radiorow input[type=radio]:invalid + label, .radiorow input[type=checkbox]:invalid + label {
+  color: red;
 }
 
 .fullpagesubmit {
