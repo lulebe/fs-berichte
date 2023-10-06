@@ -41,17 +41,16 @@ async function renderPartialExamHead (doc, query) {
 async function renderExamPartially (id, doc, query, first) {
   const exam = await Exam.findByPk(id, {include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation]})
   if (!exam) return
-  const examDate = new Date(exam.date).toLocaleDateString('de-DE')
   let firstDone = false
   exam.SubjectExams.forEach((se, i) => {
     if (!shouldInclude(se, query)) return
     if (first && !firstDone)
-      doc.fontSize(18).text(examDate, 70, 200)
+      doc.fontSize(18).text(exam.dateReadable, 70, 200)
     else
-      doc.fontSize(18).text(examDate)
+      doc.fontSize(18).text(exam.dateReadable)
     firstDone = true
     const description = se.Examiner.name + " (" + exam.ExamLocation.name + ") - " + se.Subject.name
-    doc.outline.addItem(examDate + ": " + description)
+    doc.outline.addItem(exam.dateReadable + ": " + description)
     doc.font('Helvetica').fontSize(11).text("Note: " + (exam.grade || ""))
     doc.text(exam.comment ? exam.comment.replace(/\r\n|\r/g, '\n') : "")
     doc.moveDown()
@@ -66,15 +65,14 @@ async function renderExamPartially (id, doc, query, first) {
 async function renderWholeExam (id, doc) {
   const exam = await Exam.findByPk(id, {include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation]})
   if (!exam) return
-  const examDate = new Date(exam.date).toLocaleDateString('de-DE')
   doc.addPage()
-  doc.outline.addItem(examDate)
+  doc.outline.addItem(exam.dateReadable)
   doc.image(joinpath(__dirname, '../../assets/fsmedlogo.png'), 425, 50, {
     fit: [100, 100],
     align: 'right',
     valign: 'top'
   })
-  doc.font('Helvetica').fontSize(20).text("Bericht vom " + examDate, 70, 80)
+  doc.font('Helvetica').fontSize(20).text("Bericht vom " + exam.dateReadable, 70, 80)
   doc.moveDown()
   doc.fontSize(15).text(exam.ExamLocation.name)
   doc.text("Note: " + (exam.grade || ""))

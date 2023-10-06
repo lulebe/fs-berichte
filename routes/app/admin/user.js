@@ -1,17 +1,20 @@
 const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 
-const { User, Exam, SubjectExam, Subject, Examiner, ExamLocation } = requiremain('./db/db')
+const { User, Exam, SubjectExam, Subject, Examiner, ExamLocation, ResearchReport } = requiremain('./db/db')
+
+const WORK_STRINGS = ["", "Doktorarbeit", "Praktikum", "HiWi-Job", "sonstiges"]
 
 module.exports = async (req, res) => {
 
   //search query
-  const sqlquery = {where: {UserId: req.params.id}, include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation]}
-  const results = await Exam.findAll(sqlquery)
+  const sqlqueryReports = {where: {UserId: req.params.id}, include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation]}
+  const results = await Exam.findAll(sqlqueryReports)
   results.forEach(r => {
-    r.readableDate = new Date(r.date).toLocaleDateString('de-DE')
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
+  const researchResults = await ResearchReport.findAll({where: {UserId: req.params.id}})
+  res.tmplOpts.research = researchResults
   res.tmplOpts.reports = results
   res.tmplOpts.viewedUser = await User.findByPk(req.params.id)
   res.tmplOpts.activeAdminTab = "users"

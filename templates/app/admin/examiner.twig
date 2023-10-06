@@ -32,7 +32,7 @@
         <h1>Berichte</h1>
         <ul>
           {% for result in reports %}
-            <li><a href="/app/exam/{{result.Exam.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.Exam.ExamType.name}}</strong>: {{result.Subject.name}}</a></li>
+            <li><a href="/app/exam/{{result.Exam.id}}" class="main-text">{{result.Exam.dateReadable}} - <strong>{{result.Exam.ExamType.name}}</strong>: {{result.Subject.name}}</a></li>
           {% endfor %}
         </ul>
       </p>

@@ -78,6 +78,12 @@ const ExamLocation = sequelize.define('ExamLocation', {
 //gesamte Prüfung
 const Exam = sequelize.define('Exam', {
   date: DataTypes.DATE,
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.date).toLocaleDateString('de-DE')
+    }
+  },
   studentCount: DataTypes.INTEGER,
   grade: DataTypes.STRING,
   comment: DataTypes.TEXT('long')
@@ -105,7 +111,16 @@ const SubjectExam = sequelize.define('SubjectExam', {
 })
 
 //Promotionsbericht
+const AREA_STRINGS = ["", "Grundlagenforschung", "klinisch-experimentell", "klinisch", "Literatur"]
+const WORK_STRINGS = ["", "Doktorarbeit", "Praktikum", "HiWi-Job", "sonstiges"]
+const DURATION_STRINGS = ["", "unter 4 Monate", "unter 9 Monate", "unter 1,5 Jahre", "mehr als 1,5 Jahre"]
 const ResearchReport = sequelize.define('ResearchReport', {
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  },
   subject: {
     type: DataTypes.STRING,
     allowNull: false
@@ -122,13 +137,31 @@ const ResearchReport = sequelize.define('ResearchReport', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
+  areaReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return AREA_STRINGS[this.area]
+    }
+  },
   work: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
+  workReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return WORK_STRINGS[this.work]
+    }
+  },
   duration: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  durationReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return DURATION_STRINGS[this.duration]
+    }
   },
   timetext: DataTypes.TEXT,
   teamjournalclub: DataTypes.BOOLEAN,

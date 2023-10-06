@@ -46,7 +46,6 @@ module.exports = async (req, res) => {
   sqlquery.offset = 0
   const results = await Exam.findAll(sqlquery)
   results.forEach(r => {
-    r.readableDate = new Date(r.date).toLocaleDateString('de-DE')
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
   res.tmplOpts.results = results

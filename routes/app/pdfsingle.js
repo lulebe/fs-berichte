@@ -6,18 +6,17 @@ const { Exam, ExamLocation, SubjectExam, Subject, Examiner } = requiremain('./db
 module.exports = async (req, res) => {
   const exam = await Exam.findByPk(req.params.id, {include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation]})
   if (!exam) return res.status(404).send()
-  const examDate = new Date(exam.date).toLocaleDateString('de-DE')
   
   const doc = new PDFDocument({size: 'A4'})
 
-  res.set('Content-Disposition', `attachment; filename="fs-report-${examDate}.pdf"`)
+  res.set('Content-Disposition', `attachment; filename="fs-report-${exam.dateReadable}.pdf"`)
   doc.pipe(res)
   doc.image(joinpath(__dirname, '../../assets/fsmedlogo.png'), 425, 50, {
     fit: [100, 100],
     align: 'right',
     valign: 'top'
   })
-  doc.font('Helvetica').fontSize(20).text("Bericht vom " + examDate, 70, 80)
+  doc.font('Helvetica').fontSize(20).text("Bericht vom " + exam.dateReadable, 70, 80)
   doc.moveDown()
   doc.fontSize(15).text(exam.ExamLocation.name)
   doc.text("Note: " + (exam.grade || ""))

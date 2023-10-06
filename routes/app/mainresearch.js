@@ -15,9 +15,6 @@ module.exports = async (req, res) => {
   if (req.query.supervisor)
     where.supervisor = {[Op.like]: '%'+req.query.supervisor+'%'}
   const results = await ResearchReport.findAll({where, limit: 50, offset: 0, order: [['createdAt', 'DESC']]})
-  results.forEach(r => {
-    r.readableDate = new Date(r.createdAt).toLocaleDateString('de-DE')
-  })
   res.tmplOpts.results = results
   res.tmplOpts.query = req.query
   tmpl.render('app/mainresearch.twig', res.tmplOpts).then(rendered => res.end(rendered))

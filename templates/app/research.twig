@@ -5,7 +5,7 @@
 {% block content %}
   <div class="wrapper">
     <section>
-      <h1>Bericht vom {{reportDate}}</h1>
+      <h1>Bericht vom {{report.dateReadable}}</h1>
       {% if isAdmin %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}
       {% if user.id == report.UserId or isAdmin %}<form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>{% endif %}
     <br><br>

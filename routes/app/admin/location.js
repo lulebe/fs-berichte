@@ -8,7 +8,6 @@ module.exports = async (req, res) => {
 
   const reports = await Exam.findAll({where: {ExamLocationId: req.params.id}, include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation], limit: 50})
   reports.forEach(r => {
-    r.readableDate = new Date(r.date).toLocaleDateString('de-DE')
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
   res.tmplOpts.reports = reports

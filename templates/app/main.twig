@@ -43,7 +43,7 @@
       {% endif %}
       <ul>
         {% for result in results %}
-          <li><a href="exam/{{result.id}}" class="main-text">{{result.readableDate}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+          <li><a href="exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}
       </ul>
     </section>

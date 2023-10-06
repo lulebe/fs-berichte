@@ -4,7 +4,6 @@ const { Exam, ExamLocation, SubjectExam, Subject, Examiner, User } = requiremain
 
 module.exports = async (req, res) => {
   const exam = await Exam.findByPk(req.params.id, {include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation, User]})
-  res.tmplOpts.examDate = new Date(exam.date).toLocaleDateString('de-DE')
   res.tmplOpts.exam = exam
   tmpl.render('app/exam.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
