@@ -43,7 +43,7 @@ async function getOrCreateMetadata (model, id, rawName) {
 }
 
 function fixExaminerName (name) {
-  let name = name.replaceAll('Dr', '')
+  name = name.replaceAll('Dr', '')
   name = name.replaceAll('Prof', '')
   name = name.replaceAll('Med', '')
   name = name.replaceAll('dr', '')

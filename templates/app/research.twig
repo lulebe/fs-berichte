@@ -6,6 +6,7 @@
   <div class="wrapper">
     <section>
       <h1>Bericht vom {{reportDate}}</h1>
+      {% if isAdmin %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}
       {% if user.id == report.UserId or isAdmin %}<form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>{% endif %}
     <br><br>
     <div class="card" style="margin-bottom: 16px">
@@ -38,6 +39,7 @@
       {% endif %}
     </div>
 
+    {% if report.plan or report.plantext %}
     <div class="card" style="margin-bottom: 16px">
       <h3>Planung</h3><br>
       {% if report.plan %}
@@ -61,7 +63,9 @@
         <p>{{report.plantext}}</p>
       {% endif %}
     </div>
+    {% endif %}
 
+    {% if report.intro or report.help or report.helptext %}
     <div class="card" style="margin-bottom: 16px">
       <h3>Betreuung</h3><br>
       {% if report.intro %}
@@ -102,7 +106,9 @@
         <p>{{report.helptext}}</p>
       {% endif %}
     </div>
+    {% endif %}
 
+    {% if report.taskstext or report.equipment %}
     <div class="card" style="margin-bottom: 16px">
       <h3>Aufgaben</h3><br>
       {% if report.taskstext %}
@@ -127,6 +133,7 @@
       </div>
       {% endif %}
     </div>
+    {% endif %}
 
     <div class="card" style="margin-bottom: 16px">
       <h3>Förderung</h3><br>
@@ -155,6 +162,7 @@
       {% endif %}
     </div>
 
+    {% if report.level or report.freedom or report.othertext %}
     <div class="card" style="margin-bottom: 16px">
       <h3>Sonstiges</h3><br>
       {% if report.level %}
@@ -191,6 +199,7 @@
         <p>{{report.othertext}}</p>
       {% endif %}
     </div>
+    {% endif %}
     
     </section>
   </div>
