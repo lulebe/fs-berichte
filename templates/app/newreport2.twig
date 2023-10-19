@@ -16,6 +16,7 @@
             <label>Prüfungsort (Klinik oder Institut)</label>
             <input type="hidden" name="locationId">
             <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum" required minlength="3">
+            <small style="color: darkred; font-weight: bold;"></small>
           </div><br>
           <div class="inputlabel">
             <label>Prüflinge insgesamt</label>
@@ -37,11 +38,13 @@
               <label>Fach</label>
               <input type="hidden" name="subjectId{{subjectIndex}}">
               <input type="text" name="subject{{subjectIndex}}" data-autocomplete="subject" placeholder="Anatomie" required minlength="3">
+              <small style="color: darkred; font-weight: bold;"></small>
             </div><br>
             <div class="inputlabel">
               <label>Dozent (Ganzer Name ohne Titel!)</label>
               <input type="hidden" name="examinerId{{subjectIndex}}">
               <input type="text" name="examiner{{subjectIndex}}" data-autocomplete="examiner" placeholder="Joachim Kirsch" required minlength="3">
+              <small style="color: darkred; font-weight: bold;"></small>
             </div><br>
             <small>Bericht</small>
             <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
@@ -62,6 +65,7 @@
     subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),
     location: new Fuse({{locations | json_encode() | raw}}, {keys: ['name']})
   }
+  autocompleteFeedback = true
 </script>
 <script src="/assets/autocomplete.js"></script>
 {% endblock %}
