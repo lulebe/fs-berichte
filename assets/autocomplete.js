@@ -6,7 +6,7 @@ autocompleteList.addEventListener('mousedown', e => {
   //fill hidden field
   attachedField.previousElementSibling.value = e.target.dataset.id
   //clear warning
-  if (autocompleteFeedback)
+  if (window.autocompleteFeedback)
     attachedField.nextElementSibling.innerText = ''
   attachedField.blur()
   resetAutocomplete()
@@ -28,7 +28,7 @@ for (let i = 0; i < autocompleteFields.length; i++) {
 
 function hideAutocomplete (e) {
   //show warning
-  if (autocompleteFeedback && attachedField.previousElementSibling.value == '') {
+  if (window.autocompleteFeedback && attachedField.previousElementSibling.value == '') {
     attachedField.nextElementSibling.innerText = attachedField.value + ' wird neu angelegt. Wähle wenn möglich einen der Vorschläge.'
   }
   resetAutocomplete()
@@ -46,7 +46,7 @@ function showAutocomplete (e) {
   }
   attachedField = e.target
   fillMenu(e.target.value, atData[e.target.dataset.autocomplete])
-  if (autocompleteFeedback)
+  if (window.autocompleteFeedback)
     attachedField.nextElementSibling.innerText = ''
   e.target.parentElement.appendChild(autocompleteMenu)
 }
