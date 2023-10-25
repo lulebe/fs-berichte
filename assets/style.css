@@ -233,6 +233,8 @@ i.material-icons.up {
 }
 
 header#top-bar {
+  position: sticky;
+  top: 0;
   height: 64px;
   width: 100%;
   background: linear-gradient(159deg, rgb(229, 69, 69) 0%, rgb(193, 11, 29) 24%, rgb(61, 132, 192) 90%);
