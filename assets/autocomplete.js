@@ -3,8 +3,11 @@ const autocompleteMenu = document.createElement('div')
 const autocompleteList = document.createElement('ul')
 autocompleteList.addEventListener('mousedown', e => {
   attachedField.value = e.target.textContent
+  //fill hidden field
   attachedField.previousElementSibling.value = e.target.dataset.id
-  attachedField.nextElementSibling.innerText = ''
+  //clear warning
+  if (window.autocompleteFeedback)
+    attachedField.nextElementSibling.innerText = ''
   attachedField.blur()
   resetAutocomplete()
 })
@@ -17,13 +20,15 @@ for (let i = 0; i < autocompleteFields.length; i++) {
   autocompleteField.addEventListener('blur', () => hideAutocomplete(e))
   autocompleteField.addEventListener('focus', showAutocomplete)
   autocompleteField.addEventListener('input', e => {
+    //clear hidden field
     e.target.previousElementSibling.value = ''
     showAutocomplete(e)
   })
 }
 
 function hideAutocomplete (e) {
-  if (autocompleteFeedback && attachedField.previousElementSibling.value == '') {
+  //show warning
+  if (window.autocompleteFeedback && attachedField.previousElementSibling.value == '') {
     attachedField.nextElementSibling.innerText = attachedField.value + ' wird neu angelegt. Wähle wenn möglich einen der Vorschläge.'
   }
   resetAutocomplete()
@@ -41,7 +46,8 @@ function showAutocomplete (e) {
   }
   attachedField = e.target
   fillMenu(e.target.value, atData[e.target.dataset.autocomplete])
-  attachedField.nextElementSibling.innerText = ''
+  if (window.autocompleteFeedback)
+    attachedField.nextElementSibling.innerText = ''
   e.target.parentElement.appendChild(autocompleteMenu)
 }
 
