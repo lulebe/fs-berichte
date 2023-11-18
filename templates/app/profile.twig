@@ -44,6 +44,9 @@
         {% for result in reports %}
           <li><a href="exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}
+        {% for result in research %}
+          <li><a href="research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
+        {% endfor %}
       </ul>
     </section>
   </div>

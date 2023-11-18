@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   const report = await ResearchReport.findByPk(req.params.id, {include: [User]})
   if (!report) return res.status(404).send()
   const researchPublic = (await getSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC)) === '1'
-  if (!researchPublic && report.User.id != req.user.id && !req.user.isAdmin) return res.redirect('/app/main')
+  if ((!researchPublic || !report.isPublished) && report.User.id != req.user.id && !req.user.isAdmin) return res.redirect('/app/main')
   res.tmplOpts.report = report
   tmpl.render('app/research.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   req.body.UserId = req.user.id
   req.body.head = fixPersonName(req.body.head)
   req.body.supervisor = fixPersonName(req.body.supervisor)
+  req.body.publishDate = new Date(req.body.publishDate)
   const report = await ResearchReport.create(req.body)
   res.redirect('/app/research/'+report.id)
 }

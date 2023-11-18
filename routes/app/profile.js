@@ -1,7 +1,7 @@
 const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 
-const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation } = requiremain('./db/db')
+const { Exam, SubjectExam, ResearchReport, Subject, Examiner, ExamLocation } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
 
@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
   results.forEach(r => {
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
+  res.tmplOpts.research = await ResearchReport.findAll({where: {UserId: req.user.id}})
   res.tmplOpts.reports = results
   tmpl.render('app/profile.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

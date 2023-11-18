@@ -7,14 +7,32 @@
     <section>
       <h1>Bericht vom {{report.dateReadable}}</h1>
       {% if isAdmin %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}
-      {% if user.id == report.UserId or isAdmin %}<form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>{% endif %}
+      {% if user.id == report.UserId or isAdmin %}
+      Einsehbar ab {{report.publishDateReadable}}<br><br>
+      <form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>
+      {% endif %}
     <br><br>
     <div class="card" style="margin-bottom: 16px">
-      <h3>{{ report.work }}</h3>
-      {{ report.subject }} ({{ report.area }})<br>
+      <h3>{{ report.workReadable }}</h3>
+      {{ report.subject }} ({{ report.areaReadable }})<br>
       Doktorvater/-mutter bzw Chef: {{ report.head}}<br>
       Betreuer:in: {{ report.supervisor}}<br>
-      Vollzeit: {{ report.duration }} {% if report.timetext %}({{ report.timetext }}){% endif %}<br>
+      Vollzeit: {{ report.durationReadable }} {% if report.timetext %}({{ report.timetext }}){% endif %}<br><br>
+      <div class="questionbox">
+        <div class="question">Gesamtfazit</div>
+        {% if report.rating == 1 %}
+          <div class="answer c4-4">{{report.ratingReadable}}</div>
+        {% endif %}
+        {% if report.rating == 2 %}
+          <div class="answer c4-3">{{report.ratingReadable}}</div>
+        {% endif %}
+        {% if report.rating == 3 %}
+          <div class="answer c4-2">{{report.ratingReadable}}</div>
+        {% endif %}
+        {% if report.rating == 4 %}
+          <div class="answer c4-1">{{report.ratingReadable}}</div>
+        {% endif %}
+      </div>
     </div>
 
     <div class="card" style="margin-bottom: 16px">

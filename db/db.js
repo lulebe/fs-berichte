@@ -114,11 +114,28 @@ const SubjectExam = sequelize.define('SubjectExam', {
 const AREA_STRINGS = ["", "Grundlagenforschung", "klinisch-experimentell", "klinisch", "Literatur"]
 const WORK_STRINGS = ["", "Doktorarbeit", "Praktikum", "HiWi-Job", "sonstiges"]
 const DURATION_STRINGS = ["", "unter 4 Monate", "unter 9 Monate", "unter 1,5 Jahre", "mehr als 1,5 Jahre"]
+const RATING_STRINGS = ["", "Empfehlenswert", "Akzeptabel", "Fragwürdig", "Schlecht"]
 const ResearchReport = sequelize.define('ResearchReport', {
   dateReadable: {
     type: DataTypes.VIRTUAL,
     get () {
       return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  },
+  publishDate: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  publishDateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.publishDate).toLocaleDateString('de-DE')
+    }
+  },
+  isPublished: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.publishDate) <= new Date()
     }
   },
   subject: {
@@ -161,6 +178,16 @@ const ResearchReport = sequelize.define('ResearchReport', {
     type: DataTypes.VIRTUAL,
     get () {
       return DURATION_STRINGS[this.duration]
+    }
+  },
+  rating: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  ratingReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return RATING_STRINGS[this.rating]
     }
   },
   timetext: DataTypes.TEXT,

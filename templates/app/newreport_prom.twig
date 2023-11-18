@@ -11,6 +11,10 @@
         <div class="card" style="margin-bottom: 16px;">
           <h3>Allgemeines</h3><br>
           <div class="inputlabel">
+            <label>*Veröffentlichen am:</label>
+            <input type="date" name="publishDate" required value="{{currentDate}}" min="{{currentDate}}">
+          </div><br>
+          <div class="inputlabel">
             <label>*Fachrichtung</label>
             <input type="text" name="subject" placeholder="Neurophysiologie" required minlength="3">
           </div><br>
@@ -30,6 +34,13 @@
             <div class="grouper"><input type="radio" name="area" id="iarea2" value="2" required><label for="iarea2">klinisch-experimentell</label></div>
             <div class="grouper"><input type="radio" name="area" id="iarea3" value="3" required><label for="iarea3">klinisch</label></div>
             <div class="grouper"><input type="radio" name="area" id="iarea4" value="4" required><label for="iarea4">Literatur</label></div>
+          </div>
+          <div class="inputquestion">*Was ist dein Fazit?</div>
+          <div class="radiorow">
+            <div class="grouper"><input type="radio" name="rating" id="irating1" value="1" required><label for="irating1">Empfehlenswert</label></div>
+            <div class="grouper"><input type="radio" name="rating" id="irating2" value="2" required><label for="irating2">Akzeptabel</label></div>
+            <div class="grouper"><input type="radio" name="rating" id="irating3" value="3" required><label for="irating3">Fragwürdig</label></div>
+            <div class="grouper"><input type="radio" name="rating" id="irating4" value="4" required><label for="irating4">Schlecht</label></div>
           </div>
         </div>
         <div class="card" style="margin-bottom: 16px">
