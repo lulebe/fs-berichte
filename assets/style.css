@@ -234,6 +234,7 @@ i.material-icons.up {
 
 header#top-bar {
   position: sticky;
+  z-index: 1;
   top: 0;
   height: 64px;
   width: 100%;
