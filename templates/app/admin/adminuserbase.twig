@@ -1,0 +1,37 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Admin Benutzer{% endblock %}
+
+{% block content %}
+  <div class="wrapper-2-col">
+    <section class="grid-col left">
+      <div class="card">
+        {% block admincontent %}{% endblock %}
+      </div>
+    </section>
+    <section class="grid-col right">
+      <div class="card">
+        <h1 class="mtop0">ausstehende Autorisierungen</h1>
+        {% if pendingAuths %}
+        <ul class="pending-auths">
+          {% for auth in pendingAuths %}
+            <li>
+              <div class="main-text small">
+                {{auth.email}}
+                <div class="second-line">{{auth.authReason}}</div>
+              </div>
+              <a href="?acceptAuth={{auth.id}}" class="end-btn"><i class="material-icons">check</i></a>
+              <a href="?deleteAuth={{auth.id}}" class="end-btn danger"><i class="material-icons">delete</i></a>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-status">
+          <i class="material-icons icon">checklist</i>
+          Derzeit warten keine Nutzer auf Autorisierung.
+        </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+{% endblock %}

@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/app/main",
+  "start_url": "/app/exam",
   "display": "standalone",
   "background_color": "#f3f3f3",
   "theme_color": "#c10b1d"

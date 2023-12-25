@@ -1,4 +1,4 @@
-{% extends "app/admin/adminbase.twig" %}
+{% extends "app/admin/adminreportbase.twig" %}
 
 {% block admincontent %}
   <h1 class="mtop0">Fächer</h1>
@@ -14,7 +14,7 @@
   <ul>
     {% for subject in subjects %}
       <li>
-        <a href="subject/{{subject.id}}" class="main-text">{{subject.name}}<small> - seit {{subject.createdAt}}</small></a>
+        <a href="examSubject/{{subject.id}}" class="main-text">{{subject.name}}<small> - seit {{subject.createdAt}}</small></a>
       </li>
     {% endfor %}
   </ul>

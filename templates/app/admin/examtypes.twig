@@ -1,8 +1,8 @@
-{% extends "app/admin/adminbase.twig" %}
+{% extends "app/admin/adminreportbase.twig" %}
 
 {% block admincontent %}
   <h1 class="mtop0">Prüfungsarten</h1>
-  <a href="createexamtype" class="btn iconbtn"><i class="material-icons">add</i>Neue Prüfungsart anlegen</a>
+  <a href="examtype/new" class="btn iconbtn"><i class="material-icons">add</i>Neue Prüfungsart anlegen</a>
   <ul>
     {% for examType in examTypes %}
       <li>

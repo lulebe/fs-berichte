@@ -10,5 +10,5 @@ module.exports = async (req, res) => {
     await Subject.update({'name': req.body.newname}, {where: {'id': req.params.id}})
   if (req.body.delete)
     await subject.destroy()
-  res.redirect('/app/admin/subjects')
+  res.redirect('/app/admin/examSubjects')
 }

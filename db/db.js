@@ -212,6 +212,32 @@ const ResearchReport = sequelize.define('ResearchReport', {
   othertext: DataTypes.TEXT
 })
 
+//Petitionen
+const Petition = sequelize.define('Petitions', {
+  receiver: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  text: DataTypes.TEXT('long')
+})
+
+//Tags
+const Tag = sequelize.define('Tags', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+})
+
+//Comments
+const Comment = sequelize.define('Comments', {
+  text: DataTypes.TEXT,
+  anonymous: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  }
+})
+
 //Einstellungen
 const Settings = sequelize.define('Settings', {
   id: {
@@ -224,6 +250,7 @@ const Settings = sequelize.define('Settings', {
     allowNull: false
   }
 }, {timestamps: false})
+
 
 User.hasMany(Exam,
   {
@@ -293,6 +320,41 @@ User.hasMany(ResearchReport,
   }
 )
 ResearchReport.belongsTo(User)
+
+User.hasMany(Petition,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    as: 'Creator',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+Petition.belongsTo(User, {as: 'Creator'})
+User.hasMany(Comment,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    as: 'Author',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+Comment.belongsTo(User, {as: 'Author'})
+Petition.belongsToMany(Tag, {
+  through: 'PetitionTags'
+})
+Tag.belongsToMany(Petition, {
+  through: 'PetitionTags'
+})
+Petition.belongsToMany(User, {
+  through: 'PetitionSupporters'
+})
+User.belongsToMany(Petition, {
+  through: 'PetitionSupporters'
+})
 
 async function init () {
   return await sequelize.sync({force: true})

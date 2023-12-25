@@ -2,7 +2,8 @@ $primary-color: #296ea7;
 $accent-color: #c10b1d;
 $accent-color-dark: #8f111e;
 $primary-color-dark: #014178;
-$menu-color: #222;
+$menu-color-dark: #1d1d1d;
+$menu-color: #292929;
 
 $shadow-xs: 0 0px 1px rgba(0,0,0,0.3);
 $shadow-s: 0 1px 2px rgba(0,0,0,0.3);
@@ -19,8 +20,8 @@ html, body {
 
 body {
   background-color: #f3f3f3;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
   accent-color: $accent-color;
 }
 
@@ -150,6 +151,9 @@ input:invalid {
   position: fixed;
   bottom: 0;
   left: 25%;
+  @media screen and (min-width: 1000px) {
+    left: calc(25% + 150px);
+  }
   width: 50%;
   line-height: 64px;
   font-size: 20px;
@@ -189,10 +193,10 @@ input:invalid {
 textarea {
   display: block;
   width: 100%;
-  height: 250px;
+  height: 350px;
   border: 1px solid #aaa;
   padding: 12px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Nunito', Arial, Helvetica, sans-serif;
   font-size: 1rem;
   border-radius: 16px;
   border-top-left-radius: 0;

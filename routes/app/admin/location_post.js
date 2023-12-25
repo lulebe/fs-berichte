@@ -10,5 +10,5 @@ module.exports = async (req, res) => {
     await ExamLocation.update({'name': req.body.newname}, {where: {'id': req.params.id}})
   if (req.body.delete)
     await location.destroy()
-  res.redirect('/app/admin/locations')
+  res.redirect('/app/admin/examLocations')
 }

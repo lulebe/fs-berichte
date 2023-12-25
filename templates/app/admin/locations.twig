@@ -1,4 +1,4 @@
-{% extends "app/admin/adminbase.twig" %}
+{% extends "app/admin/adminreportbase.twig" %}
 
 {% block admincontent %}
   <h1 class="mtop0">Orte</h1>
@@ -14,7 +14,7 @@
   <ul>
     {% for location in locations %}
       <li>
-        <a href="location/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAt}}</small></a>
+        <a href="examLocation/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAt}}</small></a>
       </li>
     {% endfor %}
   </ul>

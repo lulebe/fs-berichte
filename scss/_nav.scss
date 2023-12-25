@@ -10,7 +10,7 @@ header#top-bar {
   top: 0;
   height: 64px;
   width: 100%;
-  background: linear-gradient(-35deg, $accent-color 0%, $menu-color 60%);
+  background: linear-gradient(-35deg, $accent-color 0%, $menu-color-dark 50%);
   box-shadow: 0 -50px 10px 50px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: row;
@@ -68,6 +68,7 @@ header#top-bar {
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
   display: none;
 }
 #sidebar {
@@ -77,6 +78,7 @@ header#top-bar {
   top: 64px;
   bottom: 0;
   left: 0;
+  overflow-y: auto;
   transition: transform 0.2s;
   transform: translateX(-300px);
   @media screen and (min-width: 1000px) {
@@ -85,22 +87,56 @@ header#top-bar {
   ul {
     margin: 0;
     li {
-      padding-left: 16px;
+      padding-left: 8px;
       line-height: 64px;
-      color: white;
+      color: #ddd;
       background: none;
+      border-left: 8px solid transparent;
+      border-bottom: 1px solid $menu-color-dark;
       .material-icons {
         top: 12px;
         font-size: 2.5em;
-        color: #776;
+        color: #cba;
+        height: 0;
       }
       .sidebar-text {
         padding-left: 13px;
       }
-      &:hover {
-        background: rgba(0,0,0,0.3);
+      &.noimg {
+        line-height: 48px;
+        .sidebar-text {
+          padding-left: 60px;
+        }
       }
-      border-bottom: 1px solid #999;
+      &.selected {
+        border-left-color: $accent-color-dark;
+        background: rgba(143,17,30,0.15);
+        color: lighten($primary-color, 40%);
+        font-weight: bold;
+        .material-icons {
+          color: #ecb;
+        }
+      }
+      &.header {
+        line-height: 32px;
+        background-color: $menu-color-dark;
+        color: #bbb;
+      }
+      &:not(.header):not(.selected):hover {
+        background: rgba(50,50,250,0.08);
+        .material-icons {
+          color: #abc;
+        }
+      }
+    }
+  }
+  #sidebar-copyright {
+    padding: 24px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    a {
+      color: #444;
     }
   }
 }
@@ -137,7 +173,7 @@ nav#subtabs {
     padding: 16px 0;
     text-align: center;
     &.active {
-      border-bottom: 3px solid orange;
+      border-bottom: 3px solid $accent-color;
     }
     &:hover {
       background: rgba(0,0,0,0.1);

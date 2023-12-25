@@ -1,32 +1,19 @@
 {% extends "app/appbase.twig" %}
 
-{% block title %}Admin{% endblock %}
+{% block title %}Admin Petitionen{% endblock %}
 
 {% block content %}
   <div class="wrapper-2-col">
     <section class="grid-col left">
       <nav id="subtabs">
-        <a href="/app/admin/users" class="tab {% if activeAdminTab == "users" %}active {% endif %}">Nutzer</a>
-        <a href="/app/admin/examiners" class="tab {% if activeAdminTab == "examiners" %}active {% endif %}">Dozenten</a>
-        <a href="/app/admin/locations" class="tab {% if activeAdminTab == "locations" %}active {% endif %}">Orte</a>
-        <a href="/app/admin/subjects" class="tab {% if activeAdminTab == "subjects" %}active {% endif %}">Fächer</a>
-        <a href="/app/admin/examtypes" class="tab {% if activeAdminTab == "examtypes" %}active {% endif %}">Prüfungsarten</a>
+        <a href="/app/admin/petitions" class="tab {% if activeAdminTab == "petitions" %}active {% endif %}">Petitionen</a>
+        <a href="/app/admin/tags" class="tab {% if activeAdminTab == "tags" %}active {% endif %}">Tags</a>
       </nav>
       <div class="card">
         {% block admincontent %}{% endblock %}
       </div>
     </section>
     <section class="grid-col right">
-      <div class="card" style="margin-bottom: 16px">
-        <h1 class="mtop0">Promotionsberichte</h1>
-        {% if researchReportsPublic %}
-        <p>Die Promotionsberichte sind einsehbar.</p>
-        <a href="?setResearch=private" class="btn iconbtn"><i class="material-icons">lock</i> Sperren</a>
-        {% else %}
-        <p>Die Promotionsberichte sind <strong>nicht</strong> einsehbar.</p>
-        <a href="?setResearch=public" class="btn iconbtn"><i class="material-icons">lock_open</i> Freischalten</a>
-        {% endif %}
-      </div>
       <div class="card">
         <h1 class="mtop0">ausstehende Autorisierungen</h1>
         {% if pendingAuths %}
