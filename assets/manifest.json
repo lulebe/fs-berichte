@@ -1,0 +1,15 @@
+{
+  "name": "FSmed HD Lehre",
+  "short_name": "Lehre",
+  "icons": [
+    {
+      "src": "/assets/favicons/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/app/main",
+  "display": "standalone",
+  "background_color": "#f3f3f3",
+  "theme_color": "#c10b1d"
+}
