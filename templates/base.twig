@@ -12,31 +12,12 @@
   <meta name="theme-color" content="#ff0000">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FS-Berichte: {% block title %}{% endblock %}</title>
+  <title>FSmed Lehre: {% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="/assets/style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-  {% if isLoggedIn %}
-    <header id="top-bar">
-      <a href="/app/main" id="home-link">FS-Berichte</a>
-      <nav id="main-nav">
-        {% if user.isAdmin %}<a href="/app/admin/users"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
-        <a href="/app/newreport"><i class="material-icons">add_circle</i>eintragen</a>
-        <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
-        <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
-      </nav>
-      <input type="checkbox" id="mobile-nav-btn">
-      <label for="mobile-nav-btn">Menü</label>
-      <nav id="mobile-nav">
-        {% if user.isAdmin %}<a href="/app/admin/users"><i class="material-icons">admin_panel_settings</i>Admin</a>{% endif %}
-        <a href="/app/newreport"><i class="material-icons">add_circle</i>eintragen</a>
-        <a href="/app/profile"><i class="material-icons">account_box</i>Profil</a>
-        <a href="/app/logout"><i class="material-icons">lock</i>log out</a>
-      </nav>
-    </header>
-  {% endif %}
-  {% block content %}{% endblock %}
+  {% block body %}{% endblock %}
   {% block js %}{% endblock %}
 </body>
 </html>

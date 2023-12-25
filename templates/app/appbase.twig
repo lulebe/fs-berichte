@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+
+{% block body %}
+<header id="top-bar">
+  <input type="checkbox" id="mobile-sidebar-btn" title="toggle sidebar">
+  <label for ="mobile-sidebar-btn">
+    <i class="material-icons" id="sidebar-btn">menu</i><img src="/assets/logo-lehre.png" alt="">ehre
+  </label>
+  <label id="darkener" for="mobile-sidebar-btn"></label>
+  <nav id="sidebar">
+    <ul>
+      <a href="/app/main"><li><i class="material-icons">assignment</i>Prüfungsberichte</li></a>
+      <a href="/app/mainresearch"><li><i class="material-icons">science</i>Forschungs-AG Berichte</li></a>
+      <a href="/app/newreport"><li><i class="material-icons">add_circle</i>eintragen</li></a>
+      {% if user.isAdmin %}<a href="/app/admin/users"><li><i class="material-icons">admin_panel_settings</i>Admin</li></a>{% endif %}
+    </ul>
+  </nav>
+  <nav id="main-nav">
+    <a href="/app/profile"><i class="material-icons">account_box</i><span class="topnav-text">Profil</span></a>
+    <a href="/app/logout"><i class="material-icons">lock</i><span class="topnav-text">log out</span></a>
+  </nav>
+</header>
+<div id="appcontainer">
+  <div id="sidebarspacer"></div>
+  <div id="appcontent">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

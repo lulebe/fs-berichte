@@ -1,3 +1,19 @@
+#appcontainer {
+  display: flex;
+  flex-direction: row;
+  #sidebarspacer {
+    display: none;
+    flex-basis: 300px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    @media screen and (min-width: 1000px) {
+      display: block;
+    }
+  }
+  #appcontent {
+    flex-grow: 1;
+  }
+}
 
 .wrapper {
   width: 100%;

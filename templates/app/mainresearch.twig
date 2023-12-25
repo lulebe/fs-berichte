@@ -1,13 +1,9 @@
-{% extends "base.twig" %}
+{% extends "app/appbase.twig" %}
 
 {% block title %}Suche{% endblock %}
 
 {% block content %}
   <div class="wrapper">
-    <nav id="subtabs">
-      <a href="/app/main" class="tab">Prüfungen</a>
-      <a href="#" class="tab active">Arbeitsgruppen</a>
-    </nav>
     <section>
     {% if canView %}
       <div class="card">

@@ -232,24 +232,69 @@ i.material-icons.up {
   padding-bottom: 24px;
 }
 
+@keyframes darkener-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 header#top-bar {
+  user-select: none;
   position: sticky;
   z-index: 1;
   top: 0;
   height: 64px;
   width: 100%;
-  background: linear-gradient(159deg, rgb(229, 69, 69) 0%, rgb(193, 11, 29) 24%, rgb(61, 132, 192) 90%);
+  background: linear-gradient(-35deg, rgb(193, 11, 29) 0%, #666 60%);
   box-shadow: 0 -50px 10px 50px rgba(0, 0, 0, 0.5);
-  padding: 0 16px;
   display: flex;
   flex-direction: row;
 }
-header#top-bar a#home-link {
+header#top-bar #mobile-sidebar-btn {
+  position: absolute;
+  left: -9999px;
+}
+header#top-bar #mobile-sidebar-btn:checked ~ #sidebar {
+  transform: translateX(0);
+}
+@media screen and (max-width: 999px) {
+  header#top-bar #mobile-sidebar-btn:checked + label {
+    transform: translateX(-38px);
+  }
+  header#top-bar #mobile-sidebar-btn:checked ~ #darkener {
+    display: block;
+    animation: darkener-opacity 0.2s;
+  }
+}
+header#top-bar #mobile-sidebar-btn + label {
   flex-grow: 1;
   line-height: 64px;
   font-size: 32px;
-  color: white;
   font-weight: bold;
+  color: #fff;
+  padding-left: 16px;
+  transition: transform 0.2s;
+}
+@media screen and (max-width: 999px) {
+  header#top-bar #mobile-sidebar-btn + label {
+    cursor: pointer;
+  }
+}
+header#top-bar #mobile-sidebar-btn + label img {
+  height: 65%;
+  position: relative;
+  top: 6px;
+}
+header#top-bar #mobile-sidebar-btn + label #sidebar-btn {
+  top: 2px !important;
+  display: none;
+}
+@media screen and (max-width: 999px) {
+  header#top-bar #mobile-sidebar-btn + label #sidebar-btn {
+    display: inline-block;
+  }
 }
 header#top-bar .material-icons {
   position: relative;
@@ -257,81 +302,61 @@ header#top-bar .material-icons {
   padding-right: 5px;
 }
 
-nav#main-nav {
+#darkener {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
   display: none;
 }
 
-@media (min-width: 699px) {
-  nav#main-nav {
-    display: initial;
-  }
-  nav#main-nav a {
-    display: inline-block;
-    color: white;
-    padding: 0 16px;
-    height: 64px;
-    line-height: 64px;
-  }
-  nav#main-nav a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+#sidebar {
+  background-color: #666;
+  width: 300px;
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  transition: transform 0.2s;
+  transform: translateX(-300px);
+}
+@media screen and (min-width: 1000px) {
+  #sidebar {
+    transform: translateX(0);
   }
 }
-#mobile-nav-btn {
-  position: absolute;
-  left: -9999px;
+#sidebar ul {
+  margin: 0;
+}
+#sidebar ul li {
+  padding-left: 16px;
+  color: white;
+  background: none;
+  border-bottom: 1px solid #999;
+}
+#sidebar ul li .material-icons {
+  top: 11px;
+}
+#sidebar ul li:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
-#mobile-nav-btn + label {
-  display: none;
+nav#main-nav a {
+  display: inline-block;
+  color: white;
+  padding: 0 16px;
+  height: 64px;
+  line-height: 64px;
+}
+nav#main-nav a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-nav#mobile-nav {
-  display: none;
-}
-
-@media (max-width: 699px) {
-  #mobile-nav-btn + label {
-    display: block;
-    border: 1px solid white;
-    border-radius: 4px;
-    background: none;
-    height: 32px;
-    margin-top: 16px;
-    outline: none;
-    color: white;
-    padding: 5px 8px;
-    cursor: pointer;
-  }
-  #mobile-nav-btn + label:active {
-    transform: scale(1.05);
-  }
-  nav#mobile-nav {
+@media (max-width: 400px) {
+  .topnav-text {
     display: none;
-    position: absolute;
-    z-index: 100;
-    top: 64px;
-    right: 0px;
-    background: white;
-    width: 180px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  }
-  nav#mobile-nav a {
-    display: block;
-    color: #296ea7;
-    padding: 0 16px;
-    height: 64px;
-    line-height: 64px;
-    text-align: center;
-  }
-  nav#mobile-nav a:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-  #mobile-nav-btn:checked ~ #mobile-nav {
-    display: block;
-  }
-  #mobile-nav-btn:checked + label {
-    background: white;
-    color: #296ea7;
   }
 }
 nav#subtabs {
@@ -511,6 +536,25 @@ ul.selectionlist li {
 }
 .autocomplete-menu ul li:hover {
   background-color: lightgrey;
+}
+
+#appcontainer {
+  display: flex;
+  flex-direction: row;
+}
+#appcontainer #sidebarspacer {
+  display: none;
+  flex-basis: 300px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+@media screen and (min-width: 1000px) {
+  #appcontainer #sidebarspacer {
+    display: block;
+  }
+}
+#appcontainer #appcontent {
+  flex-grow: 1;
 }
 
 .wrapper {
