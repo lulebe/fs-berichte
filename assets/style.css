@@ -261,7 +261,7 @@ header#top-bar #mobile-sidebar-btn:checked ~ #sidebar {
 }
 @media screen and (max-width: 999px) {
   header#top-bar #mobile-sidebar-btn:checked + label {
-    transform: translateX(-38px);
+    transform: translateX(-40px);
   }
   header#top-bar #mobile-sidebar-btn:checked ~ #darkener {
     display: block;
@@ -290,6 +290,7 @@ header#top-bar #mobile-sidebar-btn + label img {
 header#top-bar #mobile-sidebar-btn + label #sidebar-btn {
   top: 2px !important;
   display: none;
+  padding-right: 16px;
 }
 @media screen and (max-width: 999px) {
   header#top-bar #mobile-sidebar-btn + label #sidebar-btn {
@@ -332,12 +333,17 @@ header#top-bar .material-icons {
 }
 #sidebar ul li {
   padding-left: 16px;
+  line-height: 64px;
   color: white;
   background: none;
   border-bottom: 1px solid #999;
 }
 #sidebar ul li .material-icons {
-  top: 11px;
+  top: 12px;
+  font-size: 2.5em;
+}
+#sidebar ul li .sidebar-text {
+  padding-left: 13px;
 }
 #sidebar ul li:hover {
   background: rgba(0, 0, 0, 0.3);
