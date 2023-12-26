@@ -1,5 +1,4 @@
 const { Petition } = requiremain('./db/db')
-const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
 module.exports = async (req, res) => {
   req.body.UserId = req.user.id

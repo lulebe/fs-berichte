@@ -1,0 +1,18 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Umfrage{% endblock %}
+{% block head %}
+<style>
+  iframe {
+    height: calc(100vh - 75px);
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+{{form.embedCode | raw}}
+{% endblock %}
+
+{% block js %}
+{% endblock %}

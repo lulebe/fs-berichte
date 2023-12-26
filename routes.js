@@ -65,6 +65,13 @@ appRouter.post('/petitions/:id', [require('./routes/app/petitions/petition_post'
 appRouter.get('/petitions/:id/edit', require('./routes/app/petitions/edit'))
 appRouter.post('/petitions/:id/edit', require('./routes/app/petitions/edit_post'))
 
+//forms area
+appRouter.get('/forms', require('./routes/app/forms'))
+appRouter.get('/forms/:id', require('./routes/app/form'))
+
+//awards area
+appRouter.get('/awards', require('./routes/app/awards/awards'))
+
 //admin area
 adminRouter.use(require('./middleware/admin/quickSettings'))
 adminRouter.get('/users', require('./routes/app/admin/users'))
@@ -86,3 +93,6 @@ adminRouter.get('/examtype/:id', require('./routes/app/admin/examtype'))
 adminRouter.post('/examtype/:id', require('./routes/app/admin/examtype_post'))
 adminRouter.get('/petitions', require('./routes/app/admin/petitions'))
 adminRouter.post('/petitions', [require('./routes/app/admin/petitions_post')], require('./routes/app/admin/petitions'))
+adminRouter.get('/forms', require('./routes/app/admin/forms'))
+adminRouter.post('/forms', [require('./routes/app/admin/forms_post')], require('./routes/app/admin/forms'))
+adminRouter.get('/awards', require('./routes/app/admin/awards'))

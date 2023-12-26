@@ -301,6 +301,24 @@ const PetitionComment = sequelize.define('PetitionComments', {
   }
 })
 
+//Umfragen
+const Form = sequelize.define('Forms', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  embedCode: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  }
+})
+
 //Einstellungen
 const Settings = sequelize.define('Settings', {
   id: {
@@ -424,4 +442,4 @@ User.belongsToMany(Petition, {
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
