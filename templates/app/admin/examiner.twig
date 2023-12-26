@@ -1,12 +1,12 @@
-{% extends "app/admin/adminbase.twig" %}
+{% extends "app/admin/adminreportbase.twig" %}
 
 {% block admincontent %}
       <h1>Name ändern</h1>
       <form method="POST">
         <div class="inputlabel">
-            <label>Name</label>
-            <input type="text" name="newname" placeholder="Kim Könner" required minlength="3" value="{{examiner.name}}">
-          </div><br>
+          <label>Name</label>
+          <input type="text" name="newname" placeholder="Kim Könner" required minlength="3" value="{{examiner.name}}">
+        </div><br>
         <input type="submit" value="Name ändern">
       </form>
       <h1>Zusammenführen</h1>

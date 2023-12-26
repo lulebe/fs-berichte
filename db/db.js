@@ -23,6 +23,15 @@ const User = sequelize.define('User', {
     },
     unique: true
   },
+  nickname: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  anonymous: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
   activated: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -45,6 +54,12 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false
+  },
+  displayName: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.anonymous ? false : ((this.nickname != null) ? this.nickname : this.email.split('@')[0])
+    }
   }
 })
 
@@ -212,6 +227,98 @@ const ResearchReport = sequelize.define('ResearchReport', {
   othertext: DataTypes.TEXT
 })
 
+//Petitionen
+const PETITION_STATUS = {INACTIVE: 0, ACTIVE: 1, CLOSED: 2, FINISHED: 3, CANCELLED: 4}
+const PETITION_STATUS_STRINGS = ["inaktiv", "aktiv", "in Bearbeitung", "abgeschlossen", "abgebrochen"]
+const Petition = sequelize.define('Petitions', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  recipient: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  author: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  shortText: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  text: DataTypes.TEXT('long'),
+  goal: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 50
+  },
+  deadline: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  status: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  statusReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return PETITION_STATUS_STRINGS[this.status]
+    }
+  },
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  },
+  deadlineReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.deadline).toLocaleDateString('de-DE')
+    }
+  }
+})
+
+//Tags
+const Tag = sequelize.define('Tags', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+})
+
+//Comments
+const PetitionComment = sequelize.define('PetitionComments', {
+  text: DataTypes.TEXT,
+  datetimeReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  }
+})
+
+//Umfragen
+const Form = sequelize.define('Forms', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  embedCode: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  }
+})
+
 //Einstellungen
 const Settings = sequelize.define('Settings', {
   id: {
@@ -224,6 +331,7 @@ const Settings = sequelize.define('Settings', {
     allowNull: false
   }
 }, {timestamps: false})
+
 
 User.hasMany(Exam,
   {
@@ -294,7 +402,44 @@ User.hasMany(ResearchReport,
 )
 ResearchReport.belongsTo(User)
 
+User.hasMany(Petition,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+Petition.belongsTo(User)
+User.hasMany(PetitionComment,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+PetitionComment.belongsTo(User)
+Petition.hasMany(PetitionComment)
+PetitionComment.belongsTo(Petition)
+Petition.belongsToMany(Tag, {
+  through: 'PetitionTags'
+})
+Tag.belongsToMany(Petition, {
+  through: 'PetitionTags'
+})
+Petition.belongsToMany(User, {
+  through: 'PetitionSupporters',
+  as: 'Supporters'
+})
+User.belongsToMany(Petition, {
+  through: 'PetitionSupporters',
+  as: 'SupportedPetitions'
+})
+
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Settings, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }

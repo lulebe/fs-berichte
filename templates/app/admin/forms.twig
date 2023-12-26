@@ -1,0 +1,34 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Admin Umfragen{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <h1 class="mtop0">Umfragen</h1>
+    <div class="card">
+      <h3>Umfrage eintragen</h3>
+      <form method="post">
+        <div class="inputlabel">
+          <label>Titel</label>
+          <input type="text" name="title" placeholder="Umfragename" required minlength="3">
+        </div><br>
+        <div class="inputlabel">
+          <label>Google Forms embed-code</label>
+          <input type="text" name="embedCode" placeholder="https://......." required>
+        </div><br>
+        <button type="submit" class="iconbtn">eintragen</button>
+      </form>
+    </div>
+    <h3>laufende Umfragen</h3>
+    <ul>
+      {% for form in forms %}
+        <li><a href="/app/forms/{{form.id}}" class="main-text">
+          {{form.title}} - <small>{{form.dateReadable}}</small>
+          <form method="post" class="inline">
+            <button type="submit" class="small iconbtn" name="deleteForm" value="{{form.id}}"><i class="material-icons">delete</i></button>
+          </form>
+        </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

@@ -2,14 +2,80 @@
 
 {% block title %}Login{% endblock %}
 
+{% block head %}
+<style>
+  body {
+    background: rgb(229,69,69);
+    background: linear-gradient(159deg, rgba(229,69,69,1) 0%, rgba(193,11,29,1) 24%, rgba(61,132,192,1) 90%);
+    min-height: 100vh;
+  }
+  body a {
+    color: #ccc;
+  }
+  body a:visited {
+    color: #ccc;
+  }
+
+  #error-msg {
+    margin: 0 auto;
+  }
+
+  .frontpage-cards {
+    width: 100%;
+    max-width: 1048px;
+    margin: 0 auto;
+    padding: 16px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 16px;
+  }
+  .card-login {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+  }
+  .card-register {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+  }
+  .card-forgotpw {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 1;
+  }
+
+  @media (min-width: 800px) {
+    .card-login {
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 1;
+    }
+    .card-register {
+      grid-column: 2 / span 1;
+      grid-row: 1 / span 3;
+    }
+    .card-forgotpw {
+      grid-column: 1 / span 1;
+      grid-row: 2 / span 1;
+    }
+  }
+
+  .login-area {
+    width: 100%;
+    max-width: 500px;
+    justify-self: center;
+    background: rgba(255,255,255,0.65) !important;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
   <section id="splash">
-    FSmed Berichte
-    <p>Gedankenprotokolle von mündlichen Examen und Prüfungen, sowie Berichte über Arbeitsgruppen.</p>
+    FSmed Lehre
+    <p>Gedankenprotokolle von mündlichen Prüfungen, Berichte über Arbeitsgruppen, Petitionen und mehr.</p>
   </section>
-  <div style="padding: 16px;">
-  {% if hasError %}<section class="login-area card" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
-    <section class="login-area card">
+  {% if hasError %}<section class="card" style="width: 100%; max-width: 500px" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
+  <div class="frontpage-cards">
+    <section class="login-area card card-login">
       <h3>Login</h3>
       <form action="/login{{loginGoto}}" method="POST">
         <input type="email" name="email" placeholder="E-Mail">
@@ -21,7 +87,7 @@
         <input type="submit" value="einloggen" class="btn important">
       </form>
     </section>
-    <section class="login-area card">
+    <section class="login-area card card-register">
       <h3>Registrierung</h3>
       Nutze zur Registrierung deine <strong>@stud.uni-heidelberg.de</strong> Adresse.
       Falls du keine besitzt, gib einen Grund an, weshalb du Zugriff benötigst, um dich freischalten zu lassen.
@@ -43,19 +109,19 @@
         <input type="submit" value="registrieren">
       </form>
     </section>
-    <section class="login-area card">
+    <section class="login-area card card-forgotpw">
       <h3>Passwort vergessen</h3>
       <form action="/forgotpwd" method="POST">
         <input type="email" name="email" placeholder="E-Mail">
         <input type="submit" value="Passwort zurücksetzen">
       </form>
     </section>
-    <section class="login-area" style="text-align: center">
-      &copy; Leander Berg, 2023. Licensed under <a href="/assets/LICENSE.txt" target="_blank">MIT License</a>.<br>
-      Code at <a href="https://github.com/lulebe/fs-berichte">GitHub</a><br>
-      <a href="https://www.fsmed-hd.de/impressum/">Impressum</a>
-    </section>
   </div>
+  <section style="text-align: center; padding: 24px 0;">
+    &copy; Leander Berg, 2023. Licensed under <a href="/assets/LICENSE.txt" target="_blank">MIT License</a>.<br>
+    Code at <a href="https://github.com/lulebe/fs-berichte">GitHub</a><br>
+    <a href="https://www.fsmed-hd.de/impressum/">Impressum</a>
+  </section>
 {% endblock %}
 
 {% block js %}
@@ -83,7 +149,7 @@
 
   const nohdElements = document.querySelectorAll('.nohd')
   document.getElementById('regemail-inp').addEventListener('input', e => {
-    if (e.target.value.endsWith('@stud.uni-heidelberg.de') || !e.target.value.includes('@')) {
+    if (e.target.value.toLowerCase().endsWith('@stud.uni-heidelberg.de') || !e.target.value.includes('@')) {
       for (let i = 0; i < nohdElements.length; i++) {
         nohdElements[i].style.display = 'none'
       }

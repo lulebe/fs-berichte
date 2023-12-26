@@ -12,7 +12,7 @@
       <form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>
       {% endif %}
     <br><br>
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>{{ report.workReadable }}</h3>
       {{ report.subject }} ({{ report.areaReadable }})<br>
       Doktorvater/-mutter bzw Chef: {{ report.head}}<br>
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Team</h3><br>
       {% if report.teamjournalclub %}
         <div class="checkchip yes"><i class="material-icons">check</i>Journal Clubs</div>
@@ -53,12 +53,12 @@
         <div class="checkchip no"><i class="material-icons">cancel</i>Zusammenarbeit bei Problemen</div>
       {% endif %}
       {% if report.teamtext %}
-        <p>{{report.teamtext}}</p>
+        <p class="usertext">{{report.teamtext}}</p>
       {% endif %}
     </div>
 
     {% if report.plan or report.plantext %}
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Planung</h3><br>
       {% if report.plan %}
       <div class="questionbox">
@@ -78,13 +78,13 @@
       </div>
       {% endif %}
       {% if report.plantext %}
-        <p>{{report.plantext}}</p>
+        <p class="usertext">{{report.plantext}}</p>
       {% endif %}
     </div>
     {% endif %}
 
     {% if report.intro or report.help or report.helptext %}
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Betreuung</h3><br>
       {% if report.intro %}
       <div class="questionbox">
@@ -121,17 +121,17 @@
       </div>
       {% endif %}
       {% if report.helptext %}
-        <p>{{report.helptext}}</p>
+        <p class="usertext">{{report.helptext}}</p>
       {% endif %}
     </div>
     {% endif %}
 
     {% if report.taskstext or report.equipment %}
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Aufgaben</h3><br>
       {% if report.taskstext %}
       <strong>Meine Aufgaben:</strong>
-      <p>{{report.taskstext}}</p>
+      <p class="usertext">{{report.taskstext}}</p>
       {% endif %}
       {% if report.equipment %}
       <div class="questionbox">
@@ -153,7 +153,7 @@
     </div>
     {% endif %}
 
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Förderung</h3><br>
       {% if report.supportcash %}
         <div class="checkchip yes"><i class="material-icons">check</i>Bezahlung</div>
@@ -176,12 +176,12 @@
         <div class="checkchip no"><i class="material-icons">cancel</i>Angebote für Kongresse etc.</div>
       {% endif %}
       {% if report.supporttext %}
-        <p>{{report.supporttext}}</p>
+        <p class="usertext">{{report.supporttext}}</p>
       {% endif %}
     </div>
 
     {% if report.level or report.freedom or report.othertext %}
-    <div class="card" style="margin-bottom: 16px">
+    <div class="card mb" >
       <h3>Sonstiges</h3><br>
       {% if report.level %}
       <div class="questionbox">
@@ -214,7 +214,7 @@
         {% endif %}
       </div>{% endif %}
       {% if report.othertext %}
-        <p>{{report.othertext}}</p>
+        <p class="usertext">{{report.othertext}}</p>
       {% endif %}
     </div>
     {% endif %}

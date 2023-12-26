@@ -52,5 +52,5 @@ module.exports = async (req, res) => {
   res.tmplOpts.query = req.query
   res.tmplOpts.multiDLIds = results.map(r => r.id).join('-')
   res.tmplOpts.multiDLquery = encodeURIComponent(JSON.stringify(req.query))
-  tmpl.render('app/main.twig', res.tmplOpts).then(rendered => res.end(rendered))
+  tmpl.render('app/mainexam.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

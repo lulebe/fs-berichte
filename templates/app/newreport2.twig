@@ -9,7 +9,7 @@
       <p style="color: red"><strong>Bitte nutzt die vorgeschlagenen Orte, Fächer und Prüfer, damit es nicht 10 verschiedene Schreibweisen des gleichen gibt!</strong></p>
       <form action="" method="POST">
         <input type="hidden" name="examType" value="{{examType.id}}">
-        <div class="card" style="margin-bottom: 16px;">
+        <div class="card mb">
           <small>Prüfungsdatum</small><br>
           <input type="date" name="date" id=""><br><br>
           <div class="inputlabel">
@@ -28,11 +28,11 @@
           </div><br>
           <div class="inputlabel">
             <label>Allgemeines</label>
-            <textarea name="comment" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum..."></textarea>
+            <textarea name="comment" class="usertext" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum..."></textarea>
           </div>
         </div>
         {% for subjectIndex in 1..examType.subjectCount %}
-          <div class="card" style="margin-bottom: 16px">
+          <div class="card mb" >
             <h3>Fach {{subjectIndex}}</h3><br>
             <div class="inputlabel">
               <label>Fach</label>
@@ -47,7 +47,7 @@
               <small style="color: darkred; font-weight: bold;"></small>
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
+            <textarea name="report{{subjectIndex}}" class="usertext" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
           </div>
         {% endfor %}
         <button type="submit" class="fullpagesubmit">eintragen</button>

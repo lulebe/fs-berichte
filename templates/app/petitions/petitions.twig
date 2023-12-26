@@ -1,0 +1,50 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Petitionen{% endblock %}
+
+{% block content %}
+<div class="wrapper-2-col right-over">
+  <section class="grid-col left">
+    <h1 class="mtop0">Petitionen</h1>
+    <a href="/app/petitions/new" class="btn iconbtn mb"><i class="material-icons">add</i> Neue Petition erstellen</a>
+
+  </section>
+  <section class="grid-col right">
+    <div class="card mb">
+      <h1>Suche</h1>
+      <form method="get">
+        {% for tag in tags %}
+          <input type="checkbox" class="inp-cb-tag lbl" name="tags" value="{{tag.id}}" id="cbtag{{tag.id}}" {% if tag.id in selectedTags %}checked{% endif %}>
+          <label for="cbtag{{tag.id}}">{{tag.name}}</label>
+        {% endfor %}<br><br>
+        <button type="submit" class="iconbtn important"><i class="material-icons">search</i> suchen</button>
+      </form>
+    </div>
+    <div class="card">
+    <h3>Meine Petitionen</h3>
+    {% if userPetitions %}
+      <ul>
+        {% for p in userPetitions %}
+          <li><a href="/app/petitions/{{p.id}}" class="main-text">{{p.title}} - <small>{{p.dateReadable}}</small></a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Du hast noch keine Petition erstellt.</p>
+    {% endif %}
+    </div>
+  </section>
+  <div class="resultsgrid">
+    {% for result in results %}
+      <a href="petitions/{{result.id}}" class="card selectable">
+        <h3>{{result.title}}</h3>
+        <small>{{result.dateReadable}}</small><br>
+        <p class="usertext">{{result.shortText}}</p>
+        {% for tag in result.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

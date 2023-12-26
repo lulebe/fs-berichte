@@ -18,5 +18,5 @@ module.exports = async (req, res) => {
   if (req.query.goto)
     res.redirect(req.query.goto)
   else
-    res.redirect('/app/main')
+    res.redirect('/app/exam')
 }

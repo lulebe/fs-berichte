@@ -1,7 +1,4 @@
 #splash {
-    background: rgb(229,69,69);
-    background: linear-gradient(159deg, rgba(229,69,69,1) 0%, rgba(193,11,29,1) 24%, rgba(61,132,192,1) 90%);
-    box-shadow: 0 -50px 50px 50px rgba(0,0,0,0.7);
     color: white;
     font-size: 3rem;
     text-align: center;
@@ -20,11 +17,6 @@
     }
   }
   
-  .login-area {
-    margin: 24px auto;
-    width: 100%;
-    max-width: 480px;
-  }
 
   .pwinput {
     position: relative;

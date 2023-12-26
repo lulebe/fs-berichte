@@ -25,6 +25,7 @@
     "express-session": "^1.17.3",
     "generate-password": "^1.7.0",
     "jsonwebtoken": "^9.0.0",
+    "markdown-it": "^14.0.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.1",
     "nunjucks": "^3.2.3",
