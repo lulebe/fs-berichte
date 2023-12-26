@@ -6,7 +6,7 @@
   <div class="wrapper">
     {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
     <section class="card">
-      <h1 class="mtop0">Account</h1>
+      <h1>Account</h1>
       <h3>Passwort ändern</h3>
       <form method="POST">
         <div class="pwinput" id="pw-old">
@@ -24,7 +24,18 @@
           <i class="material-icons on">visibility</i>
           <i class="material-icons off">visibility_off</i>
         </div>
-        <input type="submit" value="Passwort ändern">
+        <button type="submit" class="iconbtn" name="changepw" value="1"><i class="material-icons">key</i> Passwort ändern</button>
+      </form>
+      <h3>Nickname ändern</h3>
+      <p>Dein Nickname erscheint in Kommentaren, Petitionen, etc..</p>
+      <form method="POST">
+        <div class="inputlabel">
+          <label>Nickname</label>
+          <input type="text" name="nickname" value="{{user.nickname}}">
+        </div><br>
+        <input type="checkbox" class="lbl" name="anonymous" id="cbanonymous" value="true" {% if user.anonymous %}checked{% endif %}>
+        <label class="check" for="cbanonymous">anonym bleiben</label><br><br>
+        <button type="submit" class="iconbtn" name="changename" value="1"><i class="material-icons">save</i> speichern</button>
       </form>
       <h3>Account löschen</h3>
       <p style="color: red;">

@@ -1,0 +1,53 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Admin Petitionen{% endblock %}
+
+{% block content %}
+  <div class="wrapper-2-col">
+    <section class="grid-col left">
+      <div class="card">
+        <h1>Tags</h1>
+        <form method="post">
+          <div class="search-block">
+            <div class="inputlabel">
+              <label for="newtaginput">neues Tag</label>
+              <input type="text" name="newTag" id="newtaginput" placeholder="Block IX">
+            </div>
+            <button type="submit"><i class="material-icons">save</i></button>
+          </div>
+        </form>
+        <p>
+          <form method="post">
+            {% for tag in tags %}
+              <input type="checkbox" class="inp-cb-tag lbl" name="deleteTag" value="{{tag.id}}" id="cbtag{{tag.id}}">
+              <label for="cbtag{{tag.id}}">{{tag.name}}</label>
+            {% endfor %}
+            <br><br>
+            <button type="submit" class="iconbtn"><i class="material-icons">delete</i> Tags löschen</button>
+          </form>
+        </p>
+      </div>
+    </section>
+    <section class="grid-col right">
+      <div class="card mb">
+        <h1>Automatische Veröffentlichung</h1>
+        {% if petitionsRequireAdminConfirmation %}
+        <p>Petitionen werden <strong>erst nach Admin-Erlaubnis öffentlich</strong>. Zur Erlaubnis von direkter Veröffentlichung neuer Petitionen:</p>
+        <form method="post"><button type="submit" name="setPetitions" value="public" class="iconbtn"><i class="material-icons">lock_open</i> Freigeben</button></form>
+        {% else %}
+        <p>Petitionen werden <strong>direkt öffentlich</strong>. Um Admin-Freigabe neuer Petitionen zu erfordern:</p>
+        <form method="post"><button type="submit" name="setPetitions" value="private" class="iconbtn"><i class="material-icons">lock</i> Sperren</button></form>
+        {% endif %}
+      </div>
+      {% if petitionsRequireAdminConfirmation %}
+      <div class="card">
+        <h1>neue Petitionen</h1>
+        
+      </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

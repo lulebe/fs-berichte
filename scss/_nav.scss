@@ -6,7 +6,7 @@
 header#top-bar {
   user-select: none;
   position: sticky;
-  z-index: 1;
+  z-index: 10;
   top: 0;
   height: 64px;
   width: 100%;
@@ -34,6 +34,7 @@ header#top-bar {
     @media screen and (max-width: 999px) {
       cursor: pointer;
     }
+    min-width: 170px;
     flex-grow: 1;
     line-height: 64px;
     font-size: 32px;
@@ -143,6 +144,7 @@ header#top-bar {
 
 
 nav#main-nav {
+  flex-shrink: 0;
   a {
     display: inline-block;
     color: white;

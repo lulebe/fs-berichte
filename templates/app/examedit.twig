@@ -9,7 +9,7 @@
       <p style="color: red"><strong>Bitte nutzt die vorgeschlagenen Orte, Fächer und Prüfer, damit es nicht 10 verschiedene Schreibweisen des gleichen gibt!</strong></p>
       <form action="" method="POST">
         <input type="hidden" name="exam.ExamType" value="{{exam.ExamType.id}}">
-        <div class="card" style="margin-bottom: 16px;">
+        <div class="card mb">
           <small>Prüfungsdatum</small><br>
           <input type="date" name="date" id="" value="{{inputformatdate}}"><br><br>
           <div class="inputlabel">
@@ -31,7 +31,7 @@
           </div>
         </div>
         {% for subjectExam in exam.SubjectExams %}
-          <div class="card" style="margin-bottom: 16px">
+          <div class="card mb" >
             <h3>Prüfung {{loop.index}}</h3><br>
             <div class="inputlabel">
               <label>Fach</label>

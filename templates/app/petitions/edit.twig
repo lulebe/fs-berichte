@@ -1,0 +1,89 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Petition bearbeiten{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<style>
+.EasyMDEContainer {
+  color: #333;
+  font-family: 'Zilla Slab', serif;
+}
+.EasyMDEContainer .CodeMirror-fullscreen {
+  z-index: 12;
+}
+.EasyMDEContainer img {
+  width: 100%;
+  max-width: 300px;
+}
+.EasyMDEContainer button {
+  color: black;
+}
+.EasyMDEContainer button:hover {
+  color: black;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+  <section>
+    <h1>Petition bearbeiten</h1>
+    <form method="post">
+    <div class="card mb">
+      <div class="inputlabel">
+        <label>Titel</label>
+        <input type="text" name="title" required value="{{petition.title}}" placeholder="REWE-Döner wieder für 2,90€!">
+      </div><br>
+      <div class="inputlabel">
+        <label>Empfänger</label>
+        <input type="text" name="recipient" required value="{{petition.recipient}}" placeholder="Dieter Müller (REWE-Besitzer)">
+      </div><br>
+      <div class="inputlabel">
+        <label style="position: relative; display: inline-block;">Autor:in:en:innen...
+          <span style="position: absolute; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 99%,  white 100%); right: 0; top:0; bottom:0; left:0;"></span></label>
+        <input type="text" name="author" required value="{{petition.author}}" placeholder="Karla Kolumna, Fritz Frey, Tina Turner">
+      </div><br>
+      <div class="inputlabel">
+        <label>Deadline</label>
+        <input type="date" name="deadline" required value="{{deadlineDate}}" min="{{currentDate}}">
+      </div><br>
+      <div class="inputlabel">
+        <label>Unterstützerziel</label>
+        <input type="range" name="goal" required value="{{petition.goal}}" min="5" max="300" step="5" oninput="this.nextElementSibling.innerText = this.value">
+        <div style="text-align: center;">{{petition.goal}}</div>
+      </div><br>
+    </div>
+    <div class="card mb">
+      <h4>Tags</h4>
+      {% for tag in tags %}
+        <input type="checkbox" class="inp-cb-tag lbl" name="Tags" value="{{tag.id}}" id="cbtag{{tag.id}}" {% if tag.id in selectedTagIds %}checked{% endif %}>
+        <label for="cbtag{{tag.id}}">{{tag.name}}</label>
+      {% endfor %}
+    </div>
+    <div class="card">
+      <div class="inputlabel">
+        <label>Kurzbeschreibung (20-250 Zeichen)</label>
+        <textarea name="shortText" class="short usertext" required maxlength="255" minlength="20" placeholder="Das steht dann auf der Übersicht.">{{petition.shortText}}</textarea>
+      </div>
+      <br>
+      <div class="inputlabel">
+        <label>Beschreibung (<i class="fa fa-columns"></i> klicken zur Vorschau)</label>
+        <textarea name="text" id="mdeditor" placeholder="Worum es geht, warum, was ist der Plan?">{{petition.text}}</textarea>
+      </div><br>
+    </div>
+    <div style="height: 64px">&nbsp;</div>
+    <button type="submit" class="fullpagesubmit">Speichern</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('mdeditor'),
+    spellChecker: false
+  })
+</script>
+{% endblock %}

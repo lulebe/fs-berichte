@@ -23,6 +23,15 @@ const User = sequelize.define('User', {
     },
     unique: true
   },
+  nickname: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  anonymous: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
   activated: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
@@ -45,6 +54,12 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false
+  },
+  displayName: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.anonymous ? false : ((this.nickname != null) ? this.nickname : this.email.split('@')[0])
+    }
   }
 })
 
@@ -213,12 +228,58 @@ const ResearchReport = sequelize.define('ResearchReport', {
 })
 
 //Petitionen
+const PETITION_STATUS = {INACTIVE: 0, ACTIVE: 1, CLOSED: 2, FINISHED: 3, CANCELLED: 4}
+const PETITION_STATUS_STRINGS = ["inaktiv", "aktiv", "in Bearbeitung", "abgeschlossen", "abgebrochen"]
 const Petition = sequelize.define('Petitions', {
-  receiver: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  text: DataTypes.TEXT('long')
+  recipient: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  author: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  shortText: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  text: DataTypes.TEXT('long'),
+  goal: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 50
+  },
+  deadline: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  status: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  },
+  statusReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return PETITION_STATUS_STRINGS[this.status]
+    }
+  },
+  dateReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
+  },
+  deadlineReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.deadline).toLocaleDateString('de-DE')
+    }
+  }
 })
 
 //Tags
@@ -230,11 +291,13 @@ const Tag = sequelize.define('Tags', {
 })
 
 //Comments
-const Comment = sequelize.define('Comments', {
+const PetitionComment = sequelize.define('PetitionComments', {
   text: DataTypes.TEXT,
-  anonymous: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
+  datetimeReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
   }
 })
 
@@ -325,24 +388,24 @@ User.hasMany(Petition,
   {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    as: 'Creator',
     foreignKey: {
       allowNull: false
     }
   }
 )
-Petition.belongsTo(User, {as: 'Creator'})
-User.hasMany(Comment,
+Petition.belongsTo(User)
+User.hasMany(PetitionComment,
   {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    as: 'Author',
     foreignKey: {
       allowNull: false
     }
   }
 )
-Comment.belongsTo(User, {as: 'Author'})
+PetitionComment.belongsTo(User)
+Petition.hasMany(PetitionComment)
+PetitionComment.belongsTo(Petition)
 Petition.belongsToMany(Tag, {
   through: 'PetitionTags'
 })
@@ -350,13 +413,15 @@ Tag.belongsToMany(Petition, {
   through: 'PetitionTags'
 })
 Petition.belongsToMany(User, {
-  through: 'PetitionSupporters'
+  through: 'PetitionSupporters',
+  as: 'Supporters'
 })
 User.belongsToMany(Petition, {
-  through: 'PetitionSupporters'
+  through: 'PetitionSupporters',
+  as: 'SupportedPetitions'
 })
 
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Settings, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
