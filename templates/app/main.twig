@@ -34,7 +34,7 @@
           {% endif %}
         </div>
         <span class="usertext">{{r.data.othertext[:100]}}{% if r.data.othertext %}...{% endif %}</span>
-      {% elseif r.type == 'petition' %}
+      {% elseif r.type == 'petitions' %}
         <h3>{{r.data.title}}</h3>
         <div class="petitionprogress progress{{r.data.status}}">
           <div class="progressStep"><i class="material-icons">edit_note</i></div>
@@ -47,7 +47,7 @@
         <i class="material-icons accent">send</i> {{r.data.recipient}}
         <p class="usertext">{{r.data.shortText | nl2br }}</p>
         {% for tag in r.data.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
-      {% elseif r.type == 'form' %}
+      {% elseif r.type == 'forms' %}
         <h3>Umfrage</h3>
         <h4>{{r.data.title}}</h4>
         {{r.data.dateReadable}}

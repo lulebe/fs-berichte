@@ -21,8 +21,8 @@ module.exports = async function (email, subject, text, html) {
     from: config.MAIL_SENDER,
     to: email,
     subject,
-    text: 'Hallo,\n\n' + text + '\n\nViele Grüße,\ndas FSmed Berichte Team',
-    html: 'Hallo,<br><br>' + html + '<br><br>Viele Grüße,<br>das FSmed Berichte Team'
+    text: 'Hallo,\n\n' + text + '\n\nViele Grüße,\ndas Fachschaftsteam Lehre',
+    html: 'Hallo,<br><br>' + html + '<br><br>Viele Grüße,<br>das Fachschaftsteam Lehre'
   })
   return mailStatus
 }

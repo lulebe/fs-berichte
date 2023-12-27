@@ -21,10 +21,10 @@ module.exports = async (req, res) => {
   const petitions = (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['id', 'DESC']]
-  })).map(p => ({type: 'petition', data: p}))
+  })).map(p => ({type: 'petitions', data: p}))
 
   //forms
-  const forms = (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'form', data: f}))
+  const forms = (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f}))
 
   let results = [...petitions, ...forms, ...exams, ...researchReports].sort(() => 0.5 - Math.random())
   res.tmplOpts.results = results
