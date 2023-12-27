@@ -42,7 +42,16 @@
       {% if petitionsRequireAdminConfirmation %}
       <div class="card">
         <h1>neue Petitionen</h1>
-        
+        <ul>
+          {% for p in petitionsAwaitingConfirmation %}
+            <li>
+              <a href="/app/petitions/{{p.id}}" class="main-text small">
+                {{p.title}}
+                <div class="second-line">{{p.author}}</div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
       </div>
       {% endif %}
     </section>
