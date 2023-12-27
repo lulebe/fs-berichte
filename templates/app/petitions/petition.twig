@@ -1,6 +1,14 @@
 {% extends "app/appbase.twig" %}
 
 {% block title %}Petition{% endblock %}
+{% block head %}
+<style>
+  .maintextarea img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
   <div class="petitionlayout">
