@@ -6,16 +6,17 @@ const { User } = requiremain('./db/db')
 const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
+  const goto = req.query.goto ? '&goto=' + req.query.goto : ''
   if (!req.body.email || !req.body.password || !req.body.repeatPassword)
-    return res.redirect('/?status=1')
+    return res.redirect('/?status=1' + goto)
   if (req.body.repeatPassword !== req.body.password)
-    return res.redirect('/?status=3')
+    return res.redirect('/?status=3' + goto)
   const foundUser = await User.findOne({where: {email: req.body.email.toLowerCase()}})
   if (foundUser && foundUser.activated)
-    return res.redirect('/?status=5')
+    return res.redirect('/?status=5' + goto)
   else if (foundUser && !foundUser.activated && foundUser.authorized) {
-    sendActivationEmail(req.body.email)
-    return res.redirect('/?status=6')
+    sendActivationEmail(req.body.email, goto)
+    return res.redirect('/?status=6' + goto)
   }
   
 
@@ -26,11 +27,11 @@ module.exports = async (req, res) => {
       authorized: userIsAuthorizedDomain,
       password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
     })
-    sendActivationEmail(user)
-    res.redirect('/?status=6')
+    sendActivationEmail(user, goto)
+    res.redirect('/?status=6' + goto)
   } else {
     if (!req.body.reason) {
-      return res.redirect('/?status=8')
+      return res.redirect('/?status=8' + goto)
     }
     //create user
     const user = await User.create({
@@ -41,17 +42,17 @@ module.exports = async (req, res) => {
     })
     //send admin email
     sendAdminEmail (user, req.body.reason)
-    return res.redirect('/?status=9')
+    return res.redirect('/?status=9' + goto)
   }
 }
 
-function sendActivationEmail (user) {
+function sendActivationEmail (user, goto) {
   const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '24h' })
   return mailer(
     user.email,
     'Aktivierungslink',
-    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token,
-    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
+    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token+goto,
+    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token+goto + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
   )
 }
 
