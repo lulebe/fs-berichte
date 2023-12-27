@@ -804,6 +804,9 @@ input:invalid {
   padding: 0;
   margin: 0;
 }
+.inputlabel label.error {
+  color: red;
+}
 .inputlabel input {
   margin: 0;
   border-top-left-radius: 0;
@@ -1150,4 +1153,4 @@ textarea.short {
 }
 
 
-/*# sourceMappingURL=style4.css.map*/
+/*# sourceMappingURL=style5.css.map*/
