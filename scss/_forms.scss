@@ -20,7 +20,7 @@ button, input[type=submit], .btn {
     border-bottom-width: 2px;
     &.iconbtn {
       padding: 2px 4px;
-      line-height: normal;
+      line-height: 1.3em;
       .material-icons {
         font-size: 1rem;
         top: 2px;
@@ -181,6 +181,13 @@ input[type=range] {
   &:hover {
     font-size: 25px;
     background-color: $primary-color;
+  }
+}
+form:invalid .fullpagesubmit {
+  cursor: not-allowed;
+  &:hover {
+    font-size: 20px;
+    background-color: $primary-color-dark;
   }
 }
 

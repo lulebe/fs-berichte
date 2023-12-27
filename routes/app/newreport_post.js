@@ -4,6 +4,7 @@ const { ExamType, Subject, ExamLocation, Examiner } = requiremain('./db/db')
 module.exports = async (req, res) => {
   const examType = await ExamType.findByPk(req.body.examType)
   if (!examType) return res.status(400).send()
+  if (!validate(req.body, examType.subjectCount)) return res.status(400).send()
   const exam = await req.user.createExam({
     date: req.body.date,
     studentCount: req.body.studentCount,
@@ -31,13 +32,16 @@ async function storeReport (i, exam, req) {
 
 async function getOrCreateMetadata (model, id, rawName) {
   const name = rawName.trim()
-  if (parseInt(id)) return model.findByPk(parseInt(id))
-  const found = await model.findOne({
-    where: sequelize.where(
-      sequelize.fn('lower', sequelize.col('name')), 
-      sequelize.fn('lower', name)
-    )
-  })
+  let found =  null
+  if (parseInt(id))
+    found = model.findByPk(parseInt(id))
+  else
+    found = await model.findOne({
+      where: sequelize.where(
+        sequelize.fn('lower', sequelize.col('name')), 
+        sequelize.fn('lower', name)
+      )
+    })
   if (found) return found
   return model.create({name})
 }
@@ -55,4 +59,13 @@ function fixExaminerName (name) {
   name = name.replaceAll('.', '')
   name = name.trim()
   return name
+}
+
+function validate (body, subjectCount) {
+  if (!body.location || body.location.length < 3) return false
+  for (let i = 0; i < subjectCount; i++) {
+    if (!body['examiner'+i] || body['examiner'+i].length < 3) return false
+    if (!body['subject'+i] || body['subject'+i].length < 3) return false
+    if (!body['report'+i] || body['report'+i].length < 30) return false
+  }
 }

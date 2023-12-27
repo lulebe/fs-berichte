@@ -616,6 +616,99 @@ ul.selectionlist li {
   background: #f2f7fc !important;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+.modal.visible {
+  display: block;
+}
+.modal .modalwrapper {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+}
+@media (min-width: 700px) {
+  .modal .modalwrapper {
+    top: 128px;
+    left: 64px;
+    right: 64px;
+    bottom: 64px;
+  }
+}
+@media (min-width: 1000px) {
+  .modal .modalwrapper {
+    top: 128px;
+    left: 364px;
+    right: 64px;
+    bottom: 64px;
+  }
+}
+.modal .modalwrapper .modalcontent {
+  padding: 16px;
+  background: white;
+  border-radius: 4px;
+  max-width: 500px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.modal .modalwrapper .modalcontent h2:first-child {
+  margin-top: 0;
+  text-align: center;
+}
+.modal .modalwrapper .modalcontent .modalbtns {
+  display: flex;
+  margin-top: 8px;
+  border-top: 1px solid lightgrey;
+  padding-top: 16px;
+}
+
+.pickerModal .page.page2 {
+  display: none;
+}
+.pickerModal.onPage2 .page.page1 {
+  display: none;
+}
+.pickerModal.onPage2 .page.page2 {
+  display: flex;
+}
+.pickerModal .page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.pickerModal .listcontainer {
+  flex-grow: 1;
+  overflow: auto;
+}
+.pickerModal .listcontainer li {
+  cursor: pointer;
+}
+.pickerModal .notFoundLink {
+  display: none;
+}
+.pickerModal .notFoundLink.visible {
+  display: inline-block;
+}
+.pickerModal .confirmNewBtn {
+  display: none;
+}
+.pickerModal .confirmNewBtn.visible {
+  display: inline-block;
+}
+
 .inline {
   display: inline-block;
 }
@@ -640,7 +733,7 @@ button.small, input[type=submit].small, .btn.small {
 }
 button.small.iconbtn, input[type=submit].small.iconbtn, .btn.small.iconbtn {
   padding: 2px 4px;
-  line-height: normal;
+  line-height: 1.3em;
 }
 button.small.iconbtn .material-icons, input[type=submit].small.iconbtn .material-icons, .btn.small.iconbtn .material-icons {
   font-size: 1rem;
@@ -800,6 +893,14 @@ input[type=range] {
 .fullpagesubmit:hover {
   font-size: 25px;
   background-color: #296ea7;
+}
+
+form:invalid .fullpagesubmit {
+  cursor: not-allowed;
+}
+form:invalid .fullpagesubmit:hover {
+  font-size: 20px;
+  background-color: #014178;
 }
 
 .search-block {

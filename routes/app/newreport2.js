@@ -14,6 +14,8 @@ module.exports = async (req, res) => {
   res.tmplOpts.subjects = data[0].map(d => d.dataValues)
   res.tmplOpts.locations = data[1].map(d => d.dataValues)
   res.tmplOpts.examiners = data[2].map(d => d.dataValues)
-  
+  const d = new Date()
+  res.tmplOpts.currentDate = d.getUTCFullYear() + "-" + (d.getUTCMonth()+1+"").padStart(2, "0") + "-" + (""+d.getUTCDate()).padStart(2, "0")
+    
   tmpl.render('app/newreport2.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

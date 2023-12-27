@@ -13,9 +13,12 @@
           <small>Prüfungsdatum</small><br>
           <input type="date" name="date" id="" value="{{inputformatdate}}"><br><br>
           <div class="inputlabel">
-            <label>Prüfungsort (Klinik oder Institut)</label>
+            <label id="locationLabel">Prüfungsort (Klinik oder Institut)</label>
             <input type="hidden" name="locationId" value="{{exam.ExamLocationId}}">
-            <input type="text" name="location" data-autocomplete="location" placeholder="Uniklinikum" required minlength="3" value="{{exam.ExamLocation.name}}">
+            <input type="hidden" name="location" class="requiredInvisible" data-label="locationLabel" value="{{exam.ExamLocation.name}}">
+            <br>
+            <span id="locationDisplay">{{exam.ExamLocation.name}}</span>
+            <button type="button" class="iconbtn small" onclick="pickLocation()"><i class="material-icons">edit</i> Ort wählen</button>
           </div><br>
           <div class="inputlabel">
             <label>Prüflinge insgesamt</label>
@@ -34,14 +37,20 @@
           <div class="card mb" >
             <h3>Prüfung {{loop.index}}</h3><br>
             <div class="inputlabel">
-              <label>Fach</label>
+              <label id="subjectLabel{{subjectExam.id}}">Fach</label>
               <input type="hidden" name="subjectId{{subjectExam.id}}" value="{{subjectExam.SubjectId}}">
-              <input type="text" name="subject{{subjectExam.id}}" data-autocomplete="subject" placeholder="Anatomie" required minlength="3" value="{{subjectExam.Subject.name}}">
+              <input type="hidden" name="subject{{subjectExam.id}}" class="requiredInvisible" data-label="subjectLabel{{subjectExam.id}}" value="{{subjectExam.Subject.name}}">
+              <br>
+              <span id="subjectDisplay{{subjectExam.id}}">{{subjectExam.Subject.name}}</span>
+              <button type="button" class="iconbtn small" onclick="pickSubject({{subjectExam.id}})"><i class="material-icons">edit</i> Fach wählen</button>
             </div><br>
             <div class="inputlabel">
-              <label>Prüfer (Ganzer Name ohne Titel!)</label>
+              <label id="examinerLabel{{subjectExam.id}}">Prüfer (ganzer Name, ohne Titel)</label>
               <input type="hidden" name="examinerId{{subjectExam.id}}" value="{{subjectExam.ExaminerId}}">
-              <input type="text" name="examiner{{subjectExam.id}}" data-autocomplete="examiner" placeholder="Joachim Kirsch" required minlength="3" value="{{subjectExam.Examiner.name}}">
+              <input type="hidden" name="examiner{{subjectExam.id}}" class="requiredInvisible" data-label="examinerLabel{{subjectExam.id}}" value="{{subjectExam.Examiner.name}}">
+              <br>
+              <span id="examinerDisplay{{subjectExam.id}}">{{subjectExam.Examiner.name}}</span>
+              <button type="button" class="iconbtn small" onclick="pickExaminer({{subjectExam.id}})"><i class="material-icons">edit</i> Prüfer wählen</button>
             </div><br>
             <small>Bericht</small>
             <textarea name="report{{subjectExam.id}}" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30">{{subjectExam.report}}</textarea>
@@ -52,16 +61,134 @@
     </section>
     <div style="height: 64px">&nbsp;</div>
   </div>
+
+<div class="modal pickerModal" id="locationPicker">
+  <div class="modalwrapper">
+    <div class="modalcontent" onclick="event.stopPropagation()">
+      <h2>Ort auswählen</h2>
+      <section class="page page1">
+        <input type="text" autocomplete="off" class="modalPage1Input" placeholder="Uniklinikum">
+        <div class="listcontainer"><ul class="suggestionsList"></ul></div>
+        <span style="text-align: right;"><a href="#" class="notFoundLink">Ort nicht gefunden?</a></span>
+      </section>
+      <section class="page page2">
+        Einen neuen Ort anlegen:
+        <div class="inputlabel">
+          <label>Ort</label>
+          <input type="text" class="modalPage2Input" placeholder="Dorfklinik Kleinbüttwart">
+        </div>
+      </section>
+      <div class="modalbtns">
+        <button type="button" class="secondary modalCancelBtn">abbrechen</button>
+        <div style="flex-grow: 1"></div>
+        <button type="button" class="confirmNewBtn">übernehmen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal pickerModal" id="examinerPicker">
+  <div class="modalwrapper">
+    <div class="modalcontent" onclick="event.stopPropagation()">
+      <h2>Prüfer auswählen</h2>
+      <section class="page page1">
+        <input type="text" autocomplete="off" class="modalPage1Input" placeholder="Joachim Kirsch">
+        <div class="listcontainer"><ul class="suggestionsList"></ul></div>
+        <span style="text-align: right;"><a href="#" class="notFoundLink">Prüfer nicht gefunden?</a></span>
+      </section>
+      <section class="page page2">
+        Einen neuen Prüfer anlegen:
+        <div class="inputlabel">
+          <label>Vorname</label>
+          <input type="text" class="modalPage2Input" placeholder="Joachim">
+        </div>
+        <div class="inputlabel">
+          <label>Nachname</label>
+          <input type="text" class="modalPage2Input" placeholder="Kirsch">
+        </div>
+      </section>
+      <div class="modalbtns">
+        <button type="button" class="secondary modalCancelBtn">abbrechen</button>
+        <div style="flex-grow: 1"></div>
+        <button type="button" class="confirmNewBtn">übernehmen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal pickerModal" id="subjectPicker">
+  <div class="modalwrapper">
+    <div class="modalcontent" onclick="event.stopPropagation()">
+      <h2>Fach auswählen</h2>
+      <section class="page page1">
+        <input type="text" autocomplete="off" class="modalPage1Input" placeholder="Weltraummedizin">
+        <div class="listcontainer"><ul class="suggestionsList"></ul></div>
+        <span style="text-align: right;"><a href="#" class="notFoundLink">Fach nicht gefunden?</a></span>
+      </section>
+      <section class="page page2">
+        Ein neues Fach anlegen:
+        <div class="inputlabel">
+          <label>Name</label>
+          <input type="text" class="modalPage2Input" placeholder="Weltraummedizin">
+        </div>
+      </section>
+      <div class="modalbtns">
+        <button type="button" class="secondary modalCancelBtn">abbrechen</button>
+        <div style="flex-grow: 1"></div>
+        <button type="button" class="confirmNewBtn">übernehmen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+<script src="/assets/pickfromdbmodals.js"></script>
 <script type="text/javascript">
   atData = {
     examiner: new Fuse({{examiners | json_encode() | raw}}, {keys: ['name']}),
     subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),
     location: new Fuse({{locations | json_encode() | raw}}, {keys: ['name']})
   }
+
+  function validateForm () {
+    let valid = true
+    const fields = document.querySelectorAll('.requiredInvisible')
+    for (let i = 0; i < fields.length; i++) {
+      const element = fields[i]
+      if (element.value.length < 3) {
+        valid = false
+        document.getElementById(element.dataset.label).classList.add('error')
+      }
+    }
+    return valid
+  }
+
+  function pickLocation () {
+    new ModalHandler(document.getElementById('locationPicker'), atData.location, (id, name) => {
+      document.getElementsByName('locationId')[0].value = id
+      document.getElementsByName('location')[0].value = name
+      document.getElementById('locationDisplay').textContent = name
+      document.getElementById(document.getElementsByName('location')[0].dataset.label).classList.remove('error')
+    })
+  }
+  function pickExaminer (n) {
+    new ModalHandler(document.getElementById('examinerPicker'), atData.examiner, (id, name) => {
+      document.getElementsByName('examinerId'+n)[0].value = id
+      document.getElementsByName('examiner'+n)[0].value = name
+      document.getElementById('examinerDisplay'+n).textContent = name
+      document.getElementById(document.getElementsByName('examiner'+n)[0].dataset.label).classList.remove('error')
+    })
+  }
+  function pickSubject (n) {
+    new ModalHandler(document.getElementById('subjectPicker'), atData.subject, (id, name) => {
+      document.getElementsByName('subjectId'+n)[0].value = id
+      document.getElementsByName('subject'+n)[0].value = name
+      document.getElementById('subjectDisplay'+n).textContent = name
+      document.getElementById(document.getElementsByName('subject'+n)[0].dataset.label).classList.remove('error')
+    })
+  }
 </script>
-<script src="/assets/autocomplete.js"></script>
 {% endblock %}

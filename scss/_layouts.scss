@@ -127,3 +127,95 @@
     }
   }
 }
+
+.modal {
+  display: none;
+  &.visible {
+    display: block;
+  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  .modalwrapper {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    @media (min-width: 700px) {
+      top: 128px;
+      left: 64px;
+      right: 64px;
+      bottom: 64px;
+    }
+    @media (min-width: 1000px) {
+      top: 128px;
+      left: 364px;
+      right: 64px;
+      bottom: 64px;
+    }
+    .modalcontent {
+      padding: 16px;
+      background: white;
+      border-radius: 4px;
+      max-width: 500px;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      h2:first-child {
+        margin-top: 0;
+        text-align: center;
+      }
+      .modalbtns {
+        display: flex;
+        margin-top: 8px;
+        border-top: 1px solid lightgrey;
+        padding-top: 16px;
+      }
+    }
+  }
+}
+.pickerModal {
+  .page.page2 {
+    display: none;
+  }
+  &.onPage2 {
+    .page.page1 {
+      display: none;
+    }
+    .page.page2 {
+      display: flex;
+    }
+  }
+  .page {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .listcontainer {
+    flex-grow: 1;
+    overflow: auto;
+    li {
+      cursor: pointer;
+    }
+  }
+  .notFoundLink {
+    display: none;
+    &.visible {
+      display: inline-block;
+    }
+  }
+  .confirmNewBtn {
+    display: none;
+    &.visible {
+      display: inline-block;
+    }
+  }
+}
