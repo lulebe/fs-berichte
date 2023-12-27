@@ -40,8 +40,10 @@ async function getExams (visited) {
   const visitedExams = await Exam.findAll({where: {id: visited}, include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation, ExamType]})
   //2. get up to 7 random exams
   let randomExams = []
+  let compareDate = new Date()
+  compareDate.setFullYear(compareDate.getFullYear() - 2)
   if (visited.length < 7)
-    randomExams = await Exam.findAll({include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation, ExamType], order: Sequelize.literal('rand()'), limit: (7 - visited.length)})
+    randomExams = await Exam.findAll({where: {date: {[Op.gte]: compareDate}}, include: [{model: SubjectExam, include: [Subject, Examiner]}, ExamLocation, ExamType], order: Sequelize.literal('rand()'), limit: (7 - visited.length)})
   //3. combine
   return [...visitedExams, ...randomExams]
 }
