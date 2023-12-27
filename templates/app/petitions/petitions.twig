@@ -7,7 +7,6 @@
   <section class="grid-col left">
     <h1 class="mtop0">Petitionen</h1>
     <a href="/app/petitions/new" class="btn iconbtn mb"><i class="material-icons">add</i> Neue Petition erstellen</a>
-
   </section>
   <section class="grid-col right">
     <div class="card mb">
@@ -33,16 +32,31 @@
     {% endif %}
     </div>
   </section>
+  {% if results %}
   <div class="resultsgrid">
     {% for result in results %}
       <a href="petitions/{{result.id}}" class="card selectable">
         <h3>{{result.title}}</h3>
-        <small>{{result.dateReadable}}</small><br>
-        <p class="usertext">{{result.shortText}}</p>
+        <div class="petitionprogress progress{{result.status}}">
+          <div class="progressStep"><i class="material-icons">edit_note</i></div>
+          <div class="progressStep"><i class="material-icons">draw</i></div>
+          <div class="progressStep"><i class="material-icons">verified</i></div>
+          <div class="progressStep"><i class="material-icons">groups</i></div>
+          <div class="progressText">{{result.statusReadable}}</div>
+        </div>
+        <small><i class="material-icons primary">edit_note</i> {{result.dateReadable}} - {{result.author}}</small><br>
+        <i class="material-icons accent">send</i> {{result.recipient}}
+        <p class="usertext">{{result.shortText | nl2br }}</p>
         {% for tag in result.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
       </a>
     {% endfor %}
   </div>
+  {% else %}
+    <div class="no-content">
+      <i class="material-icons">new_releases</i><br><br>
+      Derzeit gibt es keine Petitionen.
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
 

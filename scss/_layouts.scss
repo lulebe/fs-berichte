@@ -43,7 +43,7 @@
     grid-column: 2 / span 1;
     grid-row: 1 / span 2;
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 1150px) {
     grid-template-columns: 100%;
     &.right-over {
       .grid-col.right {
@@ -66,10 +66,28 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
   gap: 16px;
+  &.morecols {
+    grid-template-columns: repeat(4, 1fr);
+    @media  (max-width: 1600px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media  (max-width: 1300px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media  (max-width: 999px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media  (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media  (max-width: 550px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
   @media  (max-width: 1600px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media  (max-width: 1000px) {
+  @media  (max-width: 999px) {
     grid-template-columns: repeat(3, 1fr);
   }
   @media  (max-width: 900px) {
@@ -78,12 +96,34 @@
   @media  (max-width: 550px) {
     grid-template-columns: repeat(1, 1fr);
   }
-  .card {
+  > a {
     align-self: stretch;
+  }
+  .card {
+    height: 100%;
     color: black;
     &:hover {
       box-shadow: $shadow-m;
       background-color: lighten($primary-color, 56%);
+    }
+  }
+}
+
+.no-content {
+  text-align: center;
+  color: grey;
+  .material-icons {
+    color: lightgrey;
+    font-size: 8rem;
+  }
+}
+
+.resultsgrid.home {
+  .card {
+    background-position: center;
+    background-size: cover;
+    &:hover {
+      background: lighten($primary-color, 56%) !important;
     }
   }
 }

@@ -3,6 +3,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 const { ResearchReport } = requiremain('./db/db')
+const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
 module.exports = async (req, res) => {
   const where = {publishDate: {[Op.lte]: new Date()}}

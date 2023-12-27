@@ -35,11 +35,11 @@
         </div>
       <h1>Ergebnisse</h1>
       {% if results %}
-      <a href="pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
+      <a href="/app/pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
       {% endif %}
       <ul>
         {% for result in results %}
-          <li><a href="exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}
       </ul>
     </section>

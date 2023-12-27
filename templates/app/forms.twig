@@ -6,6 +6,7 @@
   <div class="wrapper">
     <section>
       <h1>Umfragen</h1>
+      {% if forms %}
       <ul>
         {% for form in forms %}
           <li><a href="/app/forms/{{form.id}}" class="main-text">
@@ -13,6 +14,12 @@
           </a></li>
         {% endfor %}
       </ul>
+      {% else %}
+      <div class="no-content">
+        <i class="material-icons">new_releases</i><br><br>
+        Derzeit gibt es keine Umfragen.
+      </div>
+      {% endif %}
     </section>
   </div>
 {% endblock %}

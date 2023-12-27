@@ -30,6 +30,7 @@ appRouter.use((req, res, next) => {
 appRouter.use('/admin', require('./middleware/onlyAdmin'))
 appRouter.use('/admin', adminRouter)
 
+appRouter.get('/main', require('./routes/app/main'))
 
 //user stuff
 appRouter.get('/logout', require('./routes/app/logout'))

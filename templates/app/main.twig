@@ -1,0 +1,61 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Prüfungen{% endblock %}
+
+{% block content %}
+  <div class="resultsgrid home morecols" style="padding: 16px">
+    {% for r in results %}
+      <a href="/app/{{r.type}}/{{r.data.id}}"><div class="card" style="background-image: linear-gradient(to bottom, rgba(255, 230, 235,0.95) 10%, rgba(255,255,255,0.5) 100%), url('/assets/home-bgs/{{r.type}}.jpg')">
+      {% if r.type == 'exam' %}
+        <h3>{{r.data.ExamType.name}}</h3>
+        <small>{{r.data.dateReadable}}</small><br>
+        <small>{{r.data.ExamLocation.name}}</small><br>
+        {% for se in r.data.SubjectExams %}
+        {{se.Subject.name}} <em>({{se.Examiner.name}})</em>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        <p class="usertext">{{r.data.comment[:200]}}...</p>
+      {% elseif r.type == 'research' %}
+        <h3>{{r.data.subject}}</h3>
+        <small>{{r.data.dateReadable}}</small><br>
+        {{r.data.head}} & {{r.data.supervisor}}<br><br>
+        <div class="questionbox">
+          <div class="question">Gesamtfazit</div>
+          {% if r.data.rating == 1 %}
+            <div class="answer c4-4">{{r.data.ratingReadable}}</div>
+          {% endif %}
+          {% if r.data.rating == 2 %}
+            <div class="answer c4-3">{{r.data.ratingReadable}}</div>
+          {% endif %}
+          {% if r.data.rating == 3 %}
+            <div class="answer c4-2">{{r.data.ratingReadable}}</div>
+          {% endif %}
+          {% if r.data.rating == 4 %}
+            <div class="answer c4-1">{{r.data.ratingReadable}}</div>
+          {% endif %}
+        </div>
+        <span class="usertext">{{r.data.othertext[:100]}}{% if r.data.othertext %}...{% endif %}</span>
+      {% elseif r.type == 'petition' %}
+        <h3>{{r.data.title}}</h3>
+        <div class="petitionprogress progress{{r.data.status}}">
+          <div class="progressStep"><i class="material-icons">edit_note</i></div>
+          <div class="progressStep"><i class="material-icons">draw</i></div>
+          <div class="progressStep"><i class="material-icons">verified</i></div>
+          <div class="progressStep"><i class="material-icons">groups</i></div>
+          <div class="progressText">{{r.data.statusReadable}}</div>
+        </div>
+        <small><i class="material-icons primary">edit_note</i> {{r.data.dateReadable}} - {{r.data.author}}</small><br>
+        <i class="material-icons accent">send</i> {{r.data.recipient}}
+        <p class="usertext">{{r.data.shortText | nl2br }}</p>
+        {% for tag in r.data.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
+      {% elseif r.type == 'form' %}
+        <h3>Umfrage</h3>
+        <h4>{{r.data.title}}</h4>
+        {{r.data.dateReadable}}
+      {% endif %}
+      </div></a>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

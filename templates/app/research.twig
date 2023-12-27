@@ -17,7 +17,7 @@
       {{ report.subject }} ({{ report.areaReadable }})<br>
       Doktorvater/-mutter bzw Chef: {{ report.head}}<br>
       Betreuer:in: {{ report.supervisor}}<br>
-      Vollzeit: {{ report.durationReadable }} {% if report.timetext %}({{ report.timetext }}){% endif %}<br><br>
+      Vollzeit: {{ report.durationReadable }} {% if report.timetext %}(<span class="usertext">{{ report.timetext }}</span>){% endif %}<br><br>
       <div class="questionbox">
         <div class="question">Gesamtfazit</div>
         {% if report.rating == 1 %}

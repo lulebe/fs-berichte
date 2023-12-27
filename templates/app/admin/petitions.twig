@@ -32,10 +32,10 @@
       <div class="card mb">
         <h1>Automatische Veröffentlichung</h1>
         {% if petitionsRequireAdminConfirmation %}
-        <p>Petitionen werden <strong>erst nach Admin-Erlaubnis öffentlich</strong>. Zur Erlaubnis von direkter Veröffentlichung neuer Petitionen:</p>
+        <p>Petitionen werden <strong>erst nach Admin-Erlaubnis aktiv</strong>. Zur Erlaubnis von direkter Veröffentlichung neuer Petitionen:</p>
         <form method="post"><button type="submit" name="setPetitions" value="public" class="iconbtn"><i class="material-icons">lock_open</i> Freigeben</button></form>
         {% else %}
-        <p>Petitionen werden <strong>direkt öffentlich</strong>. Um Admin-Freigabe neuer Petitionen zu erfordern:</p>
+        <p>Petitionen können <strong>direkt aktiv werden</strong>. Um Admin-Freigabe neuer Petitionen zu erfordern:</p>
         <form method="post"><button type="submit" name="setPetitions" value="private" class="iconbtn"><i class="material-icons">lock</i> Sperren</button></form>
         {% endif %}
       </div>

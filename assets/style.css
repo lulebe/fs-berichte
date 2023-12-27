@@ -119,8 +119,9 @@ q {
 }
 
 .usertext {
-  color: #333;
+  color: #222;
   font-family: "Zilla Slab", serif;
+  line-height: 1.35rem;
 }
 
 @keyframes darkener-opacity {
@@ -515,7 +516,7 @@ ul.selectionlist li {
   grid-column: 2/span 1;
   grid-row: 1/span 2;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1150px) {
   .wrapper-2-col {
     grid-template-columns: 100%;
   }
@@ -538,12 +539,40 @@ ul.selectionlist li {
   grid-template-rows: auto;
   gap: 16px;
 }
+.resultsgrid.morecols {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 1600px) {
+  .resultsgrid.morecols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1300px) {
+  .resultsgrid.morecols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 999px) {
+  .resultsgrid.morecols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .resultsgrid.morecols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 550px) {
+  .resultsgrid.morecols {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 @media (max-width: 1600px) {
   .resultsgrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 1000px) {
+@media (max-width: 999px) {
   .resultsgrid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -558,13 +587,33 @@ ul.selectionlist li {
     grid-template-columns: repeat(1, 1fr);
   }
 }
-.resultsgrid .card {
+.resultsgrid > a {
   align-self: stretch;
+}
+.resultsgrid .card {
+  height: 100%;
   color: black;
 }
 .resultsgrid .card:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   background-color: #f2f7fc;
+}
+
+.no-content {
+  text-align: center;
+  color: grey;
+}
+.no-content .material-icons {
+  color: lightgrey;
+  font-size: 8rem;
+}
+
+.resultsgrid.home .card {
+  background-position: center;
+  background-size: cover;
+}
+.resultsgrid.home .card:hover {
+  background: #f2f7fc !important;
 }
 
 .inline {
@@ -948,6 +997,7 @@ textarea.short {
 }
 .petitionprogress .progressStep .material-icons {
   font-size: 2rem;
+  top: 9px;
 }
 .petitionprogress .progressText {
   position: absolute;

@@ -15,7 +15,7 @@
       </div>
       <i class="material-icons primary">edit_note</i> {{petition.dateReadable}} - {{petition.author}}<br>
       <i class="material-icons accent">send</i> {{petition.recipient}}
-      <q>{{petition.shortText}}</q>
+      <q>{{petition.shortText | nl2br }}</q>
       {% for tag in petition.Tags %} <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a> {% endfor %}
     </section>
     <section class="maintextarea">
