@@ -20,10 +20,7 @@ module.exports = async (req, res) => {
     User.findAll({where: {email: {[Op.like]: searchTerm}}, order: [['isAdmin', 'DESC']], limit: 50, offset}) :
     User.findAll({order: [['isAdmin', 'DESC']], limit: 50, offset})
   )
-  res.tmplOpts.users = allUsers.map(u => u.dataValues)
-  res.tmplOpts.users.forEach(u => {
-    u.createdAt = new Date(u.createdAt).toLocaleDateString()
-  })
+  res.tmplOpts.users = allUsers
   res.tmplOpts.searchQuery = req.query.searchUser
 
   res.tmplOpts.activeAdminTab = filename
