@@ -14,7 +14,7 @@
   <ul>
     {% for examiner in examiners %}
       <li>
-        <a href="examiner/{{examiner.id}}" class="main-text">{{examiner.name}}<small> - seit {{examiner.createdAt}}</small></a>
+        <a href="examiner/{{examiner.id}}" class="main-text">{{examiner.name}}<small> - seit {{examiner.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>

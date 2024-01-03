@@ -6,7 +6,7 @@
   <ul>
     {% for examType in examTypes %}
       <li>
-        <a href="examtype/{{examType.id}}" class="main-text">{{examType.name}}<small> - seit {{examType.createdAt}}</small></a>
+        <a href="examtype/{{examType.id}}" class="main-text">{{examType.name}}<small> - seit {{examType.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>

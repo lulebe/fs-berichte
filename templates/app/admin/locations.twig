@@ -14,7 +14,7 @@
   <ul>
     {% for location in locations %}
       <li>
-        <a href="examLocation/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAt}}</small></a>
+        <a href="examLocation/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>

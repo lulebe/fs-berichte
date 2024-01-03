@@ -21,10 +21,7 @@ module.exports = async (req, res) => {
     Subject.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
     Subject.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
-  res.tmplOpts.subjects = allSubjects.map(s => s.dataValues)
-  res.tmplOpts.subjects.forEach(s => {
-    s.createdAt = new Date(s.createdAt).toLocaleDateString()
-  })
+  res.tmplOpts.subjects = allSubjects
   res.tmplOpts.searchQuery = req.query.searchSubject
 
   res.tmplOpts.activeAdminTab = filename

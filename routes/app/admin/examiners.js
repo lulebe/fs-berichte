@@ -21,10 +21,7 @@ module.exports = async (req, res) => {
     Examiner.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'ASC']], limit: 50, offset}) :
     Examiner.findAll({order: [['name', 'ASC']], limit: 50, offset})
   )
-  res.tmplOpts.examiners = allExaminers.map(s => s.dataValues)
-  res.tmplOpts.examiners.forEach(s => {
-    s.createdAt = new Date(s.createdAt).toLocaleDateString()
-  })
+  res.tmplOpts.examiners = allExaminers
   res.tmplOpts.searchQuery = req.query.searchExaminer
 
   res.tmplOpts.activeAdminTab = filename

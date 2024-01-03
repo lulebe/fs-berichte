@@ -75,6 +75,12 @@ const Subject = sequelize.define('Subject', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  createdAtReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
   }
 })
 
@@ -84,6 +90,12 @@ const Examiner = sequelize.define('Examiner', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  createdAtReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
   }
 })
 
@@ -93,6 +105,12 @@ const ExamLocation = sequelize.define('ExamLocation', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
+  },
+  createdAtReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
   }
 })
 
@@ -120,6 +138,12 @@ const ExamType = sequelize.define('ExamType', {
   subjectCount: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  createdAtReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.createdAt).toLocaleDateString('de-DE')
+    }
   }
 })
 

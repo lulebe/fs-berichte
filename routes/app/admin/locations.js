@@ -21,10 +21,7 @@ module.exports = async (req, res) => {
     ExamLocation.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
     ExamLocation.findAll({order: [['name', 'DESC']], limit: 50, offset})
   )
-  res.tmplOpts.locations = allLocations.map(s => s.dataValues)
-  res.tmplOpts.locations.forEach(s => {
-    s.createdAt = new Date(s.createdAt).toLocaleDateString()
-  })
+  res.tmplOpts.locations = allLocations
   res.tmplOpts.searchQuery = req.query.searchLocation
 
   res.tmplOpts.activeAdminTab = filename
