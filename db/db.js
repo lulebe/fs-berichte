@@ -58,7 +58,7 @@ const User = sequelize.define('User', {
   createdAtReadable: {
     type: DataTypes.VIRTUAL,
     get () {
-      return new Date(this.createdAt).toLocaleDateString('de-DE')
+      return new Date(this.date).toLocaleDateString('de-DE')
     }
   },
   displayName: {
