@@ -63,9 +63,10 @@ function fixExaminerName (name) {
 
 function validate (body, subjectCount) {
   if (!body.location || body.location.length < 3) return false
-  for (let i = 0; i < subjectCount; i++) {
+  for (let i = 1; i <= subjectCount; i++) {
     if (!body['examiner'+i] || body['examiner'+i].length < 3) return false
     if (!body['subject'+i] || body['subject'+i].length < 3) return false
     if (!body['report'+i] || body['report'+i].length < 30) return false
   }
+  return true
 }
