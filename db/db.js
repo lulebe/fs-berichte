@@ -349,6 +349,60 @@ const Form = sequelize.define('Forms', {
   }
 })
 
+//Awards
+const Award = sequelize.define('Awards', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  description: DataTypes.TEXT,
+  status: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    set (val) {
+      if (Object.values(this.STATUS).includes(val))
+        this.setDataValue('status', val)
+      else
+        throw new Error("invalid status to be set on Award " + this.id)
+    }
+  },
+  statusReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.STATUS_READABLE[this.status]
+    }
+  },
+  votingDeadline: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  }
+})
+Award.STATUS = Object.freeze({UNPUBLISHED: 0, PUBLISHED: 1, DONE: 2})
+Award.STATUS_READABLE = ["Unveröffentlicht", "Veröffentlicht", "Abgeschlossen"]
+
+const AwardCandidate = sequelize.define('AwardCandidates', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  imageUrl: DataTypes.STRING(1024),
+  shortDescription: {
+    type: DataTypes.STRING(1024),
+    allowNull: false
+  },
+  longDescription: {
+    type: DataTypes.TEXT('long'),
+    allowNull: false
+  }
+})
+
+const AwardVote = sequelize.define('AwardVotes', {}, {
+  indexes: [
+    {unique: true, fields: ['UserId', 'AwardId']}
+  ]
+})
+
 //Einstellungen
 const Settings = sequelize.define('Settings', {
   id: {
@@ -469,7 +523,39 @@ User.belongsToMany(Petition, {
   as: 'SupportedPetitions'
 })
 
+
+User.hasMany(AwardVote,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+AwardVote.belongsTo(User)
+Award.hasMany(AwardVote,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+AwardVote.belongsTo(Award)
+AwardCandidate.hasMany(AwardVote,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+AwardVote.belongsTo(AwardCandidate)
+
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, AwardVote, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }

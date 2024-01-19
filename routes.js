@@ -97,3 +97,4 @@ adminRouter.post('/petitions', [require('./routes/app/admin/petitions_post')], r
 adminRouter.get('/forms', require('./routes/app/admin/forms'))
 adminRouter.post('/forms', [require('./routes/app/admin/forms_post')], require('./routes/app/admin/forms'))
 adminRouter.get('/awards', require('./routes/app/admin/awards'))
+adminRouter.get('/awards/new', require('./routes/app/admin/awards/new'))

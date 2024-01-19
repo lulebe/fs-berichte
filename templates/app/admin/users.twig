@@ -14,7 +14,7 @@
   <ul>
     {% for user in users %}
       <li>
-        <a href="user/{{user.id}}" class="main-text">{% if user.isAdmin %}<strong>{% endif %}{{user.email}}{% if user.isAdmin %}</strong>{% endif %}<small> - seit {{user.createdAtReadable}}</small></a>
+        <a href="user/{{user.id}}" class="main-text">{% if user.isAdmin %}<strong>{% endif %}{{user.email}}{% if user.isAdmin %}</strong>{% endif %}{% if user.nickname %} ({{user.nickname}}){% endif %} <small style="white-space: nowrap;">- seit {{user.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>
