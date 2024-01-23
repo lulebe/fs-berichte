@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Fächer</h1>
   <form method="get">
-    <div class="search-block">
+    <div class="input-btn-block">
       <div class="inputlabel">
         <label for="subjectsearchinput">Fachsuche</label>
         <input type="search" name="searchSubject" id="subjectsearchinput" value="{{searchQuery}}" placeholder="Name">
@@ -11,7 +11,7 @@
       <button type="submit"><i class="material-icons">search</i></button>
     </div>
   </form>
-  <ul>
+  <ul class="striped">
     {% for subject in subjects %}
       <li>
         <a href="examSubject/{{subject.id}}" class="main-text">{{subject.name}}<small> - seit {{subject.createdAtReadable}}</small></a>

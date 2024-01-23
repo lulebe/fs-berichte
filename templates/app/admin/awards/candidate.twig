@@ -1,0 +1,41 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+{% block head %}
+<style>
+  .maintextarea img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" v-scope>
+  <a href="/app/admin/awards/{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
+  <h1>{{candidate.name}}</h1>
+  <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</a><br><br>
+  <div class="card maintextarea">
+    {{candidate.longDescriptionHtml | raw}}    
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<script>
+  const award = {{award | json_encode | raw }}
+  const candidate = {{candidate | json_encode | raw }}
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+
+  award,
+  candidate,
+
+  get header () {
+    return this.candidate.name || 'Kadidaten'
+  }
+
+}).mount()
+</script>
+{% endblock %}

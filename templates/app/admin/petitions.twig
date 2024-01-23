@@ -8,7 +8,7 @@
       <div class="card">
         <h1>Tags</h1>
         <form method="post">
-          <div class="search-block">
+          <div class="input-btn-block">
             <div class="inputlabel">
               <label for="newtaginput">neues Tag</label>
               <input type="text" name="newTag" id="newtaginput" placeholder="Block IX">
@@ -42,7 +42,7 @@
       {% if petitionsRequireAdminConfirmation %}
       <div class="card">
         <h1>neue Petitionen</h1>
-        <ul>
+        <ul class="striped">
           {% for p in petitionsAwaitingConfirmation %}
             <li>
               <a href="/app/petitions/{{p.id}}" class="main-text small">

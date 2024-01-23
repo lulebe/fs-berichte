@@ -323,7 +323,7 @@ const Tag = sequelize.define('Tags', {
 //Comments
 const PetitionComment = sequelize.define('PetitionComments', {
   text: DataTypes.TEXT,
-  datetimeReadable: {
+  dateReadable: {
     type: DataTypes.VIRTUAL,
     get () {
       return new Date(this.createdAt).toLocaleDateString('de-DE')
@@ -356,12 +356,13 @@ const Award = sequelize.define('Awards', {
     allowNull: false
   },
   description: DataTypes.TEXT,
+
   status: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
     set (val) {
-      if (Object.values(this.STATUS).includes(val))
+      if (Object.values(Award.STATUS).includes(val))
         this.setDataValue('status', val)
       else
         throw new Error("invalid status to be set on Award " + this.id)
@@ -370,12 +371,18 @@ const Award = sequelize.define('Awards', {
   statusReadable: {
     type: DataTypes.VIRTUAL,
     get () {
-      return this.STATUS_READABLE[this.status]
+      return Award.STATUS_READABLE[this.status]
     }
   },
   votingDeadline: {
     type: DataTypes.DATEONLY,
     allowNull: false
+  },
+  votingDeadlineReadable: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.votingDeadline).toLocaleDateString('de-DE')
+    }
   }
 })
 Award.STATUS = Object.freeze({UNPUBLISHED: 0, PUBLISHED: 1, DONE: 2})
@@ -386,7 +393,7 @@ const AwardCandidate = sequelize.define('AwardCandidates', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  imageUrl: DataTypes.STRING(1024),
+  position: DataTypes.INTEGER,
   shortDescription: {
     type: DataTypes.STRING(1024),
     allowNull: false
@@ -397,10 +404,23 @@ const AwardCandidate = sequelize.define('AwardCandidates', {
   }
 })
 
+
 const AwardVote = sequelize.define('AwardVotes', {}, {
   indexes: [
     {unique: true, fields: ['UserId', 'AwardId']}
   ]
+})
+
+//Files
+const FileStorage = sequelize.define('FileStorage', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  data: {
+    type: DataTypes.BLOB('long'),
+    allowNull: false
+  }
 })
 
 //Einstellungen
@@ -523,7 +543,16 @@ User.belongsToMany(Petition, {
   as: 'SupportedPetitions'
 })
 
-
+Award.hasMany(AwardCandidate,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+AwardCandidate.belongsTo(Award)
 User.hasMany(AwardVote,
   {
     onDelete: 'CASCADE',
@@ -558,4 +587,4 @@ AwardVote.belongsTo(AwardCandidate)
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, AwardVote, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, AwardVote, FileStorage, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }

@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Dozenten</h1>
   <form method="get">
-    <div class="search-block">
+    <div class="input-btn-block">
       <div class="inputlabel">
         <label for="examinersearchinput">Dozentensuche</label>
         <input type="search" name="searchExaminer" id="examinersearchinput" value="{{searchQuery}}" placeholder="Name">
@@ -11,7 +11,7 @@
       <button type="submit"><i class="material-icons">search</i></button>
     </div>
   </form>
-  <ul>
+  <ul class="striped">
     {% for examiner in examiners %}
       <li>
         <a href="examiner/{{examiner.id}}" class="main-text">{{examiner.name}}<small> - seit {{examiner.createdAtReadable}}</small></a>

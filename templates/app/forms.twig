@@ -7,7 +7,7 @@
     <section>
       <h1>Umfragen</h1>
       {% if forms %}
-      <ul>
+      <ul class="striped">
         {% for form in forms %}
           <li><a href="/app/forms/{{form.id}}" class="main-text">
             {{form.title}} - <small>{{form.dateReadable}}</small>

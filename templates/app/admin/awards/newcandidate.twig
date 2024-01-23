@@ -1,0 +1,110 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<style>
+.EasyMDEContainer {
+  color: #333;
+  font-family: 'Zilla Slab', serif;
+}
+.EasyMDEContainer .CodeMirror-fullscreen {
+  z-index: 12;
+}
+.editor-toolbar.fullscreen {
+  z-index: 12;
+}
+.editor-preview-side {
+  z-index: 12;
+}
+.EasyMDEContainer img {
+  max-width: 100%;
+  max-height: 500px;
+}
+.EasyMDEContainer button {
+  color: black;
+}
+.EasyMDEContainer button:hover {
+  color: black;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" v-scope>
+  <a href="../../{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
+  <h1>${header} aufstellen</h1>
+  <div class="card">
+    <form action="" method="post">
+      <div class="inputlabel">
+        <label>Name des Kandidaten</label>
+        <input type="text" name="name" v-model="candidate.name" placeholder="Joachim Kirsch" required />
+      </div>
+      <div class="inputlabel">
+        <label>Kurzbeschreibung</label>
+        <textarea name="shortDescription" class="short usertext" minlength="30" maxlength="250" required></textarea>
+      </div>
+      <div class="inputlabel">
+        <label>Ausführliche Beschreibung</label>
+        <textarea name="longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung">
+# Allgemeines
+So eine tolle Lehre und so *blabla*
+## Ist toll weil
+1. bla
+2. blubb
+3. tralala
+          </textarea>
+      </div>
+      <button type="submit" class="fullpagesubmit">hinzufügen</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<script>
+  const award = {{award | json_encode | raw }}
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+
+  award,
+  candidate: {
+    name: "",
+    description: ""
+  },
+
+  get header () {
+    return this.candidate.name || 'Kadidaten'
+  }
+
+}).mount()
+
+const easyMDE = new EasyMDE({
+  element: document.getElementById('mdeditor'),
+  spellChecker: false,
+  uploadImage: true,
+  imageUploadEndpoint: '/app/admin/images',
+  toolbar: [
+    "bold", "italic", "heading", "|",
+    "quote", "unordered-list", "ordered-list", "|",
+    "link", "image",
+    {
+      name: 'upload-image',
+      action: EasyMDE.drawUploadedImage,
+      className: "fa fa-upload",
+      title: 'Upload Image',
+    }
+    , "|",
+    "preview", "side-by-side", "fullscreen", "|",
+    "undo", "redo", "|",
+    "guide"
+    ],
+  autosave: {
+    enabled: true,
+    uniqueId: "newpetition"
+  }
+})
+</script>
+{% endblock %}

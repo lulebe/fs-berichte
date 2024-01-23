@@ -13,6 +13,10 @@ button, input[type=submit], .btn {
   outline: none;
   cursor: pointer;
   color: white;
+  &:focus {
+    outline: 2px solid black;
+    outline-offset: 2px;
+  }
   &.small {
     font-size: 0.85rem;
     padding: 5px 10px;
@@ -57,6 +61,9 @@ button, input[type=submit], .btn {
   &:visited {
     color: white;
   }
+  &.pushup {
+    transform: translateY(-4px);
+  }
 }
 
 select {
@@ -75,17 +82,21 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   margin: 16px auto;
   padding: 8px 16px;
   font-size: 1rem;
-  border: 1px solid #aaa;
-  border-radius: 16px;
+  border: 2px solid #bbb;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 -3px 3px rgba(0,0,0,0.1) inset;
   outline: none;
   background: white;
   &:focus {
     border-color: $primary-color;
+    box-shadow: none;
   }
 }
 
 input:invalid {
-  border: 1px solid red;
+  border: 2px solid $warning-color;
+  border-top: none;
 }
 
 .inputlabel {
@@ -94,7 +105,7 @@ input:invalid {
     padding: 0;
     margin: 0;
     &.error {
-      color: red;
+      color: $warning-color;
     }
   }
   input {
@@ -155,7 +166,7 @@ input[type=radio].lbl, input[type=checkbox].lbl {
     }
   }
   &:invalid + label {
-    color: red;
+    color: $warning-color;
   }
 }
 
@@ -194,7 +205,7 @@ form:invalid .fullpagesubmit {
   }
 }
 
-.search-block {
+.input-btn-block {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -218,19 +229,24 @@ textarea {
   display: block;
   width: 100%;
   height: 350px;
-  border: 1px solid #aaa;
+  border: 2px solid #bbb;
   padding: 12px;
   font-family: 'Nunito', Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  border-radius: 16px;
+  border-radius: 8px;
   border-top-left-radius: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15) inset;
   outline: none;
   resize: vertical;
   &:focus {
     border-color: $primary-color;
+    box-shadow: none;
   }
   &.short {
     height: 120px;
+  }
+  &:invalid {
+    border-color: $warning-color;
   }
 }
 

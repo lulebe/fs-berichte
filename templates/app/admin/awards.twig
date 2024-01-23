@@ -5,12 +5,14 @@
 {% block content %}
 <div class="wrapper">
   <a href="/app/admin/awards/new">neuen Award anlegen</a>
-  <p class="usertext" style="text-align: center">
-    Leider ist PaLMe erst noch in der Entstehung.
-  </p>
   <ul>
     <li>Create new Award</li>
     <li>list awards & edit</li>
+  </ul>
+  <ul  class="striped">
+    {% for award in awards %}
+    <li><a href="/app/admin/awards/{{award.id}}" class="main-text">{{award.title}}</a></li>
+    {% endfor %}
   </ul>
 </div>
 {% endblock %}

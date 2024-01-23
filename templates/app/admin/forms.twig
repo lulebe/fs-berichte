@@ -20,7 +20,7 @@
       </form>
     </div>
     <h3>laufende Umfragen</h3>
-    <ul>
+    <ul class="striped">
       {% for form in forms %}
         <li><a href="/app/forms/{{form.id}}" class="main-text">
           {{form.title}} - <small>{{form.dateReadable}}</small>

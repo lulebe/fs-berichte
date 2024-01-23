@@ -51,7 +51,7 @@
       <h1>Meine Berichte</h1>
       {% if reports %}
       {% endif %}
-      <ul>
+      <ul class="striped">
         {% for result in reports %}
           <li><a href="exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}

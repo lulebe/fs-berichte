@@ -85,8 +85,8 @@
     <section class="commentsarea">
       <h1>Kommentare</h1>
       {% for comment in petition.PetitionComments %}
-      <div class="card mb">
-        {{comment.User.displayName}} <small>({{comment.datetimeReadable}})</small>
+      <div class="card mb" id="comment{{comment.id}}">
+        {% if isAdmin %}<a href="/app/admin/user/{{comment.User.id}}">{% endif %}{{comment.User.displayName}}{% if isAdmin %}</a>{% endif %} <small>({{comment.dateReadable}})</small>
         <hr>
         {% if comment.User.id == user.id or isAdmin %}
         <form method="post" class="inline" style="float: right"><button type="submit" class="small iconbtn important" name="deletecomment" value="{{comment.id}}"><i class="material-icons">delete</i></button></form>

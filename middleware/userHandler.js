@@ -11,7 +11,7 @@ module.exports = async function (req, res, next) {
     return res.redirect('/')
   }
   res.tmplOpts.isLoggedIn = true
-  res.tmplOpts.user = req.user.dataValues
+  res.tmplOpts.user = req.user
   res.tmplOpts.isAdmin = req.user.isAdmin
   next()
 }
