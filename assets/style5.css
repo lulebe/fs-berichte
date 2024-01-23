@@ -803,7 +803,6 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   font-size: 1rem;
   border: none;
   border-bottom: 2px solid #bbb;
-  box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.1) inset;
   border-radius: 8px 8px 0 0;
   outline: none;
   background: white;
@@ -949,7 +948,6 @@ textarea {
   font-family: "Nunito", Arial, Helvetica, sans-serif;
   font-size: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) inset;
   outline: none;
   resize: vertical;
 }
