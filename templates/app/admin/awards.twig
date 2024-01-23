@@ -4,11 +4,7 @@
 
 {% block content %}
 <div class="wrapper">
-  <a href="/app/admin/awards/new">neuen Award anlegen</a>
-  <ul>
-    <li>Create new Award</li>
-    <li>list awards & edit</li>
-  </ul>
+  <a href="/app/admin/awards/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Award anlegen</a>
   <ul  class="striped">
     {% for award in awards %}
     <li><a href="/app/admin/awards/{{award.id}}" class="main-text">{{award.title}}</a></li>

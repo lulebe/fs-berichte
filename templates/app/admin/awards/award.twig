@@ -10,10 +10,7 @@
       <h1 class="mtop0">${award.title} <button class="iconbtn" style="float: right" @click="editing=true"><i class="material-icons">edit</i> bearbeiten</button></h1>
       <h4>${award.statusReadable}</h4>
       Voting bis ${award.votingDeadlineReadable}
-      <p v-if="!editing">${award.description}</p>
-      <ul>
-        <li>edit candidates</li>
-      </ul>
+      <p v-if="!editing" class="usertext">${award.description}</p>
     </div>
     <div class="card" v-if="editing">
       <div class="inputlabel">
@@ -41,7 +38,7 @@
       </div>
       <div class="inputlabel">
         <label>Beschreibung</label>
-        <textarea class="short" v-model="award.description"></textarea>
+        <textarea class="short usertext" v-model="award.description"></textarea>
       </div>
       <br>
       <button type="button" class="iconbtn" @click="saveChanges()"><i class="material-icons">save</i> speichern</button>
@@ -50,12 +47,12 @@
   </section>
   <section class="grid-col right">
     <h2>Kandidaten</h2>
-    <a href="/app/admin/awards/{{award.id}}/candidates/new"><i class="material-icons">add_circle</i> neuen Kandidaten hinzufügen</a><br><br>
+    <a href="/app/admin/awards/{{award.id}}/candidates/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Kandidaten hinzufügen</a><br><br>
     <div id="candidatesList">
       {% for candidate in award.AwardCandidates %}
         <div class="card mb" data-candidate-id="{{candidate.id}}" style="cursor: move;">
           <a href="{{award.id}}/candidates/{{candidate.id}}"><h4 class="mtop0">{{candidate.name}}</h4></a>
-          {{candidate.shortDescription}}
+          <p class="usertext">{{candidate.shortDescription}}</p>
         </div>
       {% endfor %}
     </div>
