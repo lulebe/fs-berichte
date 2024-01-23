@@ -82,10 +82,10 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   margin: 16px auto;
   padding: 8px 16px;
   font-size: 1rem;
-  border: 2px solid #bbb;
-  border-top: none;
-  border-radius: 0 0 8px 8px;
+  border: none;
+  border-bottom: 2px solid #bbb;
   box-shadow: 0 -3px 3px rgba(0,0,0,0.1) inset;
+  border-radius: 8px 8px 0 0;
   outline: none;
   background: white;
   &:focus {
@@ -95,8 +95,7 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
 }
 
 input:invalid {
-  border: 2px solid $warning-color;
-  border-top: none;
+  border-bottom: 2px solid $warning-color;
 }
 
 .inputlabel {
@@ -110,7 +109,6 @@ input:invalid {
   }
   input {
     margin: 0;
-    border-top-left-radius: 0;
   }
 }
 
@@ -234,7 +232,6 @@ textarea {
   font-family: 'Nunito', Arial, Helvetica, sans-serif;
   font-size: 1rem;
   border-radius: 8px;
-  border-top-left-radius: 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15) inset;
   outline: none;
   resize: vertical;
