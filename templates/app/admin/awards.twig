@@ -7,7 +7,7 @@
   <a href="/app/admin/awards/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Award anlegen</a>
   <ul  class="striped">
     {% for award in awards %}
-    <li><a href="/app/admin/awards/{{award.id}}" class="main-text">{{award.title}}</a></li>
+    <li><a href="/app/admin/awards/{{award.id}}" class="main-text">{{award.title}} <small>({{award.statusReadable}})</small></a></li>
     {% endfor %}
   </ul>
 </div>

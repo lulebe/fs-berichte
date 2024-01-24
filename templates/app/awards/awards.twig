@@ -5,6 +5,7 @@
 {% block content %}
 <div class="wrapper narrow">
   <h1>PaLMe</h1>
+  <p>{{awardsDescription}}</p>
   {% for award in awards %}
   <a href="/app/awards/{{award.id}}" class="block">
     <div class="card mb">
@@ -13,6 +14,12 @@
     </div>
   </a>
   {% endfor %}
+  {% if awards|length == 0 %}
+    <div class="no-content">
+      <img src="/assets/desert.png" style="opacity: 0.3;"><br><br>
+      Derzeit gibt es keine PaLMen.
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
 
