@@ -3,6 +3,7 @@
     box-shadow: $shadow-s;
     background: white;
     padding: 16px 16px 16px 16px;
+    overflow: hidden;
     > {
       h1, h2, h3, h4 {
         &:first-child {

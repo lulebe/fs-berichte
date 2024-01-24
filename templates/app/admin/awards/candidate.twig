@@ -2,6 +2,7 @@
 
 {% block title %}PaLMe Admin{% endblock %}
 {% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 <style>
   .maintextarea img {
     max-width: 100%;
@@ -16,8 +17,14 @@
   <h1>{{candidate.name}}</h1>
   <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</a><br><br>
   <div class="card mb" style="padding: 0;">
-    <div class="gallery">
-      <div class="gallery-image" v-for="(image, i) in bgImages" :style="{'background-image': image}" :class="{visible: i == currentImage}"></div>
+    <div class="splide">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {% for image in candidate.CandidateImages %}
+            <li class="splide__slide"><img src="/app/awards/image/{{image.id}}.{{image.type}}"></li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </div>
   <div class="card maintextarea usertext">
@@ -28,26 +35,37 @@
 
 {% block js %}
 <script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 <script>
+  new Splide('.splide', {
+    type: 'loop',
+    height: '600px',
+    focus: 'center',
+    breakpoints: {
+      400: {
+        height: '200px'
+      },
+      600: {
+        height: '300px'
+      },
+      800: {
+        height: '400px'
+      },
+      1000: {
+        height: '500px'
+      }
+    },
+    autoWidth: true,
+    autoplay: true
+  }).mount()
+
   const award = {{award | json_encode | raw }}
   const candidate = {{candidate | json_encode | raw }}
   PetiteVue.createApp({
   $delimiters: ['${', '}'],
 
   award,
-  candidate,
-  currentImage: 0,
-
-  get bgImages () {
-    return this.candidate.CandidateImages.map(image => `url("/app/awards/image/${image.id}.${image.type}")`)
-  },
-
-  mounted () {
-    console.log(this.bgImages)
-    setInterval(() => {
-      this.currentImage = (this.currentImage + 1) % this.bgImages.length
-    }, 5000)
-  }
+  candidate
 
 }).mount()
 </script>

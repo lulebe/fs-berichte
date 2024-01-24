@@ -41,7 +41,7 @@ hr {
   border: none;
   height: 1px;
   background-color: lightgrey;
-  margin: 6px 0;
+  margin: 16px 0;
 }
 
 .mtop0 {
@@ -324,6 +324,7 @@ nav#subtabs .tab:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   background: white;
   padding: 16px 16px 16px 16px;
+  overflow: hidden;
 }
 .card > h1:first-child, .card > h2:first-child, .card > h3:first-child, .card > h4:first-child {
   margin-top: 0;
@@ -717,52 +718,8 @@ ul.selectionlist li {
   display: inline-block;
 }
 
-.gallery {
-  height: 800px;
-  position: relative;
-}
-@media (max-height: 900px) {
-  .gallery {
-    height: 700px;
-  }
-}
-@media (max-height: 800px) {
-  .gallery {
-    height: 600px;
-  }
-}
-@media (max-height: 700px) {
-  .gallery {
-    height: 500px;
-  }
-}
-@media (max-height: 600px) {
-  .gallery {
-    height: 400px;
-  }
-}
-@media (max-height: 500px) {
-  .gallery {
-    height: 300px;
-  }
-}
-@media (max-height: 400px) {
-  .gallery {
-    height: 200px;
-  }
-}
-.gallery .gallery-image {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
+.splide img {
   height: 100%;
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-.gallery .gallery-image.visible {
-  opacity: 1;
 }
 
 .inline {
