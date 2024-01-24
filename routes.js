@@ -72,6 +72,8 @@ appRouter.get('/forms/:id', require('./routes/app/form'))
 
 //awards area
 appRouter.get('/awards', require('./routes/app/awards/awards'))
+appRouter.get('/awards/:id', require('./routes/app/awards/award'))
+appRouter.get('/awards/:awardid/candidates/:candidateid', require('./routes/app/awards/candidate'))
 appRouter.get('/awards/image/:filename', require('./routes/app/awards/image_get'))
 
 //admin area
@@ -107,5 +109,7 @@ adminRouter.delete('/awards/:id', require('./routes/app/admin/awards/delete'))
 adminRouter.get('/awards/:awardid/candidates/new', require('./routes/app/admin/awards/newcandidate'))
 adminRouter.post('/awards/:awardid/candidates/new', require('./routes/app/admin/awards/newcandidate_post'))
 adminRouter.get('/awards/:awardid/candidates/:candidateid', require('./routes/app/admin/awards/candidate'))
+adminRouter.put('/awards/:awardid/candidates/:candidateid', require('./routes/app/admin/awards/candidate_update'))
 adminRouter.get('/awards/:awardid/candidates/:candidateid/delete', require('./routes/app/admin/awards/candidate_delete'))
 adminRouter.post('/awards/:awardid/candidates/:candidateid/images', require('./routes/app/admin/awards/image_upload'))
+adminRouter.delete('/awards/images/:id', require('./routes/app/admin/awards/image_delete'))

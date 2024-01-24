@@ -1,7 +1,8 @@
 const tmpl = requiremain('./templates')
 
-const {  } = requiremain('./db/db')
+const { Award } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
+  res.tmplOpts.awards = await Award.findAll()
   tmpl.render('app/awards/awards.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

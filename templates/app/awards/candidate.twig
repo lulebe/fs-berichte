@@ -1,0 +1,90 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+<style>
+  .maintextarea img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+  .splide img {
+    max-height: 600px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper-2-col" style="gap: 0; padding-bottom: 0;">
+  <div>
+    <a href="/app/awards/{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
+    <h1 style="margin: 0.2em 0;">{{candidate.name}}</h1>
+  </div>
+</div>
+<div class="wrapper-2-col right-over" v-scope>
+  <div class="grid-col left">
+    <div class="card mb" style="padding: 0;">
+      <div class="splide">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {% for image in candidate.CandidateImages %}
+              <li class="splide__slide"><img src="/app/awards/image/{{image.id}}.{{image.type}}"></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card maintextarea usertext">
+      {{candidate.longDescriptionHtml | raw}}    
+    </div>
+  </div>
+  <div class="grid-col right">
+    {% for candidate in award.AwardCandidates %}
+      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}" class="block mb">
+        <div class="card">
+          <h3>{{candidate.name}}</h3>
+          <p>{{candidate.shortDescription}}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<script>
+  new Splide('.splide', {
+    type: 'loop',
+    height: '600px',
+    focus: 'center',
+    breakpoints: {
+      400: {
+        height: '200px'
+      },
+      600: {
+        height: '300px'
+      },
+      800: {
+        height: '400px'
+      },
+      1000: {
+        height: '500px'
+      }
+    },
+    autoWidth: true,
+    autoplay: true
+  }).mount()
+
+  const award = {{award | json_encode | raw }}
+  const candidate = {{candidate | json_encode | raw }}
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+
+  award,
+  candidate
+
+}).mount()
+</script>
+{% endblock %}

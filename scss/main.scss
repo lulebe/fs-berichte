@@ -47,6 +47,20 @@ a {
   &:hover {
     color: $primary-color-dark;
   }
+  &.block {
+    color: inherit;
+    display: block;
+    &:visited {
+      color: inherit;
+    }
+    &:hover {
+      color: inherit;
+      > * {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        background-color: lighten($primary-color, 57%);
+      }
+    }
+  }
 }
 
 
@@ -60,7 +74,7 @@ hr {
 .mtop0 {
   margin-top: 0;
 }
-.mb {
+.mb:not(:last-child) {
   margin-bottom: 16px;
 }
 
@@ -91,6 +105,27 @@ i.material-icons {
   padding: 16px;
   color: white;
   font-weight: 600;
+  text-align: center;
+}
+.error-container {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  right: 0;
+  padding: 16px;
+  bottom: 64px;
+  @media (min-width: 1000px) {
+    bottom: auto;
+    top: 64px;
+    width: 500px;
+  }
+}
+.error-container .material-icons {
+  float: right;
+  top: 0;
+}
+.error-container #error-msg {
+  cursor: pointer;
 }
 
 .tag {

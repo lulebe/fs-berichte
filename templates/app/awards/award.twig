@@ -1,0 +1,29 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe{% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="wrapper-2-col">
+  <div class="grid-col left">
+    <h1 class="mtop0">{{award.title}}</h1>
+    <p>{{award.description}}</p>
+  </div>
+  <div class="grid-col right">
+    {% for candidate in award.AwardCandidates %}
+      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}" class="block mb">
+        <div class="card">
+          <h3>{{candidate.name}}</h3>
+          <p>{{candidate.shortDescription}}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+  
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

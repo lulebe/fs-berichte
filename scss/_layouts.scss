@@ -1,17 +1,7 @@
 #appcontainer {
-  display: flex;
-  flex-direction: row;
-  #sidebarspacer {
-    display: none;
-    flex-basis: 300px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    @media screen and (min-width: 1000px) {
-      display: block;
-    }
-  }
-  #appcontent {
-    flex-grow: 1;
+  padding-left: 0;
+  @media screen and (min-width: 1000px) {
+    padding-left: 300px;
   }
 }
 
@@ -35,6 +25,9 @@
   grid-template-columns: 2fr 1fr;
   align-items: start;
   gap: 16px;
+  .grid-col {
+    min-width: 0;
+  }
   .grid-col.left {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -223,5 +216,17 @@
 .splide {
   img {
     height: 100%;
+  }
+}
+
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  justify-items: center;
+  align-items: center;
+  img {
+    max-width: 100%;
+    max-height: 150px;
   }
 }

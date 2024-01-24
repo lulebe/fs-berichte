@@ -4,9 +4,15 @@
 
 {% block content %}
 <div class="wrapper narrow">
-  <p class="usertext" style="text-align: center">
-    Leider ist PaLMe erst noch in der Entstehung.
-  </p>
+  <h1>PaLMe</h1>
+  {% for award in awards %}
+  <a href="/app/awards/{{award.id}}" class="block">
+    <div class="card mb">
+      <h3>{{award.title}}</h3>
+      <p>{{award.description}}</p>
+    </div>
+  </a>
+  {% endfor %}
 </div>
 {% endblock %}
 

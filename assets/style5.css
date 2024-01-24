@@ -36,6 +36,20 @@ a:visited {
 a:hover {
   color: #014178;
 }
+a.block {
+  color: inherit;
+  display: block;
+}
+a.block:visited {
+  color: inherit;
+}
+a.block:hover {
+  color: inherit;
+}
+a.block:hover > * {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  background-color: #f6fafd;
+}
 
 hr {
   border: none;
@@ -48,7 +62,7 @@ hr {
   margin-top: 0;
 }
 
-.mb {
+.mb:not(:last-child) {
   margin-bottom: 16px;
 }
 
@@ -79,6 +93,32 @@ i.material-icons.up {
   padding: 16px;
   color: white;
   font-weight: 600;
+  text-align: center;
+}
+
+.error-container {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  right: 0;
+  padding: 16px;
+  bottom: 64px;
+}
+@media (min-width: 1000px) {
+  .error-container {
+    bottom: auto;
+    top: 64px;
+    width: 500px;
+  }
+}
+
+.error-container .material-icons {
+  float: right;
+  top: 0;
+}
+
+.error-container #error-msg {
+  cursor: pointer;
 }
 
 .tag {
@@ -478,22 +518,12 @@ ul.selectionlist li {
 }
 
 #appcontainer {
-  display: flex;
-  flex-direction: row;
-}
-#appcontainer #sidebarspacer {
-  display: none;
-  flex-basis: 300px;
-  flex-grow: 0;
-  flex-shrink: 0;
+  padding-left: 0;
 }
 @media screen and (min-width: 1000px) {
-  #appcontainer #sidebarspacer {
-    display: block;
+  #appcontainer {
+    padding-left: 300px;
   }
-}
-#appcontainer #appcontent {
-  flex-grow: 1;
 }
 
 .wrapper {
@@ -516,6 +546,9 @@ ul.selectionlist li {
   grid-template-columns: 2fr 1fr;
   align-items: start;
   gap: 16px;
+}
+.wrapper-2-col .grid-col {
+  min-width: 0;
 }
 .wrapper-2-col .grid-col.left {
   grid-column: 1/span 1;
@@ -720,6 +753,18 @@ ul.selectionlist li {
 
 .splide img {
   height: 100%;
+}
+
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  justify-items: center;
+  align-items: center;
+}
+.image-list img {
+  max-width: 100%;
+  max-height: 150px;
 }
 
 .inline {
