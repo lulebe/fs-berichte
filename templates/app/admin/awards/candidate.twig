@@ -11,10 +11,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="wrapper" v-scope>
+<div class="wrapper" v-scope @vue:mounted="mounted">
   <a href="/app/admin/awards/{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
   <h1>{{candidate.name}}</h1>
   <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</a><br><br>
+  <div class="card mb" style="padding: 0;">
+    <div class="gallery">
+      <div class="gallery-image" v-for="(image, i) in bgImages" :style="{'background-image': image}" :class="{visible: i == currentImage}"></div>
+    </div>
+  </div>
   <div class="card maintextarea usertext">
     {{candidate.longDescriptionHtml | raw}}    
   </div>
@@ -31,9 +36,17 @@
 
   award,
   candidate,
+  currentImage: 0,
 
-  get header () {
-    return this.candidate.name || 'Kadidaten'
+  get bgImages () {
+    return this.candidate.CandidateImages.map(image => `url("/app/awards/image/${image.id}.${image.type}")`)
+  },
+
+  mounted () {
+    console.log(this.bgImages)
+    setInterval(() => {
+      this.currentImage = (this.currentImage + 1) % this.bgImages.length
+    }, 5000)
   }
 
 }).mount()

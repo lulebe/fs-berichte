@@ -3,7 +3,7 @@
 {% block title %}Bericht{% endblock %}
 
 {% block content %}
-  <div class="wrapper">
+  <div class="wrapper narrow">
     <section>
       <h1>Bericht vom {{exam.dateReadable}}</h1>
       {% if isAdmin %}<a href="/app/admin/user/{{exam.UserId}}"><i class="material-icons">person</i> von {{exam.User.email}}</a><br><br>{% endif %}

@@ -403,17 +403,8 @@ const AwardCandidate = sequelize.define('AwardCandidates', {
     allowNull: false
   }
 })
-
-
-const AwardVote = sequelize.define('AwardVotes', {}, {
-  indexes: [
-    {unique: true, fields: ['UserId', 'AwardId']}
-  ]
-})
-
-//Files
-const FileStorage = sequelize.define('FileStorage', {
-  name: {
+const CandidateImage = sequelize.define('CandidateImages', {
+  type: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -421,6 +412,13 @@ const FileStorage = sequelize.define('FileStorage', {
     type: DataTypes.BLOB('long'),
     allowNull: false
   }
+})
+
+
+const AwardVote = sequelize.define('AwardVotes', {}, {
+  indexes: [
+    {unique: true, fields: ['UserId', 'AwardId']}
+  ]
 })
 
 //Einstellungen
@@ -553,6 +551,16 @@ Award.hasMany(AwardCandidate,
   }
 )
 AwardCandidate.belongsTo(Award)
+AwardCandidate.hasMany(CandidateImage,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+CandidateImage.belongsTo(AwardCandidate)
 User.hasMany(AwardVote,
   {
     onDelete: 'CASCADE',
@@ -587,4 +595,4 @@ AwardVote.belongsTo(AwardCandidate)
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, AwardVote, FileStorage, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
+module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, CandidateImage, AwardVote, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }

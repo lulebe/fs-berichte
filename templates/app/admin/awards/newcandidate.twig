@@ -2,81 +2,150 @@
 
 {% block title %}PaLMe Admin{% endblock %}
 {% block head %}
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
+  type="text/css"
+/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
 <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 <style>
-.EasyMDEContainer {
-  color: #333;
-  font-family: 'Zilla Slab', serif;
-}
-.EasyMDEContainer .CodeMirror-fullscreen {
-  z-index: 12;
-}
-.editor-toolbar.fullscreen {
-  z-index: 12;
-}
-.editor-preview-side {
-  z-index: 12;
-}
-.EasyMDEContainer img {
-  max-width: 100%;
-  max-height: 500px;
-}
-.EasyMDEContainer button {
-  color: black;
-}
-.EasyMDEContainer button:hover {
-  color: black;
-}
+  .error-container {
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    left: 0;
+    padding: 16px;
+    bottom: 64px;
+  }
+  .error-container .material-icons {
+    float: right;
+    top: 0;
+  }
+  .error-container #error-msg {
+    cursor: pointer;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="wrapper" v-scope>
+  <div class="error-container" v-if="store.errorMsg">
+    <div id="error-msg" @click="store.errorMsg=null">${store.errorMsg} <i class="material-icons">close</i></div>
+  </div>
+  <form action="" method="post" id="mainform" @submit.prevent="submit()">
   <a href="../../{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
   <h1>${header} aufstellen</h1>
-  <div class="card">
-    <form action="" method="post">
+    <div class="card mb">
       <div class="inputlabel">
         <label>Name des Kandidaten</label>
-        <input type="text" name="name" v-model="candidate.name" placeholder="Joachim Kirsch" required />
+        <input type="text" name="name" v-model="store.candidate.name" placeholder="Joachim Kirsch" required />
       </div>
       <div class="inputlabel">
         <label>Kurzbeschreibung</label>
-        <textarea name="shortDescription" class="short usertext" minlength="30" maxlength="250" required></textarea>
+        <textarea v-model="store.candidate.shortDescription" class="short usertext" minlength="30" maxlength="250" required></textarea>
       </div>
+    </div>
+    <div class="card mb">
+      <div id="imageList">
+        <img :src="image" v-for="image in store.imagePaths">
+      </div>
+      <div class="dropzone"></div>
+    </div>
+    <div class="card">
       <div class="inputlabel">
-        <label>Ausführliche Beschreibung</label>
-        <textarea name="longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung">
-# Allgemeines
-So eine tolle Lehre und so *blabla*
-## Ist toll weil
-1. bla
-2. blubb
-3. tralala
-          </textarea>
+      <label>Ausführliche Beschreibung</label>
+      <textarea v-model="store.candidate.longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
       </div>
-      <button type="submit" class="fullpagesubmit">hinzufügen</button>
-    </form>
-  </div>
+      <button type="submit" class="fullpagesubmit" :disabled="store.submitting">hinzufügen</button>
+    </div>
+  </form>
 </div>
 {% endblock %}
 
 {% block js %}
-<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
 <script>
-  const award = {{award | json_encode | raw }}
+   const store = PetiteVue.reactive({
+    imagePaths: [],
+    award: {{award | json_encode | raw }},
+    candidate: {
+      name: "",
+      shortDescription: "",
+      longDescription: `# Allgemeines
+So eine tolle Lehre und so *blabla*
+## Ist toll weil
+1. bla
+2. blubb
+3. tralala`
+    },
+    submitting: false,
+    errorMsg: null,
+    addImage (path) {
+      this.imagePaths.push(path)
+    }
+  })
+
+  Dropzone.autoDiscover = false
+  const dropzone = new Dropzone("div.dropzone", {
+    url: `/awards/{{award.id}}/candidates/${store.candidate.id}/images`,
+    parallelUploads: 1,
+    maxFilesize: 5,
+    acceptedFiles: "image/*",
+    dictDefaultMessage: "Bilder (5mb max) für den Kandidaten hinzufügen",
+    autoProcessQueue: false,
+    addRemoveLinks: true
+  })
+  dropzone.on('complete', (file) => {
+    if (store.submitting)
+    dropzone.processQueue()
+  })
+  dropzone.on('error', (f,m) => {
+    dropzone.removeFile(f)
+    store.errorMsg = "Upload fehlgeschlagen."
+  })
   PetiteVue.createApp({
   $delimiters: ['${', '}'],
 
-  award,
-  candidate: {
-    name: "",
-    description: ""
-  },
+  store,
 
   get header () {
-    return this.candidate.name || 'Kadidaten'
+    return this.store.candidate.name || 'Kadidaten'
+  },
+
+  submit () {
+    this.store.submitting = true
+    fetch('/app/admin/awards/{{award.id}}/candidates/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.store.candidate)
+    }).then(res => {
+      if (!res.ok) {
+        this.errorMsg = "Speichern fehlgeschlagen."
+        this.store.submitting = false
+        return new Error(res.statusText)
+      }
+      return res.json()
+    })
+    .then(data => {
+      store.candidate.id = data.id
+      dropzone.options.url = `/app/admin/awards/{{award.id}}/candidates/${store.candidate.id}/images`
+      dropzone.processQueue()
+      const completeHandler = () => {
+        dropzone.off('queuecomplete', completeHandler)
+        console.log('done')
+        window.location = '/app/admin/awards/{{award.id}}/candidates/' + this.store.candidate.id
+      }
+      dropzone.on('queuecomplete', completeHandler)
+    })
+    .catch(error => {
+      this.store.submitting = false
+      console.log(error)
+      this.errorMsg = "Speichern fehlgeschlagen."
+    })
   }
 
 }).mount()
@@ -84,27 +153,21 @@ So eine tolle Lehre und so *blabla*
 const easyMDE = new EasyMDE({
   element: document.getElementById('mdeditor'),
   spellChecker: false,
-  uploadImage: true,
-  imageUploadEndpoint: '/app/admin/images',
   toolbar: [
     "bold", "italic", "heading", "|",
     "quote", "unordered-list", "ordered-list", "|",
-    "link", "image",
-    {
-      name: 'upload-image',
-      action: EasyMDE.drawUploadedImage,
-      className: "fa fa-upload",
-      title: 'Upload Image',
-    }
-    , "|",
+    "link", "image", "|",
     "preview", "side-by-side", "fullscreen", "|",
     "undo", "redo", "|",
     "guide"
     ],
   autosave: {
     enabled: true,
-    uniqueId: "newpetition"
+    uniqueId: "newcandidate"
   }
+})
+easyMDE.codemirror.on("change", () => {
+    store.candidate.longDescription = easyMDE.value()
 })
 </script>
 {% endblock %}

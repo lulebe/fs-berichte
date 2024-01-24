@@ -72,6 +72,7 @@ appRouter.get('/forms/:id', require('./routes/app/form'))
 
 //awards area
 appRouter.get('/awards', require('./routes/app/awards/awards'))
+appRouter.get('/awards/image/:filename', require('./routes/app/awards/image_get'))
 
 //admin area
 adminRouter.use(require('./middleware/admin/quickSettings'))
@@ -107,6 +108,4 @@ adminRouter.get('/awards/:awardid/candidates/new', require('./routes/app/admin/a
 adminRouter.post('/awards/:awardid/candidates/new', require('./routes/app/admin/awards/newcandidate_post'))
 adminRouter.get('/awards/:awardid/candidates/:candidateid', require('./routes/app/admin/awards/candidate'))
 adminRouter.get('/awards/:awardid/candidates/:candidateid/delete', require('./routes/app/admin/awards/candidate_delete'))
-//files
-adminRouter.post('/images', require('./routes/app/admin/image_upload'))
-appRouter.get('/files/:id', require('./routes/app/files'))
+adminRouter.post('/awards/:awardid/candidates/:candidateid/images', require('./routes/app/admin/awards/image_upload'))

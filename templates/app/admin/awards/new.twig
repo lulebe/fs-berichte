@@ -4,29 +4,10 @@
 {% block head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
 <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-<style>
-.EasyMDEContainer {
-  color: #333;
-  font-family: 'Zilla Slab', serif;
-}
-.EasyMDEContainer .CodeMirror-fullscreen {
-  z-index: 12;
-}
-.EasyMDEContainer img {
-  max-width: 100%;
-  max-height: 500px;
-}
-.EasyMDEContainer button {
-  color: black;
-}
-.EasyMDEContainer button:hover {
-  color: black;
-}
-</style>
 {% endblock %}
 
 {% block content %}
-<div class="wrapper">
+<div class="wrapper narrow">
   <section>
     <h1>neue PaLMe anlegen</h1>
     <form method="post">

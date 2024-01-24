@@ -11,5 +11,7 @@ module.exports = async (req, res) => {
     longDescription: req.body.longDescription,
     AwardId: award.id
   })
-  res.redirect(`/app/admin/awards/${req.params.awardid}`)
+  return res.status(201).json(candidate)
 }
+
+//RETURNS JSON

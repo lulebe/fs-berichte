@@ -1,6 +1,6 @@
 const busboy = require('busboy')
 
-const { FileStorage } = requiremain('./db/db')
+const { AwardCandidate, CandidateImage } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const bb = busboy({ headers: req.headers, limits: {fileSize: 3 * 1024 * 1024, files: 1} })
@@ -20,16 +20,18 @@ module.exports = async (req, res) => {
     console.log(`Field [${name}]: value: %j`, val)
   })
   bb.on('close', () => {
-    console.log('Done parsing form!')
     saveAndRespond(req, res, fileBuffer, filename)
   })
   req.pipe(bb)
 }
 
 async function saveAndRespond(req, res, fileBuffer, filename) {
-  const file = await FileStorage.create({
-    name: filename,
-    data: fileBuffer
+  const candidate = await AwardCandidate.findByPk(parseInt(req.params.candidateid))
+  if (!candidate) return res.status(404).send()
+  const file = await CandidateImage.create({
+    type: filename.split('.').pop(),
+    data: fileBuffer,
+    AwardCandidateId: candidate.id
   })
-  res.status(200).json({data: {filePath: `app/files/${file.id + '.' + filename.split('.').pop()}`}})
+  res.status(200).json({data: {filePath: `/app/awards/image/${file.id + '.' + filename.split('.').pop()}`}})
 }
