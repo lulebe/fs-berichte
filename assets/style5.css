@@ -138,8 +138,8 @@ header#top-bar {
   top: 0;
   height: 64px;
   width: 100%;
-  background: linear-gradient(-35deg, #c10b1d 0%, #1d1d1d 50%);
-  box-shadow: 0 -50px 10px 50px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(-35deg, #c10b1d 0%, #1D1D30 55%, #1D1D1D 100%);
+  box-shadow: 0 -19px 15px 20px black;
   display: flex;
   flex-direction: row;
 }
@@ -232,7 +232,7 @@ header#top-bar .material-icons {
   color: #ddd;
   background: none;
   border-left: 8px solid transparent;
-  border-bottom: 1px solid #1d1d1d;
+  border-bottom: 1px solid #1D1D1D;
 }
 #sidebar ul li .material-icons {
   top: 12px;
@@ -260,7 +260,7 @@ header#top-bar .material-icons {
 }
 #sidebar ul li.header {
   line-height: 32px;
-  background-color: #1d1d1d;
+  background-color: #1D1D1D;
   color: #bbb;
 }
 #sidebar ul li:not(.header):not(.selected):hover {
@@ -790,6 +790,15 @@ button.pushup, input[type=submit].pushup, .btn.pushup {
   transform: translateY(-4px);
 }
 
+form:invalid button[type=submit], form:invalid input[type=submit] {
+  cursor: not-allowed;
+  background-color: darkgrey;
+  border-color: transparent;
+}
+form:invalid button[type=submit]:hover, form:invalid input[type=submit]:hover {
+  box-shadow: none;
+}
+
 select {
   height: 32px;
   padding: 0 16px;
@@ -929,7 +938,7 @@ form:invalid .fullpagesubmit {
 }
 form:invalid .fullpagesubmit:hover {
   font-size: 20px;
-  background-color: #014178;
+  background-color: darkgrey;
 }
 
 .input-btn-block {

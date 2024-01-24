@@ -18,14 +18,16 @@
       </li>
     {% endfor %}
   </ul>
+  {% if pageCount > 1 %}
   Seiten:
-  {% for p in 1..pageCount %}
-    {% if loop.index == pageIndex %}
-      <strong>{{p}}</strong>
-    {% else %}
-      <a href="?page={{p}}">{{p}}</a>
-    {% endif %}
-  {% endfor %}
+    {% for p in 1..pageCount %}
+      {% if loop.index == pageIndex %}
+        <strong>{{p}}</strong>
+      {% else %}
+        <a href="?page={{p}}">{{p}}</a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 
 {% block js %}

@@ -66,6 +66,15 @@ button, input[type=submit], .btn {
   }
 }
 
+form:invalid button[type="submit"], form:invalid input[type="submit"] {
+  cursor: not-allowed;
+  background-color: $disabled-color;
+  border-color: transparent;
+  &:hover {
+    box-shadow: none;
+  }
+}
+
 select {
   height: 32px;
   padding: 0 16px;
@@ -203,7 +212,7 @@ form:invalid .fullpagesubmit {
   cursor: not-allowed;
   &:hover {
     font-size: 20px;
-    background-color: $primary-color-dark;
+    background-color: $disabled-color;
   }
 }
 
