@@ -11,7 +11,8 @@ module.exports = async (req, res) => {
   res.tmplOpts.petition = petition
   res.tmplOpts.petition.supporterCount = await petition.countSupporters()
   res.tmplOpts.indicatorLength = res.tmplOpts.petition.supporterCount / petition.goal * 100
-  res.tmplOpts.isSupporting = await petition.hasSupporter(req.user)
+  if (req.user)
+    res.tmplOpts.isSupporting = await petition.hasSupporter(req.user)
   res.tmplOpts.daysLeft = Math.ceil((new Date(petition.deadline) - new Date()) / (1000 * 60 * 60 * 24))
   const publicSupporters = await petition.getSupporters({where: {anonymous: false}, order: sequelize.literal('rand()'), limit: 4})
   res.tmplOpts.supporterNames = publicSupporters.map(u => u.displayName).join(', ')

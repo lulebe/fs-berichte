@@ -9,7 +9,8 @@ module.exports = async (req, res) => {
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
   res.tmplOpts.award = award
-  res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})
+  if (req.user)
+    res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})
   const voteCountData = await AwardVote.findAll({where: {AwardId: award.id}, group: ['AwardCandidateId'], order: [['count', 'DESC']], include: [{model: AwardCandidate, attributes: ['id', 'name']}], attributes: [[Sequelize.fn('COUNT', Sequelize.col('AwardCandidateId')), 'count']]})
   award.AwardCandidates.forEach(c => {
     if (!voteCountData.some(vc => vc.AwardCandidate.id === c.id))

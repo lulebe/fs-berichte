@@ -8,7 +8,8 @@
 {% block content %}
 <div class="wrapper-2-col" style="gap: 0; padding-bottom: 0;">
   <div>
-    <h1 style="margin-bottom: 0">{{award.title}}</h1>
+    <a href="#" style="float: right" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
+    <h1 style="margin: 0">{{award.title}}</h1>
   </div>
 </div>
 <div class="wrapper-2-col" style="padding-top: 0">
@@ -60,5 +61,16 @@
       data.element.addClass('winner')
     }
   })
+
+  const shareData = {
+    title: "FSmed HD PaLMe: {{award.title}}",
+    url: "{{currentUrl}}"
+  }
+  function share () {
+    navigator.share(shareData)
+    .catch(_ => {
+      navigator.clipboard.writeText(shareData.url)
+    })
+  }
 </script>
 {% endblock %}
