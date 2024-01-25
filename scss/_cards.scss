@@ -3,7 +3,6 @@
     box-shadow: $shadow-s;
     background: white;
     padding: 16px 16px 16px 16px;
-    overflow: hidden;
     > {
       h1, h2, h3, h4 {
         &:first-child {
@@ -24,6 +23,28 @@
     }
     &.voted {
       border-right: 50px solid $secondary-color;
+      position: relative;
+      &::after {
+        font-family: 'Material Icons';
+        color: white;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: -36px;
+        margin-top: -9px;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+        content: 'task_alt';
+      }
     }
   }
   

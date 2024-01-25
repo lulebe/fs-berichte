@@ -375,7 +375,6 @@ nav#subtabs .tab:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   background: white;
   padding: 16px 16px 16px 16px;
-  overflow: hidden;
 }
 .card > h1:first-child, .card > h2:first-child, .card > h3:first-child, .card > h4:first-child {
   margin-top: 0;
@@ -393,6 +392,28 @@ nav#subtabs .tab:hover {
 }
 .card.voted {
   border-right: 50px solid #2e9f43;
+  position: relative;
+}
+.card.voted::after {
+  font-family: "Material Icons";
+  color: white;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: -36px;
+  margin-top: -9px;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  content: "task_alt";
 }
 
 .msgcard {
