@@ -380,6 +380,9 @@ nav#subtabs .tab:hover {
 .card.highlight {
   border-left: 5px solid #296ea7;
 }
+.card.voted {
+  border-right: 50px solid #2e9f43;
+}
 
 .msgcard {
   width: 100%;
@@ -1262,6 +1265,28 @@ textarea:invalid {
 }
 .petitionprogress.progress3 .progressStep:nth-child(4) {
   color: #61060f;
+}
+
+.award-vote-chart .ct-label {
+  color: black;
+}
+.award-vote-chart .ct-bar {
+  stroke-width: 30px;
+  stroke: #c10b1d;
+  opacity: 0.3;
+}
+.award-vote-chart .ct-bar.winner {
+  stroke: #2e9f43;
+  opacity: 1;
+}
+
+@media (min-width: 1600px) {
+  .wide.award-vote-chart .ct-label {
+    font-size: 0.9rem;
+  }
+  .wide.award-vote-chart .ct-bar {
+    stroke-width: 40px;
+  }
 }
 
 

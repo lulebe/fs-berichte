@@ -22,6 +22,9 @@
     &.highlight {
       border-left: 5px solid $primary-color;
     }
+    &.voted {
+      border-right: 50px solid $secondary-color;
+    }
   }
   
   .msgcard {

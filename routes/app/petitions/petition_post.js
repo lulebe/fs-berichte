@@ -5,10 +5,10 @@ module.exports = async (req, res, next) => {
   if (!req.params.id) return res.status(404).send()
   const petition = await Petition.findByPk(req.params.id)
   if (!petition) return res.status(404).send()
-  if (req.body.support === '1' && petition.status === PETITION_STATUS.ACTIVE) {
+  if (req.body.support === '1' && petition.status === PETITION_STATUS.ACTIVE && petition.beforeDeadline) {
     await petition.addSupporter(req.user)
   }
-  if (req.body.support === '0' && petition.status === PETITION_STATUS.ACTIVE) {
+  if (req.body.support === '0' && petition.status === PETITION_STATUS.ACTIVE && petition.beforeDeadline) {
     await petition.removeSupporter(req.user)
   }
   if (req.body.comment) {

@@ -3,6 +3,7 @@
 {% block title %}PaLMe Admin{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.css">
 <style>
   .maintextarea img {
     max-width: 100%;
@@ -10,9 +11,6 @@
   }
   .splide img {
     max-height: 600px;
-  }
-  .card.voted {
-    border-right: 50px solid green;
   }
 </style>
 {% endblock %}
@@ -26,22 +24,44 @@
 </div>
 <div class="wrapper-2-col right-over" v-scope>
   <div class="grid-col left">
-    <div class="card mb" style="padding: 0;">
-      <div class="splide">
-        <div class="splide__track">
-          <ul class="splide__list">
-            {% for image in candidate.CandidateImages %}
-              <li class="splide__slide"><img src="/app/awards/image/{{image.id}}.{{image.type}}"></li>
-            {% endfor %}
-          </ul>
+    {% if candidate.CandidateImages|length > 0 %}
+      <div class="card mb" style="padding: 0;">
+        <div class="splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for image in candidate.CandidateImages %}
+                <li class="splide__slide"><img src="/app/awards/image/{{image.id}}.{{image.type}}"></li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
     <div class="card maintextarea usertext">
       {{candidate.longDescriptionHtml | raw}}    
     </div>
   </div>
   <div class="grid-col right">
+    <div class="card mb">
+      <h3>Abstimmung</h3>
+      <div class="award-vote-chart"></div>
+    </div>
+    {% if not userVote %}
+      {% if award.beforeDeadline %}
+        <strong>Du hast noch nicht abgestimmt.</strong>
+        <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
+      {% endif %}
+    {% elseif userVote.AwardCandidateId==candidate.id %}
+      <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
+    {% else %}
+      <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
+      {% if award.beforeDeadline %}
+        <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
+      {% endif %}
+    {% endif %}
+    {% if not award.beforeDeadline %}
+      <strong>Die Abstimmung ist beendet.</strong>
+    {% endif %}
     {% for c in award.AwardCandidates %}
       <a href="/app/awards/{{award.id}}/candidates/{{c.id}}" class="block mb">
         <div class="card {% if userVote and userVote.AwardCandidateId==c.id %}voted{% endif %} {% if candidate.id==c.id %}highlight{% endif %}">
@@ -50,15 +70,6 @@
         </div>
       </a>
     {% endfor %}
-    {% if not userVote %}
-      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
-      <strong>Du hast noch nicht abgestimmt.</strong>
-    {% elseif userVote.AwardCandidateId==candidate.id %}
-      <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
-    {% else %}
-      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
-      <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
-    {% endif %}
   </div>
 </div>
 {% endblock %}
@@ -66,7 +77,9 @@
 {% block js %}
 <script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.js"></script>
 <script>
+  {% if candidate.CandidateImages|length > 0 %}
   new Splide('.splide', {
     type: 'loop',
     height: '600px',
@@ -88,6 +101,28 @@
     autoWidth: true,
     autoplay: true
   }).mount()
+  {% endif %}
+
+  const voteData = {{voteCounts | json_encode | raw }}
+  const chartData = {
+    labels: voteData.map(c => c.AwardCandidate.name),
+    series: [voteData.map(c => c.count)]
+  }
+  const winnerVotes = Math.max.apply(null, chartData.series[0])
+  new Chartist.Bar('.award-vote-chart', chartData, {
+    high: Math.max.apply(null, chartData.series[0]),
+    low: 0,
+    height: voteData.length * 50 + 'px',
+    horizontalBars: true,
+    axisX: {
+      onlyInteger: true
+    },
+    chartPadding: {top: 0, right: 20, left: 70, bottom: 0}
+  }).on('draw', function(data) {
+    if(data.type === 'bar' && data.value.x === winnerVotes) {
+      data.element.addClass('winner')
+    }
+  })
 
   const award = {{award | json_encode | raw }}
   const candidate = {{candidate | json_encode | raw }}

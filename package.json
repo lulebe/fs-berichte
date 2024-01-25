@@ -9,7 +9,8 @@
     "watch-build": "brunch watch",
     "start": "node .",
     "watch-server": "nodemon -e js,twig,html,phtml,json",
-    "dbinit": "node ./db/init-db.js"
+    "dbinit": "node ./db/init-db.js",
+    "init-with-testdata": "node ./db/generate-testdata.js"
   },
   "repository": {
     "type": "git",

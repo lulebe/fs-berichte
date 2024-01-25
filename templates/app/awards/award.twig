@@ -2,6 +2,7 @@
 
 {% block title %}PaLMe{% endblock %}
 {% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.css">
 {% endblock %}
 
 {% block content %}
@@ -12,13 +13,17 @@
 </div>
 <div class="wrapper-2-col">
   <div class="grid-col left">
-    Abstimmung bis {{award.votingDeadlineReadable}}
     <p class="usertext">{{award.description}}</p>
+    <div class="card mb">
+      <h2>Stimmen</h2>
+      <div class="wide award-vote-chart"></div>
+    </div>
   </div>
   <div class="grid-col right">
+    <p>Abstimmung bis {{award.votingDeadlineReadable}}</p>
     {% for candidate in award.AwardCandidates %}
       <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}" class="block mb">
-        <div class="card">
+        <div class="card {% if userVote and userVote.AwardCandidateId==candidate.id %}voted{% endif %}">
           <h3>{{candidate.name}}</h3>
           <p class="usertext">{{candidate.shortDescription}}</p>
         </div>
@@ -30,5 +35,27 @@
 {% endblock %}
 
 {% block js %}
-
+<script src="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.js"></script>
+<script>
+  const voteData = {{voteCounts | json_encode | raw }}
+  const chartData = {
+    labels: voteData.map(c => c.AwardCandidate.name),
+    series: [voteData.map(c => c.count)]
+  }
+  const winnerVotes = Math.max.apply(null, chartData.series[0])
+  new Chartist.Bar('.award-vote-chart', chartData, {
+    high: Math.max.apply(null, chartData.series[0]),
+    low: 0,
+    height: voteData.length * 70 + 'px',
+    horizontalBars: true,
+    axisX: {
+      onlyInteger: true
+    },
+    chartPadding: {top: 0, right: 25, left: 100, bottom: 0}
+  }).on('draw', function(data) {
+    if(data.type === 'bar' && data.value.x === winnerVotes) {
+      data.element.addClass('winner')
+    }
+  })
+</script>
 {% endblock %}

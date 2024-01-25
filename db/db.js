@@ -309,6 +309,12 @@ const Petition = sequelize.define('Petitions', {
     get () {
       return new Date(this.deadline).toLocaleDateString('de-DE')
     }
+  },
+  beforeDeadline: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.deadline) >= new Date()
+    }
   }
 })
 
@@ -356,7 +362,6 @@ const Award = sequelize.define('Awards', {
     allowNull: false
   },
   description: DataTypes.TEXT,
-
   status: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -382,6 +387,12 @@ const Award = sequelize.define('Awards', {
     type: DataTypes.VIRTUAL,
     get () {
       return new Date(this.votingDeadline).toLocaleDateString('de-DE')
+    }
+  },
+  beforeDeadline: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return new Date(this.votingDeadline) >= new Date()
     }
   }
 })
