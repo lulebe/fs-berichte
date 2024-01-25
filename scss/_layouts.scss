@@ -230,3 +230,9 @@
     max-height: 150px;
   }
 }
+
+#candidatesList {
+  @media (max-width: 1150px) and (pointer: coarse) {
+    width: 80%;
+  }
+}

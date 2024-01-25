@@ -23,7 +23,7 @@
   <form action="" method="post" id="mainform" @submit.prevent="submit()">
   <a href="../../{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
   <h1>${store.candidate.name}</h1>
-  <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</a><br><br>
+  <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important" onclick="return confirm('Wirklich löschen?')"><i class="material-icons">delete</i> löschen</a><br><br>
     <div class="card mb">
       <div class="inputlabel">
         <label>Name des Kandidaten</label>

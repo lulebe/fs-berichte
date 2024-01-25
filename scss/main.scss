@@ -64,6 +64,16 @@ a {
   }
 }
 
+blockquote {
+  border-left: 4px solid grey;
+  margin: 0 0 1rem 1rem;
+  font-style: italic;
+  background: #eee;
+  padding: 1rem;
+  p {
+    margin: 0;
+  }
+}
 
 hr {
   border: none;

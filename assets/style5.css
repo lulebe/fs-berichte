@@ -51,6 +51,17 @@ a.block:hover > * {
   background-color: #f6fafd;
 }
 
+blockquote {
+  border-left: 4px solid grey;
+  margin: 0 0 1rem 1rem;
+  font-style: italic;
+  background: #eee;
+  padding: 1rem;
+}
+blockquote p {
+  margin: 0;
+}
+
 hr {
   border: none;
   height: 1px;
@@ -771,6 +782,12 @@ ul.selectionlist li {
 .image-list img {
   max-width: 100%;
   max-height: 150px;
+}
+
+@media (max-width: 1150px) and (pointer: coarse) {
+  #candidatesList {
+    width: 80%;
+  }
 }
 
 .inline {
