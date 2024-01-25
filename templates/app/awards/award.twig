@@ -18,6 +18,9 @@
       <h2>Stimmen</h2>
       <div class="wide award-vote-chart"></div>
     </div>
+    {% if isAdmin %}
+      <br><a href="/app/admin/awards/{{award.id}}#edit" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>
+    {% endif %}
   </div>
   <div class="grid-col right">
     <p>Abstimmung bis {{award.votingDeadlineReadable}}</p>

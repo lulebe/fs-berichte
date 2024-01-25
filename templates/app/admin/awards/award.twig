@@ -3,7 +3,7 @@
 {% block title %}PaLMe Admin{% endblock %}
 
 {% block content %}
-<div class="wrapper-2-col" v-scope>
+<div class="wrapper-2-col" v-scope @vue:mounted="mounted()">
   <section class="grid-col left">
     <div id="error-msg" class="mb" v-if="errorMsg">${errorMsg}</div>
     <div class="card" v-if="!editing">
@@ -47,7 +47,8 @@
   </section>
   <section class="grid-col right">
     <h2>Kandidaten</h2>
-    <a href="/app/admin/awards/{{award.id}}/candidates/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Kandidaten hinzufügen</a><br><br>
+    <a href="/app/admin/awards/{{award.id}}/candidates/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Kandidaten hinzufügen</a>
+    <p>Drag &amp; Drop zum Ändern der Reihenfolge</p>
     <div id="candidatesList">
       {% for candidate in award.AwardCandidates %}
         <div class="card mb" data-candidate-id="{{candidate.id}}" style="cursor: move;">
@@ -56,7 +57,6 @@
         </div>
       {% endfor %}
     </div>
-    <small>Drag &amp; Drop zum Ändern der Reihenfolge</small>
   </section>
 </div>
 {% endblock %}
@@ -102,8 +102,11 @@
     .catch(error => {
       this.errorMsg = "Löschen fehlgeschlagen."
     })
-  }
+  },
 
+  mounted () {
+    if (window.location.hash === '#edit') this.editing = true
+  }
 }).mount()
 </script>
 <script type="module">

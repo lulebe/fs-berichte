@@ -22,7 +22,7 @@
     <h1 style="margin: 0.2em 0;">{{candidate.name}}</h1>
   </div>
 </div>
-<div class="wrapper-2-col right-over" v-scope>
+<div class="wrapper-2-col" v-scope>
   <div class="grid-col left">
     {% if candidate.CandidateImages|length > 0 %}
       <div class="card mb" style="padding: 0;">
@@ -40,10 +40,13 @@
     <div class="card maintextarea usertext">
       {{candidate.longDescriptionHtml | raw}}    
     </div>
+    {% if isAdmin %}
+      <br><a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>
+    {% endif %}
   </div>
   <div class="grid-col right">
     <div class="card mb">
-      <h3>Abstimmung</h3>
+      <h2>Abstimmung</h2>
       <div class="award-vote-chart"></div>
     </div>
     {% if not userVote %}

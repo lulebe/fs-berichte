@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="wrapper" v-scope>
+<div class="wrapper" v-scope @vue:mounted="mounted()">
   <div class="error-container" v-if="store.errorMsg">
     <div id="error-msg" @click="store.errorMsg=null">${store.errorMsg} <i class="material-icons">close</i></div>
   </div>
@@ -47,7 +47,7 @@
     <div class="card">
       <div class="inputlabel">
       <label>Ausführliche Beschreibung</label>
-      <textarea v-model="store.candidate.longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
+      <textarea id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
       </div>
     </div>
     <div style="height: 64px">&nbsp;</div>
@@ -85,6 +85,24 @@
   dropzone.on('error', (f,m) => {
     dropzone.removeFile(f)
     store.errorMsg = "Upload fehlgeschlagen."
+  })
+
+  
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('mdeditor'),
+    spellChecker: false,
+    toolbar: [
+      "bold", "italic", "heading", "|",
+      "quote", "unordered-list", "ordered-list", "|",
+      "link", "image", "|",
+      "preview", "side-by-side", "fullscreen", "|",
+      "undo", "redo", "|",
+      "guide"
+      ],
+    autosave: {
+      enabled: true,
+      uniqueId: "newcandidate"
+    }
   })
 
 
@@ -134,25 +152,12 @@
         store.candidate.CandidateImages.splice(store.candidate.CandidateImages.indexOf(image), 1)
       }
     })
+  },
+  mounted () {
+    easyMDE.codemirror.doc.setValue(store.candidate.longDescription)
   }
 }).mount()
 
-const easyMDE = new EasyMDE({
-  element: document.getElementById('mdeditor'),
-  spellChecker: false,
-  toolbar: [
-    "bold", "italic", "heading", "|",
-    "quote", "unordered-list", "ordered-list", "|",
-    "link", "image", "|",
-    "preview", "side-by-side", "fullscreen", "|",
-    "undo", "redo", "|",
-    "guide"
-    ],
-  autosave: {
-    enabled: true,
-    uniqueId: "newcandidate"
-  }
-})
 easyMDE.codemirror.on("change", () => {
     store.candidate.longDescription = easyMDE.value()
     store.hasChanges = true

@@ -56,7 +56,7 @@
     </div>
     <div class="card">
       <div class="inputlabel">
-      <label>Ausführliche Beschreibung</label>
+      <label>Ausführliche Beschreibung (<i class="fa fa-columns"></i> für Vollbild)</label>
       <textarea v-model="store.candidate.longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
       </div>
     </div>
@@ -73,12 +73,23 @@
     candidate: {
       name: "",
       shortDescription: "",
-      longDescription: `# Allgemeines
-So eine tolle Lehre und so *blabla*
-## Ist toll weil
-1. bla
-2. blubb
-3. tralala`
+      longDescription: `# Fach?
+
+In diesem Textfeld sollte eine ausführliche Beschreibung stehen. Warum ist diese Person aufgestellt? Details zu Lehre, Projekten, auch bisschen was zur Person an sich vielleicht.
+
+
+## Krasser Typ
+
+1. Dies macht der
+2. Und jenes auch
+3. Und sogar das
+
+
+## Leute sagen
+
+> Ich fand das beste ja, dass wir sogar selbst n Whipple im Blockpraktikum machen durften
+
+> Dank Prof. Müller konnte ich gestern meinen eigenen Blinddarm operieren!`
     },
     submitting: false,
     errorMsg: null
