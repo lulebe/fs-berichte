@@ -11,6 +11,9 @@
   .splide img {
     max-height: 600px;
   }
+  .card.voted {
+    border-right: 50px solid green;
+  }
 </style>
 {% endblock %}
 
@@ -39,14 +42,23 @@
     </div>
   </div>
   <div class="grid-col right">
-    {% for candidate in award.AwardCandidates %}
-      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}" class="block mb">
-        <div class="card">
-          <h3>{{candidate.name}}</h3>
-          <p>{{candidate.shortDescription}}</p>
+    {% for c in award.AwardCandidates %}
+      <a href="/app/awards/{{award.id}}/candidates/{{c.id}}" class="block mb">
+        <div class="card {% if userVote and userVote.AwardCandidateId==c.id %}voted{% endif %} {% if candidate.id==c.id %}highlight{% endif %}">
+          <h3>{{c.name}}</h3>
+          <p class="usertext">{{c.shortDescription}}</p>
         </div>
       </a>
     {% endfor %}
+    {% if not userVote %}
+      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
+      <strong>Du hast noch nicht abgestimmt.</strong>
+    {% elseif userVote.AwardCandidateId==candidate.id %}
+      <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
+    {% else %}
+      <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
+      <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

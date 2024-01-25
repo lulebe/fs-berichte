@@ -377,6 +377,9 @@ nav#subtabs .tab:hover {
   border: 2px solid #296ea7;
   box-shadow: 0 7px 12px rgba(0, 0, 0, 0.3);
 }
+.card.highlight {
+  border-left: 5px solid #296ea7;
+}
 
 .msgcard {
   width: 100%;

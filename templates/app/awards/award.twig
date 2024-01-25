@@ -5,17 +5,22 @@
 {% endblock %}
 
 {% block content %}
+<div class="wrapper-2-col" style="gap: 0; padding-bottom: 0;">
+  <div>
+    <h1>{{award.title}}</h1>
+  </div>
+</div>
 <div class="wrapper-2-col">
   <div class="grid-col left">
-    <h1 class="mtop0">{{award.title}}</h1>
-    <p>{{award.description}}</p>
+    Abstimmung bis {{award.votingDeadlineReadable}}
+    <p class="usertext">{{award.description}}</p>
   </div>
   <div class="grid-col right">
     {% for candidate in award.AwardCandidates %}
       <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}" class="block mb">
         <div class="card">
           <h3>{{candidate.name}}</h3>
-          <p>{{candidate.shortDescription}}</p>
+          <p class="usertext">{{candidate.shortDescription}}</p>
         </div>
       </a>
     {% endfor %}

@@ -74,6 +74,7 @@ appRouter.get('/forms/:id', require('./routes/app/form'))
 appRouter.get('/awards', require('./routes/app/awards/awards'))
 appRouter.get('/awards/:id', require('./routes/app/awards/award'))
 appRouter.get('/awards/:awardid/candidates/:candidateid', require('./routes/app/awards/candidate'))
+appRouter.get('/awards/:awardid/candidates/:candidateid/vote', require('./routes/app/awards/castvote'))
 appRouter.get('/awards/image/:filename', require('./routes/app/awards/image_get'))
 
 //admin area

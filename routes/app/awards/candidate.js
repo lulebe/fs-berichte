@@ -12,5 +12,6 @@ module.exports = async (req, res) => {
   const candidate = await AwardCandidate.findByPk(req.params.candidateid, {include: [{model: CandidateImage, attributes: ['id', 'type']}]})
   candidate.longDescriptionHtml = md().render(candidate.longDescription)
   res.tmplOpts.candidate = candidate
+  res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: req.params.awardid}, include: [AwardCandidate]})
   tmpl.render('app/awards/candidate.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
