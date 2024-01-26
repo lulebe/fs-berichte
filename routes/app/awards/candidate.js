@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
   res.tmplOpts.award = award
-  candidate.longDescriptionHtml = md.render(candidate.longDescription)
+  candidate.longDescriptionHtml = md.render(candidate.longDescription).replaceAll('<a', '<a target="_blank"')
   res.tmplOpts.candidate = candidate
   if (req.user)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: req.params.awardid}, include: [AwardCandidate]})

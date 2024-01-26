@@ -12,6 +12,6 @@ module.exports = async (req, res) => {
   d.setMonth(d.getMonth() + 2)
   res.tmplOpts.deadlineDate = d.getUTCFullYear() + "-" + (d.getUTCMonth()+1+"").padStart(2, "0") + "-" + (""+d.getUTCDate()).padStart(2, "0")
   res.tmplOpts.adminApproval = (await getSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION)) === '1'
-  res.tmplOpts.howTo = md.render(await getSetting(SETTINGS_KEYS.PETITION_HOW_TO))
+  res.tmplOpts.howTo = md.render(await getSetting(SETTINGS_KEYS.PETITION_HOW_TO)).replaceAll('<a', '<a target="_blank"')
   tmpl.render('app/petitions/new.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
