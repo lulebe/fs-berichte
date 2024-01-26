@@ -26,7 +26,7 @@
       <i class="material-icons accent">send</i> {{petition.recipient}}<br>
       <q>{{petition.shortText | nl2br }}</q>
       {% for tag in petition.Tags %}
-        {% if isLoggedIn %}
+        {% if isAuthDomainUser %}
           <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a>
         {% else %}
           <span class="tag">{{tag.name}}</span>
@@ -41,7 +41,7 @@
     <section class="dataarea">
       <div class="card mb">
         <h3>Unterstützung</h3>
-        {% if isLoggedIn and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
+        {% if isAuthDomainUser and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
         <div class="supportersdisplay">
           <div class="current">{{petition.supporterCount}}</div>
           <div class="supportbar"><div class="indicator" style="width: {{indicatorLength}}%"></div><div class="percentage">{{indicatorLength}}%</div></div>
@@ -50,7 +50,7 @@
         {% if isSupporting %}
           <p>Du unterstützt diese Petition.</p>
         {% endif %}
-        {% if isActive and isLoggedIn %}
+        {% if isActive and isAuthDomainUser %}
         {% if isSupporting %}
           <form method="post">
             <button type="submit" name="support" value="0">nicht mehr unterstützen</button>
@@ -61,7 +61,7 @@
           </form>
         {% endif %}
         {% endif %}
-        {% if isLoggedIn %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
+        {% if isAuthDomainUser %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
         <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
       </div>
       {% if user.id == petition.UserId or isAdmin %}
@@ -89,7 +89,7 @@
       </div>
       {% endif %}
     </section>
-    {% if isLoggedIn %}
+    {% if isAuthDomainUser %}
       <section class="commentsarea">
         <h1>Kommentare</h1>
         {% for comment in petition.PetitionComments %}

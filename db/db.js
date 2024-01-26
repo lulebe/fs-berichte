@@ -66,6 +66,12 @@ const User = sequelize.define('User', {
     get () {
       return this.anonymous ? false : ((this.nickname != null) ? this.nickname : this.email.split('@')[0])
     }
+  },
+  hasAuthorizedDomain: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.email.split('@')[1] === config.AUTHORIZED_DOMAIN
+    }
   }
 })
 

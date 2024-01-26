@@ -15,10 +15,12 @@
         <a href="/app/exam"><li class="{% if sidebarSelectedUrl starts with '/exam' %}selected{% endif %}"><i class="material-icons">assignment</i><span class="sidebar-text">Prüfungsberichte</span></li></a>
         <a href="/app/research"><li class="{% if sidebarSelectedUrl starts with '/research' %}selected{% endif %}"><i class="material-icons">science</i><span class="sidebar-text">Forschungs-AG Berichte</span></li></a>
         <a href="/app/newreport"><li class="{% if sidebarSelectedUrl starts with '/newreport' %}selected{% endif %}"><i class="material-icons">add_circle</i><span class="sidebar-text">eintragen</span></li></a>
-        <li class="header">Lehre</li>
-        <a href="/app/petitions"><li class="{% if sidebarSelectedUrl starts with '/petition' %}selected{% endif %}"><i class="material-icons">how_to_vote</i><span class="sidebar-text">Petitionen</span></li></a>
-        <a href="/app/forms"><li class="{% if sidebarSelectedUrl starts with '/form' %}selected{% endif %}"><i class="material-icons">checklist</i><span class="sidebar-text">Umfragen</span></li></a>
-        <a href="/app/awards"><li class="{% if sidebarSelectedUrl starts with '/award' %}selected{% endif %}"><i class="material-icons">workspace_premium</i><span class="sidebar-text">PaLMe {% if hasNewAward %}<i class="material-icons" style="top: 6px; font-size: 1.5rem; color: red;">notification_important</i>{% endif %}</span></li></a>
+        {% if user.hasAuthorizedDomain %}
+          <li class="header">Lehre</li>
+          <a href="/app/petitions"><li class="{% if sidebarSelectedUrl starts with '/petition' %}selected{% endif %}"><i class="material-icons">how_to_vote</i><span class="sidebar-text">Petitionen</span></li></a>
+          <a href="/app/forms"><li class="{% if sidebarSelectedUrl starts with '/form' %}selected{% endif %}"><i class="material-icons">checklist</i><span class="sidebar-text">Umfragen</span></li></a>
+          <a href="/app/awards"><li class="{% if sidebarSelectedUrl starts with '/award' %}selected{% endif %}"><i class="material-icons">workspace_premium</i><span class="sidebar-text">PaLMe {% if hasNewAward %}<i class="material-icons" style="top: 6px; font-size: 1.5rem; color: red;">notification_important</i>{% endif %}</span></li></a>
+        {% endif %}
         {% if user.isAdmin %}
           <li class="header">Admin</li>
           <a href="/app/admin/users"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/user' %}selected{% endif %}"><span class="sidebar-text">Nutzer</span></li></a>

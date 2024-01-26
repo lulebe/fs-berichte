@@ -50,14 +50,14 @@
       <h2>Abstimmung</h2>
       <div class="award-vote-chart"></div>
     </div>
-    {% if not userVote and isLoggedIn %}
+    {% if not userVote and isAuthDomainUser %}
       {% if award.canVote %}
         <strong>Du hast noch nicht abgestimmt.</strong>
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
       {% endif %}
     {% elseif userVote.AwardCandidateId==candidate.id %}
       <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
-    {% elseif isLoggedIn %}
+    {% elseif isAuthDomainUser %}
       <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
       {% if award.canVote %}
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>

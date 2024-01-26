@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
   res.tmplOpts.award = award
-  if (req.user)
+  if (req.user && req.user.hasAuthorizedDomain)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})
   const voteCountData = await AwardVote.findAll({where: {AwardId: award.id}, group: ['AwardCandidateId'], order: [['count', 'DESC']], include: [{model: AwardCandidate, attributes: ['id', 'name']}], attributes: [[Sequelize.fn('COUNT', Sequelize.col('AwardCandidateId')), 'count']]})
   award.AwardCandidates.forEach(c => {

@@ -3,6 +3,7 @@ const appRouter = require('express').Router()
 const adminRouter = require('express').Router()
 
 const { User } = require('./db/db')
+const isAuthDomain = require('./middleware/authorizedDomainUser')
 
 
 module.exports = router
@@ -58,23 +59,23 @@ appRouter.get('/newreport/:examType', require('./routes/app/newreport2'))
 appRouter.post('/newreport/:examType', require('./routes/app/newreport_post'))
 
 //petitions area
-appRouter.get('/petitions', require('./routes/app/petitions/petitions'))
-appRouter.get('/petitions/new', require('./routes/app/petitions/new'))
-appRouter.post('/petitions/new', require('./routes/app/petitions/new_post'))
+appRouter.get('/petitions', [isAuthDomain],require('./routes/app/petitions/petitions'))
+appRouter.get('/petitions/new', [isAuthDomain], require('./routes/app/petitions/new'))
+appRouter.post('/petitions/new', [isAuthDomain], require('./routes/app/petitions/new_post'))
 appRouter.get('/petitions/:id', require('./routes/app/petitions/petition'))
-appRouter.post('/petitions/:id', require('./routes/app/petitions/petition_post'))
-appRouter.get('/petitions/:id/edit', require('./routes/app/petitions/edit'))
-appRouter.post('/petitions/:id/edit', require('./routes/app/petitions/edit_post'))
+appRouter.post('/petitions/:id', [isAuthDomain], require('./routes/app/petitions/petition_post'))
+appRouter.get('/petitions/:id/edit', [isAuthDomain], require('./routes/app/petitions/edit'))
+appRouter.post('/petitions/:id/edit', [isAuthDomain], require('./routes/app/petitions/edit_post'))
 
 //forms area
-appRouter.get('/forms', require('./routes/app/forms'))
-appRouter.get('/forms/:id', require('./routes/app/form'))
+appRouter.get('/forms', [isAuthDomain], require('./routes/app/forms'))
+appRouter.get('/forms/:id', [isAuthDomain], require('./routes/app/form'))
 
 //awards area
-appRouter.get('/awards', require('./routes/app/awards/awards'))
+appRouter.get('/awards', [isAuthDomain], require('./routes/app/awards/awards'))
 appRouter.get('/awards/:id', require('./routes/app/awards/award'))
 appRouter.get('/awards/:awardid/candidates/:candidateid', require('./routes/app/awards/candidate'))
-appRouter.get('/awards/:awardid/candidates/:candidateid/vote', require('./routes/app/awards/castvote'))
+appRouter.get('/awards/:awardid/candidates/:candidateid/vote', [isAuthDomain], require('./routes/app/awards/castvote'))
 appRouter.get('/awards/image/:filename', require('./routes/app/awards/image_get'))
 
 //admin area

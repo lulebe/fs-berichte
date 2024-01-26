@@ -1,4 +1,7 @@
 const { Petition } = requiremain('./db/db')
+const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { User } = requiremain('./db/db')
+const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
   req.body.UserId = req.user.id
@@ -8,5 +11,15 @@ module.exports = async (req, res) => {
     if (!Array.isArray(req.body.Tags)) req.body.Tags = [req.body.Tags]
     await petition.setTags(req.body.Tags)
   }
+  if (!req.user.isAdmin && (await getSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION)) === '1') notifyAdmin(petition)
   res.redirect('/app/petitions/'+petition.id)
+}
+
+async function notifyAdmin(petition) {
+  return mailer(
+    config.ADMIN_EMAIL,
+    'Neue Petition',
+    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:\n${config.ROOT_URL}/app/petitions/${petition.id}.`,
+    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:<br><a href="${config.ROOT_URL}/app/petitions/${petition.id}">${config.ROOT_URL}/app/petitions/${petition.id}</a>.`
+  )
 }

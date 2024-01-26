@@ -4,6 +4,7 @@ const { User, Award, AwardVote } = requiremain('./db/db')
 
 module.exports = async function (req, res, next) {
   res.tmplOpts.isLoggedIn = false
+  res.tmplOpts.isAuthDomainUser = false
   res.tmplOpts.user = null
   res.tmplOpts.isAdmin = false
   res.tmplOpts.currentPath = req.originalUrl
@@ -13,6 +14,7 @@ module.exports = async function (req, res, next) {
     if (req.user) {
       res.tmplOpts.hasNewAward = (await Award.findAll({where: {status: Award.STATUS.PUBLISHED, votingDeadline: {[Op.gte]: new Date()}}, attributes: ['id'], include: {model: AwardVote, where: {UserId: req.user.id}, required: false}})).filter(a => a.AwardVotes.length === 0)
       res.tmplOpts.isLoggedIn = true
+      res.tmplOpts.isAuthDomainUser = req.user.hasAuthorizedDomain
       res.tmplOpts.user = req.user
       res.tmplOpts.isAdmin = req.user.isAdmin
     }
