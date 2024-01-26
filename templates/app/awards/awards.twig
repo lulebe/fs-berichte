@@ -10,7 +10,7 @@
   <a href="/app/awards/{{award.id}}" class="block mb" {% if award.status is same as(0) %}style="opacity: 0.5"{% endif %}>
     <div class="card">
       <h3>{{award.title}}</h3>
-      <p class="usertext" style="white-space: pre">{{award.description}}</p>
+      <p class="usertext" style="white-space: pre-wrap">{{award.description}}</p>
     </div>
   </a>
   {% endfor %}

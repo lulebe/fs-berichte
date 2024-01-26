@@ -70,7 +70,7 @@
       <a href="/app/awards/{{award.id}}/candidates/{{c.id}}" class="block mb">
         <div class="card {% if userVote and userVote.AwardCandidateId==c.id %}voted{% endif %} {% if candidate.id==c.id %}highlight{% endif %}">
           <h3>{{c.name}}</h3>
-          <p class="usertext" style="white-space: pre">{{c.shortDescription}}</p>
+          <p class="usertext" style="white-space: pre-wrap">{{c.shortDescription}}</p>
         </div>
       </a>
     {% endfor %}
