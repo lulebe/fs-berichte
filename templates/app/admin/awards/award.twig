@@ -124,7 +124,7 @@
     if (saveSortTimeout) clearTimeout(saveSortTimeout)
     saveSortTimeout = setTimeout(() => {
       const newOrder = [...document.getElementById('candidatesList').children].map(el => el.dataset.candidateId)
-      fetch({{award.id}}, {
+      fetch('{{award.id}}', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
