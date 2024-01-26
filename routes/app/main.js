@@ -4,7 +4,7 @@ const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
-const { Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation, ResearchReport, Form, Petition } = requiremain('./db/db')
+const { Award, AwardCandidate, Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation, ResearchReport, Form, Petition } = requiremain('./db/db')
 const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
 module.exports = async (req, res) => {
@@ -21,13 +21,20 @@ module.exports = async (req, res) => {
   const petitions = (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['id', 'DESC']]
-  })).map(p => ({type: 'petitions', data: p}))
+  })).map(p => ({type: 'petition', data: p}))
+
+  //awards
+  const awards = (await Award.findAll({
+    where: {status:  Award.STATUS.PUBLISHED},
+    include: [{model: AwardCandidate, attributes: ['id', 'name']}],
+    order: [['id', 'DESC']]
+  })).map(a => ({type: 'award', data: a}))
 
   //forms
-  const forms = (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f}))
+  const forms = (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'form', data: f}))
 
-  let results = [...petitions, ...forms, ...exams, ...researchReports].sort(() => 0.5 - Math.random())
-  res.tmplOpts.results = results
+  const reports = [...exams, ...researchReports].sort(() => 0.5 - Math.random())
+  res.tmplOpts.results = [...awards, ...petitions, ...forms, ...reports]
   tmpl.render('app/main.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
 
