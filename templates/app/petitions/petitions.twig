@@ -4,11 +4,11 @@
 
 {% block content %}
 <div class="wrapper-2-col right-over">
-  <section class="grid-col left">
+  <div class="grid-col left">
     <h1 class="mtop0">Petitionen</h1>
     <a href="/app/petitions/new" class="btn iconbtn mb"><i class="material-icons">add</i> Neue Petition erstellen</a>
-  </section>
-  <section class="grid-col right">
+  </div>
+  <div class="grid-col right">
     <div class="card mb">
       <h1>Suche</h1>
       <form method="get">
@@ -31,7 +31,7 @@
       <p>Du hast noch keine Petition erstellt.</p>
     {% endif %}
     </div>
-  </section>
+  </div>
   {% if results %}
   <div class="resultsgrid">
     {% for result in results %}

@@ -3,8 +3,19 @@
 {% block title %}Prüfungen{% endblock %}
 
 {% block content %}
-  <div class="wrapper narrow">
-    <section>
+  <div class="wrapper-2-col right-over">
+    <div class="grid-col left">
+      <h1>Prüfungsprotokolle</h1>
+      {% if results %}
+      <a href="/app/pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
+      {% endif %}
+      <ul class="striped">
+        {% for result in results %}
+          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="grid-col right">
       <div class="card">
         <h1>Prüfungssuche</h1>
         <form method="GET">
@@ -32,17 +43,8 @@
           </div><br>
           <button type="submit" class="important iconbtn"><i class="material-icons">search</i> suchen</button>
         </form>
-        </div>
-      <h1>Ergebnisse</h1>
-      {% if results %}
-      <a href="/app/pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
-      {% endif %}
-      <ul class="striped">
-        {% for result in results %}
-          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
-        {% endfor %}
-      </ul>
-    </section>
+      </div>
+    </div>
   </div>
 {% endblock %}
 
