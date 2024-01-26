@@ -48,7 +48,7 @@
   }
   const winnerVotes = Math.max.apply(null, chartData.series[0])
   new Chartist.Bar('.award-vote-chart', chartData, {
-    high: Math.max.apply(null, chartData.series[0]),
+    high: Math.max.apply(null, chartData.series[0]) || 1,
     low: 0,
     height: voteData.length * 70 + 'px',
     horizontalBars: true,
