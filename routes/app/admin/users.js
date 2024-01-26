@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   const allUsers = await (
     (searchTerm) ?
     User.findAll({where: {[Op.or]: {email: {[Op.like]: searchTerm}, nickname: {[Op.like]: searchTerm}}}, order: [['isAdmin', 'DESC'], ['id', 'DESC']], limit: 50, offset}) :
-    User.findAll({order: [['isAdmin', 'DESC']], limit: 50, offset})
+    User.findAll({order: [['isAdmin', 'DESC'], ['id', 'DESC']], limit: 50, offset})
   )
   res.tmplOpts.users = allUsers
   res.tmplOpts.searchQuery = req.query.searchUser
