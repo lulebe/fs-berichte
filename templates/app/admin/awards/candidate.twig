@@ -155,13 +155,13 @@
   },
   mounted () {
     easyMDE.codemirror.doc.setValue(store.candidate.longDescription)
+    easyMDE.codemirror.on("change", () => {
+        store.candidate.longDescription = easyMDE.value()
+        store.hasChanges = true
+    })
   }
 }).mount()
 
-easyMDE.codemirror.on("change", () => {
-    store.candidate.longDescription = easyMDE.value()
-    store.hasChanges = true
-})
 </script>
 </script>
 {% endblock %}
