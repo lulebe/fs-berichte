@@ -14,7 +14,7 @@
           </div>
           <div class="resultsgrid morecols" style="padding: 16px">
             <a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>
-            <a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>
+            {% if isAuthDomainUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
           </div>
         {% endif %}
         <ul class="striped">
@@ -59,6 +59,7 @@
           <button type="submit" class="iconbtn" name="changepw" value="1"><i class="material-icons">key</i> Passwort ändern</button>
         </form>
       </section>
+      {% if isAuthDomainUser %}
       <section class="card mb">
         <h3>Nickname ändern</h3>
         <p>Dein Nickname erscheint in Kommentaren, Petitionen, etc..</p>
@@ -72,6 +73,7 @@
           <button type="submit" class="iconbtn" name="changename" value="1"><i class="material-icons">save</i> speichern</button>
         </form>
       </section>
+      {% endif %}
       <section class="card mb">
         <h3>Account löschen</h3>
         <p style="color: red;">

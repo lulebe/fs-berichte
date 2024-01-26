@@ -18,10 +18,10 @@ module.exports = async (req, res) => {
   researchReports = researchReports.map(r => ({type: 'research', data: r}))
   
   //petitions
-  const petitions = (await Petition.findAll({
+  const petitions = req.user.hasAuthorizedDomain ?  (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['createdAt', 'DESC']]
-  })).map(p => ({type: 'petitions', data: p}))
+  })).map(p => ({type: 'petitions', data: p})) : []
   await Promise.all(petitions.map(p => {
     return p.data.countSupporters().then(count => {
       p.data.supporterCount = count
@@ -31,14 +31,14 @@ module.exports = async (req, res) => {
   }))
 
   //awards
-  const awards = (await Award.findAll({
+  const awards = req.user.hasAuthorizedDomain ? (await Award.findAll({
     where: {status:  Award.STATUS.PUBLISHED},
     include: [{model: AwardCandidate, attributes: ['id', 'name']}],
     order: [['createdAt', 'DESC']]
-  })).map(a => ({type: 'awards', data: a}))
+  })).map(a => ({type: 'awards', data: a})) : []
 
   //forms
-  const forms = (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f}))
+  const forms = req.user.hasAuthorizedDomain ? (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f})) : []
 
   const reports = [...exams, ...researchReports].sort(() => 0.5 - Math.random())
   res.tmplOpts.results = [...awards, ...petitions, ...forms, ...reports]
