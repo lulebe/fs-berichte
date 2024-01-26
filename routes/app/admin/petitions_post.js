@@ -1,4 +1,4 @@
-const { Petition, Tag } = requiremain('./db/db')
+const { Tag } = requiremain('./db/db')
 const { setSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
 module.exports = async (req, res, next) => {

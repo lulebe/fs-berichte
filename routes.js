@@ -101,7 +101,8 @@ adminRouter.post('/petitions', [require('./routes/app/admin/petitions_post')], r
 adminRouter.get('/forms', require('./routes/app/admin/forms'))
 adminRouter.post('/forms', [require('./routes/app/admin/forms_post')], require('./routes/app/admin/forms'))
 //admin awards
-adminRouter.get('/awards', require('./routes/app/admin/awards'))
+adminRouter.get('/awards', require('./routes/app/admin/awards/awards'))
+adminRouter.post('/awards', require('./routes/app/admin/awards/awards_post'))
 adminRouter.get('/awards/new', require('./routes/app/admin/awards/new'))
 adminRouter.post('/awards/new', require('./routes/app/admin/awards/new_post'))
 adminRouter.get('/awards/:id', require('./routes/app/admin/awards/award'))
