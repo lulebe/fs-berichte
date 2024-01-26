@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   doc.moveDown()
   doc.fontSize(15).text(exam.ExamLocation.name)
   doc.text("Note: " + (exam.grade || ""))
-  doc.fontSize(9).text("© berichte.fsmed-hd.de", 255, 170)
+  doc.fontSize(9).text("© lehre.fsmed-hd.de", 255, 170)
   doc.moveTo(70, 180).lineTo(525, 180).stroke()
   doc.fontSize(18).text("Kommentar", 70, 200)
   doc.fontSize(11).text(exam.comment ? exam.comment.replaceAll(/\r\n|\r/g, '\n') : "")
