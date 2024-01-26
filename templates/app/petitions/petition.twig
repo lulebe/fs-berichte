@@ -101,7 +101,7 @@
             <button type="submit" class="small iconbtn important" name="deletecomment" value="{{comment.id}}"><i class="material-icons">delete</i></button>
           </form>
           {% endif %}
-          <div class="usertext">{{comment.text}}</div>
+          <div class="usertext">{{comment.text | nl2br}}</div>
         </div>
         {% endfor %}
         <div class="card mb">
