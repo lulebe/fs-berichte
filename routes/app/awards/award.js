@@ -8,7 +8,11 @@ module.exports = async (req, res) => {
   const award = await Award.findByPk(req.params.id, {include: [
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
-  if (!award || (award.status < Award.STATUS.PUBLISHED && !(req.user && req.user.isAdmin))) return res.status(404).send()
+  if (!award) return res.redirect('/app/awards')
+  if (award.status < Award.STATUS.PUBLISHED) {
+    if (!req.user) return res.requireLogin()
+    if (!req.user.isAdmin) return res.redirect('/app/awards')
+  }
   res.tmplOpts.award = award
   if (req.user)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})

@@ -22,6 +22,10 @@ module.exports = async function (req, res, next) {
       const goto = req.originalUrl != '/app/logout' ? '?goto=' + encodeURIComponent(req.originalUrl) : ''
       return res.redirect('/' + goto)
     }
+    res.requireLogin = function () {
+      const goto = req.originalUrl != '/app/logout' ? '?goto=' + encodeURIComponent(req.originalUrl) : ''
+      return res.redirect('/' + goto)
+    }
   }
   next()
 }
