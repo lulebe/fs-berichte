@@ -68,9 +68,7 @@
   }
   function share () {
     navigator.share(shareData)
-    .catch(_ => {
-      navigator.clipboard.writeText(shareData.url)
-    })
+    .catch(_ => {})
   }
 </script>
 {% endblock %}
