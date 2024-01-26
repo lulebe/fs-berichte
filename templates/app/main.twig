@@ -38,25 +38,33 @@
           {% endif %}
         </div>
         <span class="usertext">{{r.data.othertext[:100]}}{% if r.data.othertext %}...{% endif %}</span>
-      {% elseif r.type == 'petition' %}
+      {% elseif r.type == 'petitions' %}
         <h3>{{r.data.title}}</h3>
-        <div class="petitionprogress progress{{r.data.status}}">
+        {% if r.data.isActive %}
+          <div class="supportersdisplay">
+          <div class="current">{{r.data.supporterCount}}</div>
+          <div class="supportbar"><div class="indicator" style="width: {{r.data.percentage}}%"></div><div class="percentage">{{r.data.percentage}}%</div></div>
+          <div class="goal">{{r.data.goal}}</div>
+        </div>
+        {% else %}
+          <div class="petitionprogress progress{{r.data.status}}">
           <div class="progressStep"><i class="material-icons">edit_note</i></div>
           <div class="progressStep"><i class="material-icons">draw</i></div>
           <div class="progressStep"><i class="material-icons">verified</i></div>
           <div class="progressStep"><i class="material-icons">groups</i></div>
           <div class="progressText">{{r.data.statusReadable}}</div>
         </div>
+        {% endif %}
         <small><i class="material-icons primary">edit_note</i> {{r.data.dateReadable}} - {{r.data.author}}</small><br>
         <i class="material-icons accent">send</i> {{r.data.recipient}}
         <p class="usertext">{{r.data.shortText | nl2br }}</p>
         {% for tag in r.data.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
-      {% elseif r.type == 'award' %}
+      {% elseif r.type == 'awards' %}
         <h3>{{r.data.title}}</h3>
         <small>{{r.data.votingDeadlineReadable}}</small><br>
         <p class="usertext">{{r.data.description[:250] | nl2br }} ...</p>
         {% for tag in r.data.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
-      {% elseif r.type == 'form' %}
+      {% elseif r.type == 'forms' %}
         <h3>Umfrage</h3>
         <h4>{{r.data.title}}</h4>
         {{r.data.dateReadable}}
