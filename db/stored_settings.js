@@ -14,7 +14,7 @@ async function getSetting (key) {
 }
 
 async function setSetting (key, value) {
-  const entry = await Settings.upsert({id: key, value})
+  const entry = await Settings.upsert({id: key, value: value.substring(0, 4000)})
   return entry
 }
 
