@@ -9,10 +9,6 @@ module.exports = async (req, res) => {
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
-  if (award.status < Award.STATUS.PUBLISHED) {
-    if (!req.user) return res.requireLogin()
-    if (!req.user.isAdmin) return res.redirect('/app/awards')
-  }
   res.tmplOpts.award = award
   if (req.user)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})
