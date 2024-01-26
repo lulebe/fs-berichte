@@ -5,7 +5,7 @@
 {% block content %}
 <div class="wrapper narrow">
   <h1>PaLMe</h1>
-  <p>{{awardDescription}}</p>
+  <p>{{awardDescription | raw}}</p>
   {% for award in awards %}
   <a href="/app/awards/{{award.id}}" class="block mb" {% if award.status is same as(0) %}style="opacity: 0.5"{% endif %}>
     <div class="card">
