@@ -3,14 +3,16 @@
 {% block title %}Petitionen{% endblock %}
 
 {% block content %}
+<div class="title-2-col">
+  <h1>Petitionen</h1>
+</div>
 <div class="wrapper-2-col right-over">
   <div class="grid-col left">
-    <h1 class="mtop0">Petitionen</h1>
     <a href="/app/petitions/new" class="btn iconbtn mb"><i class="material-icons">add</i> Neue Petition erstellen</a>
   </div>
   <div class="grid-col right">
     <div class="card mb">
-      <h1>Suche</h1>
+      <h2>Suche</h2>
       <form method="get">
         {% for tag in tags %}
           <input type="checkbox" class="inp-cb-tag lbl" name="tags" value="{{tag.id}}" id="cbtag{{tag.id}}" {% if tag.id in selectedTags %}checked{% endif %}>

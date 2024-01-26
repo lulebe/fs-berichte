@@ -3,9 +3,11 @@
 {% block title %}Prüfungen{% endblock %}
 
 {% block content %}
+  <div class="title-2-col">
+    <h1>Prüfungsprotokolle</h1>
+  </div>
   <div class="wrapper-2-col right-over">
     <div class="grid-col left">
-      <h1>Prüfungsprotokolle</h1>
       {% if results %}
       <a href="/app/pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
       {% endif %}
@@ -17,7 +19,7 @@
     </div>
     <div class="grid-col right">
       <div class="card">
-        <h1>Prüfungssuche</h1>
+        <h2>Suche</h2>
         <form method="GET">
           Prüfungstyp:
           <select name="examType">

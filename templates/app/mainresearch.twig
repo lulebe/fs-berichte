@@ -3,10 +3,12 @@
 {% block title %}AGs{% endblock %}
 
 {% block content %}
+  <div class="title-2-col">
+    <h1>Arbeitsgruppenberichte</h1>
+  </div>
   <div class="wrapper-2-col right-over">
   {% if canView %}
     <div class="grid-col left">
-      <h1>Arbeitsgruppenberichte</h1>
       <ul class="striped">
         {% for result in results %}
           <li><a href="research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
@@ -15,7 +17,7 @@
     </div>
     <div class="grid-col right">
       <div class="card">
-        <h1>Arbeitsgruppensuche</h1>
+        <h2>Suche</h2>
         <form method="GET">
           <div class="inputlabel">
             <label>Fachrichtung</label>

@@ -612,6 +612,20 @@ ul.selectionlist li {
   }
 }
 
+.title-2-col {
+  padding-bottom: 0;
+  width: 100%;
+  max-width: 1620px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.title-2-col h1 {
+  margin: 0;
+}
+.title-2-col + .wrapper-2-col {
+  padding-top: 0;
+}
+
 .resultsgrid {
   display: grid;
   width: 100%;
