@@ -51,7 +51,7 @@
       <div class="award-vote-chart"></div>
     </div>
     {% if not userVote and isLoggedIn %}
-      {% if award.beforeDeadline %}
+      {% if award.canVote %}
         <strong>Du hast noch nicht abgestimmt.</strong>
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
       {% endif %}
