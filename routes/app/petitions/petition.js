@@ -6,7 +6,7 @@ const tmpl = requiremain('./templates')
 const { Petition, PetitionComment, PETITION_STATUS, PETITION_STATUS_STRINGS, Tag, User } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
-  const petition = await Petition.findByPk(req.params.id, {include: [Tag, User, {model: PetitionComment, include: [User]}]})
+  const petition = await Petition.findByPk(req.params.id, {include: [Tag, User, {model: PetitionComment, include: [User], order: [['createdAt', 'DESC']]}]})
   petition.textHtml = md.render(petition.text)
   res.tmplOpts.petition = petition
   res.tmplOpts.petition.supporterCount = await petition.countSupporters()
