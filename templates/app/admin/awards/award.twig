@@ -10,7 +10,7 @@
       <h1 class="mtop0">${award.title} <button class="iconbtn" style="float: right" @click="editing=true"><i class="material-icons">edit</i> bearbeiten</button></h1>
       <h4>${award.statusReadable}</h4>
       Voting bis ${award.votingDeadlineReadable}
-      <p v-if="!editing" class="usertext">${award.description}</p>
+      <p v-if="!editing" class="usertext" style="white-space: pre">${award.description}</p>
     </div>
     <div class="card" v-if="editing">
       <div class="inputlabel">
@@ -53,7 +53,7 @@
       {% for candidate in award.AwardCandidates %}
         <div class="card mb" data-candidate-id="{{candidate.id}}" style="cursor: move;">
           <a href="{{award.id}}/candidates/{{candidate.id}}"><h4 class="mtop0">{{candidate.name}}</h4></a>
-          <p class="usertext">{{candidate.shortDescription}}</p>
+          <p class="usertext" style="white-space: pre">{{candidate.shortDescription}}</p>
         </div>
       {% endfor %}
     </div>
