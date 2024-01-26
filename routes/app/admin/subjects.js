@@ -7,7 +7,7 @@ const { Subject } = requiremain('./db/db')
 const filename = require('path').parse(__filename).name
 
 module.exports = async (req, res) => {
-  const searchTerm = req.query.searchSubject ? '%'+req.query.searchSubject.toLowerCase()+'%' : null
+  const searchTerm = req.query.searchSubject ? '%'+req.query.searchSubject.toLowerCase().trim()+'%' : null
   const SubjectCount = await (
     (searchTerm) ?
     Subject.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
