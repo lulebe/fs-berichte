@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   //petitions
   const petitions = (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
-    order: [['id', 'DESC']]
+    order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p}))
   await Promise.all(petitions.map(p => {
     return p.data.countSupporters().then(count => {
@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
   const awards = (await Award.findAll({
     where: {status:  Award.STATUS.PUBLISHED},
     include: [{model: AwardCandidate, attributes: ['id', 'name']}],
-    order: [['id', 'DESC']]
+    order: [['createdAt', 'DESC']]
   })).map(a => ({type: 'awards', data: a}))
 
   //forms

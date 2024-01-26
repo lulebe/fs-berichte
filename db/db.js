@@ -261,6 +261,11 @@ const ResearchReport = sequelize.define('ResearchReport', {
 const PETITION_STATUS = {INACTIVE: 0, ACTIVE: 1, CLOSED: 2, FINISHED: 3, CANCELLED: 4}
 const PETITION_STATUS_STRINGS = ["inaktiv", "aktiv", "in Bearbeitung", "abgeschlossen", "abgebrochen"]
 const Petition = sequelize.define('Petitions', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -357,6 +362,11 @@ const Form = sequelize.define('Forms', {
 
 //Awards
 const Award = sequelize.define('Awards', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -400,13 +410,18 @@ Award.STATUS = Object.freeze({UNPUBLISHED: 0, PUBLISHED: 1, DONE: 2})
 Award.STATUS_READABLE = ["Unveröffentlicht", "Veröffentlicht", "Abgeschlossen"]
 
 const AwardCandidate = sequelize.define('AwardCandidates', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false
   },
   position: DataTypes.INTEGER,
   shortDescription: {
-    type: DataTypes.STRING(1024),
+    type: DataTypes.STRING(1000),
     allowNull: false
   },
   longDescription: {
@@ -415,6 +430,11 @@ const AwardCandidate = sequelize.define('AwardCandidates', {
   }
 })
 const CandidateImage = sequelize.define('CandidateImages', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
   type: {
     type: DataTypes.STRING,
     allowNull: false

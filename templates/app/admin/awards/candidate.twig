@@ -80,7 +80,7 @@
   })
   dropzone.on('success', file => {
     const imageData = JSON.parse(file.xhr.responseText).data.filePath.split('/').slice(-1)[0].split('.')
-    store.candidate.CandidateImages.push({id: parseInt(imageData[0]), type: imageData[1]})
+    store.candidate.CandidateImages.push({id: imageData[0], type: imageData[1]})
   })
   dropzone.on('error', (f,m) => {
     dropzone.removeFile(f)

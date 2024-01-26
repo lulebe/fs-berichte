@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 }
 
 async function saveAndRespond(req, res, fileBuffer, filename) {
-  const candidate = await AwardCandidate.findByPk(parseInt(req.params.candidateid))
+  const candidate = await AwardCandidate.findByPk(req.params.candidateid)
   if (!candidate) return res.status(404).send()
   const file = await CandidateImage.create({
     type: filename.split('.').pop(),

@@ -2,7 +2,8 @@ const { Settings } = require('./db')
 
 const SETTINGS_KEYS = {
   RESEARCH_REPORTS_PUBLIC: 1,
-  PETITIONS_REQUIRE_ADMIN_CONFIRMATION: 2
+  PETITIONS_REQUIRE_ADMIN_CONFIRMATION: 2,
+  PETITION_HOW_TO: 3
 }
 
 async function getSetting (key) {

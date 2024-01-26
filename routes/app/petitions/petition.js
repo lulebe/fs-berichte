@@ -1,5 +1,5 @@
-const md = require('markdown-it')
-const sequelize = require('sequelize');
+const md = require('markdown-it')()
+const sequelize = require('sequelize')
 
 const tmpl = requiremain('./templates')
 
@@ -7,7 +7,7 @@ const { Petition, PetitionComment, PETITION_STATUS, PETITION_STATUS_STRINGS, Tag
 
 module.exports = async (req, res) => {
   const petition = await Petition.findByPk(req.params.id, {include: [Tag, User, {model: PetitionComment, include: [User]}]})
-  petition.textHtml = md().render(petition.text)
+  petition.textHtml = md.render(petition.text)
   res.tmplOpts.petition = petition
   res.tmplOpts.petition.supporterCount = await petition.countSupporters()
   res.tmplOpts.indicatorLength = res.tmplOpts.petition.supporterCount / petition.goal * 100

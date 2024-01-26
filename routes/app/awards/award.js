@@ -18,5 +18,6 @@ module.exports = async (req, res) => {
   })
   voteCountData.sort((a, b) => b.count - a.count)
   res.tmplOpts.voteCounts = voteCountData
+  res.tmplOpts.totalVotes = await AwardVote.count({where: {AwardId: award.id}})
   tmpl.render('app/awards/award.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

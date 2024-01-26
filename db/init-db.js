@@ -7,6 +7,7 @@ module.exports = new Promise(resolve => {
   db.init().then(() => {
     setSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC, false)
     setSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, false)
+    setSetting(SETTINGS_KEYS.PETITION_HOW_TO, '')
     const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(config.SALT_ROUNDS))
     db.User.create({email: "test@example.com", activated: true, authorized: true, isAdmin: true, password})
     .then(() => {
