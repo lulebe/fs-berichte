@@ -8,51 +8,50 @@
 
 {% block content %}
 <div class="wrapper">
-  <section>
-    <h1>neue Petition anlegen</h1>
-    <p>{{howTo | raw}}</p>
-    
-    <form method="post">
-    <div class="card mb">
-      <div class="inputlabel">
-        <label>Titel</label>
-        <input type="text" name="title" required placeholder="REWE-Döner wieder für 2,90€!">
-      </div><br>
-      <div class="inputlabel">
-        <label>Empfänger</label>
-        <input type="text" name="recipient" required placeholder="Dieter Müller (REWE-Besitzer)">
-      </div><br>
-      <div class="inputlabel">
-        <label style="position: relative; display: inline-block;">Autor:in:en:innen...
-          <span style="position: absolute; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 99%,  white 100%); right: 0; top:0; bottom:0; left:0;"></span></label>
-        <input type="text" name="author" required placeholder="Karla Kolumna, Fritz Frey, Tina Turner">
-      </div><br>
-      <div class="inputlabel">
-        <label>Deadline</label>
-        <input type="date" name="deadline" required value="{{deadlineDate}}" min="{{currentDate}}">
-      </div><br>
-      <div class="inputlabel">
-        <label>Unterstützerziel</label>
-        <input type="range" name="goal" required value="50" min="5" max="300" step="5" oninput="this.nextElementSibling.innerText = this.value">
-        <div style="text-align: center;">50</div>
-      </div><br>
+  <h1 class="mtop0">neue Petition anlegen</h1>
+  <p>{{howTo | raw}}</p>
+  
+  <form method="post">
+  <div class="card mb">
+    <div class="inputlabel">
+      <label>Titel</label>
+      <input type="text" name="title" required placeholder="REWE-Döner wieder für 2,90€!">
+    </div><br>
+    <div class="inputlabel">
+      <label>Empfänger</label>
+      <input type="text" name="recipient" required placeholder="Dieter Müller (REWE-Besitzer)">
+    </div><br>
+    <div class="inputlabel">
+      <label style="position: relative; display: inline-block;">Autor:in:en:innen...
+        <span style="position: absolute; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 99%,  white 100%); right: 0; top:0; bottom:0; left:0;"></span></label>
+      <input type="text" name="author" required placeholder="Karla Kolumna, Fritz Frey, Tina Turner">
+    </div><br>
+    <div class="inputlabel">
+      <label>Deadline</label>
+      <input type="date" name="deadline" required value="{{deadlineDate}}" min="{{currentDate}}">
+    </div><br>
+    <div class="inputlabel">
+      <label>Unterstützerziel</label>
+      <input type="range" name="goal" required value="50" min="5" max="300" step="5" oninput="this.nextElementSibling.innerText = this.value">
+      <div style="text-align: center;">50</div>
+    </div><br>
+  </div>
+  <div class="card mb">
+    <h4>Tags</h4>
+    {% for tag in tags %}
+      <input type="checkbox" class="inp-cb-tag lbl" name="Tags" value="{{tag.id}}" id="cbtag{{tag.id}}">
+      <label for="cbtag{{tag.id}}">{{tag.name}}</label>
+    {% endfor %}
+  </div>
+  <div class="card">
+    <div class="inputlabel">
+      <label>Kurzbeschreibung (20-250 Zeichen)</label>
+      <textarea name="shortText" class="short usertext" required maxlength="255" minlength="20" placeholder="Das steht dann auf der Übersicht."></textarea>
     </div>
-    <div class="card mb">
-      <h4>Tags</h4>
-      {% for tag in tags %}
-        <input type="checkbox" class="inp-cb-tag lbl" name="Tags" value="{{tag.id}}" id="cbtag{{tag.id}}">
-        <label for="cbtag{{tag.id}}">{{tag.name}}</label>
-      {% endfor %}
-    </div>
-    <div class="card">
-      <div class="inputlabel">
-        <label>Kurzbeschreibung (20-250 Zeichen)</label>
-        <textarea name="shortText" class="short usertext" required maxlength="255" minlength="20" placeholder="Das steht dann auf der Übersicht."></textarea>
-      </div>
-      <br>
-      <div class="inputlabel">
-        <label>Beschreibung (<i class="fa fa-columns"></i> klicken zur Vorschau)</label>
-        <textarea name="text" id="mdeditor" placeholder="Worum es geht, warum, was ist der Plan?">
+    <br>
+    <div class="inputlabel">
+      <label>Beschreibung (<i class="fa fa-columns"></i> klicken zur Vorschau)</label>
+      <textarea name="text" id="mdeditor" placeholder="Worum es geht, warum, was ist der Plan?">
 # Problem
 bla *blabla*
 ## Ziel
@@ -62,19 +61,18 @@ bla *blabla*
 2. blubb
 3. tralala
 </textarea>
-      </div>
-      <small>
-      Du kannst Bilder verlinken, indem du den Link von anderen Seiten kopierst oder
-      die Bilder bei einem Bild-Hosting-Anbieter hochlädst, der dir einen Link dazu bereitstellt
-      (z.B. <a href="https://freeimage.host/" target="_blank">freeimage.host</a>,
-      <a href="https://postimages.org/">postimages.org</a> oder
-      <a href="https://imgtr.ee/">imgtr.ee</a>)
-      </small>
     </div>
-    <div style="height: 64px">&nbsp;</div>
-    <button type="submit" class="fullpagesubmit">veröffentlichen</button>
-    </form>
-  </section>
+    <small>
+    Du kannst Bilder verlinken, indem du den Link von anderen Seiten kopierst oder
+    die Bilder bei einem Bild-Hosting-Anbieter hochlädst, der dir einen Link dazu bereitstellt
+    (z.B. <a href="https://freeimage.host/" target="_blank">freeimage.host</a>,
+    <a href="https://postimages.org/">postimages.org</a> oder
+    <a href="https://imgtr.ee/">imgtr.ee</a>)
+    </small>
+  </div>
+  <div style="height: 64px">&nbsp;</div>
+  <button type="submit" class="fullpagesubmit">veröffentlichen</button>
+  </form>
 </div>
 {% endblock %}
 
