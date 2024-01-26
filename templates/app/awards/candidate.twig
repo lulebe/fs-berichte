@@ -59,7 +59,7 @@
       <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
     {% elseif isLoggedIn %}
       <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
-      {% if award.beforeDeadline %}
+      {% if award.canVote %}
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
       {% endif %}
     {% endif %}
