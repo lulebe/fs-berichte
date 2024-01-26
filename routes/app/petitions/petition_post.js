@@ -46,5 +46,5 @@ module.exports = async (req, res, next) => {
       }
     }
   }
-  next()
+  res.redirect('/app/petitions/'+petition.id)
 }

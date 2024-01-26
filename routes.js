@@ -62,7 +62,7 @@ appRouter.get('/petitions', require('./routes/app/petitions/petitions'))
 appRouter.get('/petitions/new', require('./routes/app/petitions/new'))
 appRouter.post('/petitions/new', require('./routes/app/petitions/new_post'))
 appRouter.get('/petitions/:id', require('./routes/app/petitions/petition'))
-appRouter.post('/petitions/:id', [require('./routes/app/petitions/petition_post')], require('./routes/app/petitions/petition'))
+appRouter.post('/petitions/:id', require('./routes/app/petitions/petition_post'))
 appRouter.get('/petitions/:id/edit', require('./routes/app/petitions/edit'))
 appRouter.post('/petitions/:id/edit', require('./routes/app/petitions/edit_post'))
 
