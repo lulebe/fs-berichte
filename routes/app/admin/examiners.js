@@ -7,7 +7,7 @@ const { Examiner } = requiremain('./db/db')
 const filename = require('path').parse(__filename).name
 
 module.exports = async (req, res) => {
-  const searchTerm = req.query.searchExaminer ? '%'+req.query.searchExaminer+'%' : null
+  const searchTerm = req.query.searchExaminer ? '%'+req.query.searchExaminer.toLowerCase().trim()+'%' : null
   const ExaminerCount = await (
     (searchTerm) ?
     Examiner.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :

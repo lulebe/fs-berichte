@@ -13,5 +13,8 @@ module.exports = async (req, res, next) => {
     const deletions = Promise.all(req.body.deleteTag.map(id => Tag.destroy({where: {id}})))
     await deletions
   }
+  if (req.body.howTo) {
+    await setSetting(SETTINGS_KEYS.PETITION_HOW_TO, req.body.howTo)
+  }
   next()
 }

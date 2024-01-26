@@ -1,0 +1,25 @@
+.award-vote-chart {
+  .ct-label {
+    color: black;
+  }
+  .ct-bar {
+    stroke-width: 30px;
+    stroke: $accent-color;
+    opacity: 0.3;
+    &.winner {
+      stroke: $secondary-color;
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  .wide.award-vote-chart {
+    .ct-label {
+      font-size: 0.9rem;
+    }
+    .ct-bar {
+      stroke-width: 40px;
+    }
+}
+}

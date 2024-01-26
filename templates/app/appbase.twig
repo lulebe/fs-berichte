@@ -2,42 +2,45 @@
 
 {% block body %}
 <header id="top-bar">
-  <input type="checkbox" id="mobile-sidebar-btn" title="toggle sidebar">
+  <input type="checkbox" id="mobile-sidebar-btn" {% if not isLoggedIn %}disabled{% endif %} title="toggle sidebar">
   <label for ="mobile-sidebar-btn">
-    <i class="material-icons" id="sidebar-btn">menu</i><img src="/assets/logo-lehre.png" alt="">ehre
+    {% if isLoggedIn %}<i class="material-icons" id="sidebar-btn">menu</i>{% endif %}<img src="/assets/logo-lehre.png" alt="">ehre
   </label>
-  <label id="darkener" for="mobile-sidebar-btn"></label>
-  <nav id="sidebar">
-    <ul>
-      <a href="/app/main"><li class="{% if sidebarSelectedUrl starts with '/main' %}selected{% endif %}"><i class="material-icons">dashboard</i><span class="sidebar-text">Startseite</span></li></a>
-      <li class="header">Berichte</li>
-      <a href="/app/exam"><li class="{% if sidebarSelectedUrl starts with '/exam' %}selected{% endif %}"><i class="material-icons">assignment</i><span class="sidebar-text">Prüfungsberichte</span></li></a>
-      <a href="/app/research"><li class="{% if sidebarSelectedUrl starts with '/research' %}selected{% endif %}"><i class="material-icons">science</i><span class="sidebar-text">Forschungs-AG Berichte</span></li></a>
-      <a href="/app/newreport"><li class="{% if sidebarSelectedUrl starts with '/newreport' %}selected{% endif %}"><i class="material-icons">add_circle</i><span class="sidebar-text">eintragen</span></li></a>
-      <li class="header">Lehre</li>
-      <a href="/app/petitions"><li class="{% if sidebarSelectedUrl starts with '/petition' %}selected{% endif %}"><i class="material-icons">how_to_vote</i><span class="sidebar-text">Petitionen</span></li></a>
-      <a href="/app/forms"><li class="{% if sidebarSelectedUrl starts with '/form' %}selected{% endif %}"><i class="material-icons">checklist</i><span class="sidebar-text">Umfragen</span></li></a>
-      <a href="/app/awards"><li class="{% if sidebarSelectedUrl starts with '/award' %}selected{% endif %}"><i class="material-icons">workspace_premium</i><span class="sidebar-text">PaLMe</span></li></a>
-      {% if user.isAdmin %}
-      <li class="header">Admin</li>
-      <a href="/app/admin/users"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/user' %}selected{% endif %}"><span class="sidebar-text">Nutzer</span></li></a>
-      <a href="/app/admin/examtypes"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/exam' %}selected{% endif %}"><span class="sidebar-text">Berichte</span></li></a>
-      <a href="/app/admin/petitions"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/petitions' %}selected{% endif %}"><span class="sidebar-text">Petitionen</span></li></a>
-      <a href="/app/admin/forms"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/forms' %}selected{% endif %}"><span class="sidebar-text">Umfragen</span></li></a>
-      <a href="/app/admin/awards"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/awards' %}selected{% endif %}"><span class="sidebar-text">PaLMe</span></li></a>
-      {% endif %}
-    </ul>
-    <div id="sidebar-copyright"><a href="https://github.com/lulebe/fs-berichte" target="_blank">&copy; Leander Berg 2023</a></div>
+  {% if isLoggedIn %}
+    <label id="darkener" for="mobile-sidebar-btn"></label>
+    <nav id="sidebar">
+      <ul>
+        <a href="/app/main"><li class="{% if sidebarSelectedUrl starts with '/main' %}selected{% endif %}"><i class="material-icons">dashboard</i><span class="sidebar-text">Startseite</span></li></a>
+        <li class="header">Berichte</li>
+        <a href="/app/exam"><li class="{% if sidebarSelectedUrl starts with '/exam' %}selected{% endif %}"><i class="material-icons">assignment</i><span class="sidebar-text">Prüfungsberichte</span></li></a>
+        <a href="/app/research"><li class="{% if sidebarSelectedUrl starts with '/research' %}selected{% endif %}"><i class="material-icons">science</i><span class="sidebar-text">Forschungs-AG Berichte</span></li></a>
+        <a href="/app/newreport"><li class="{% if sidebarSelectedUrl starts with '/newreport' %}selected{% endif %}"><i class="material-icons">add_circle</i><span class="sidebar-text">eintragen</span></li></a>
+        <li class="header">Lehre</li>
+        <a href="/app/petitions"><li class="{% if sidebarSelectedUrl starts with '/petition' %}selected{% endif %}"><i class="material-icons">how_to_vote</i><span class="sidebar-text">Petitionen</span></li></a>
+        <a href="/app/forms"><li class="{% if sidebarSelectedUrl starts with '/form' %}selected{% endif %}"><i class="material-icons">checklist</i><span class="sidebar-text">Umfragen</span></li></a>
+        <a href="/app/awards"><li class="{% if sidebarSelectedUrl starts with '/award' %}selected{% endif %}"><i class="material-icons">workspace_premium</i><span class="sidebar-text">PaLMe {% if hasNewAward %}<i class="material-icons" style="top: 6px; font-size: 1.5rem; color: red;">notification_important</i>{% endif %}</span></li></a>
+        {% if user.isAdmin %}
+          <li class="header">Admin</li>
+          <a href="/app/admin/users"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/user' %}selected{% endif %}"><span class="sidebar-text">Nutzer</span></li></a>
+          <a href="/app/admin/examtypes"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/exam' %}selected{% endif %}"><span class="sidebar-text">Berichte</span></li></a>
+          <a href="/app/admin/petitions"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/petitions' %}selected{% endif %}"><span class="sidebar-text">Petitionen</span></li></a>
+          <a href="/app/admin/forms"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/forms' %}selected{% endif %}"><span class="sidebar-text">Umfragen</span></li></a>
+          <a href="/app/admin/awards"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/awards' %}selected{% endif %}"><span class="sidebar-text">PaLMe</span></li></a>
+        {% endif %}
+      </ul>
+    <div id="sidebar-copyright"><a href="https://github.com/lulebe/fs-berichte" target="_blank">&copy; Leander Berg 2024</a></div>
   </nav>
+  {% endif %}
   <nav id="main-nav">
-    <a href="/app/profile"><i class="material-icons">account_box</i><span class="topnav-text">Profil</span></a>
-    <a href="/app/logout"><i class="material-icons">lock</i><span class="topnav-text">log out</span></a>
+    {% if isLoggedIn %}
+      <a href="/app/profile"><i class="material-icons">account_box</i><span class="topnav-text">Profil</span></a>
+      <a href="/app/logout"><i class="material-icons">lock</i><span class="topnav-text">log out</span></a>
+    {% else %}
+      <a href="/?goto={{currentPath}}"><i class="material-icons">lock</i><span class="topnav-text">log in</span></a>
+    {% endif %}
   </nav>
 </header>
-<div id="appcontainer">
-  <div id="sidebarspacer"></div>
-  <div id="appcontent">
-    {% block content %}{% endblock %}
-  </div>
+<div id="appcontainer" class="{% if isLoggedIn %}loggedin{% endif %}">
+  {% block content %}{% endblock %}
 </div>
 {% endblock %}

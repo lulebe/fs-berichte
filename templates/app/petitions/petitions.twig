@@ -22,7 +22,7 @@
     <div class="card">
     <h3>Meine Petitionen</h3>
     {% if userPetitions %}
-      <ul>
+      <ul class="striped">
         {% for p in userPetitions %}
           <li><a href="/app/petitions/{{p.id}}" class="main-text">{{p.title}} - <small>{{p.dateReadable}}</small></a></li>
         {% endfor %}

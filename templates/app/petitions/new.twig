@@ -4,41 +4,13 @@
 {% block head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
 <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-<style>
-.EasyMDEContainer {
-  color: #333;
-  font-family: 'Zilla Slab', serif;
-}
-.EasyMDEContainer .CodeMirror-fullscreen {
-  z-index: 12;
-}
-.EasyMDEContainer img {
-  max-width: 100%;
-  max-height: 500px;
-}
-.EasyMDEContainer button {
-  color: black;
-}
-.EasyMDEContainer button:hover {
-  color: black;
-}
-</style>
 {% endblock %}
 
 {% block content %}
 <div class="wrapper">
   <section>
     <h1>neue Petition anlegen</h1>
-    <p>Deine Petition ist zunächst <strong>inaktiv</strong>. Sie ist dann nur über den Link (bzw für dich unter "Meine Petitionen") sichtbar,
-    bis sie auf <strong>aktiv</strong> geschaltet wird.
-    {% if adminApproval %}
-    Dies können nur die Admins machen, sprich dich daher mit ihnen zur Veröffentlichung ab (z.b. FSrat, AK Lehre, Kreuzmich-Admins etc).
-    {% else %}
-    Dies kannst du jederzeit auf der Seite der Petition machen.
-    {% endif %}<br>
-    Um alle auf dem Laufenden zu halten, kannst du den Status der Petition später ändern ("inaktiv", "aktiv", "in Bearbeitung", "abgeschlossen", "abgebrochen")
-    und die Petition bearbeiten, um Updates zum Stand hinzuzufügen.
-    </p>
+    <p>{{howTo | raw}}</p>
     
     <form method="post">
     <div class="card mb">

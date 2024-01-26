@@ -13,6 +13,10 @@ button, input[type=submit], .btn {
   outline: none;
   cursor: pointer;
   color: white;
+  &:focus {
+    outline: 2px solid black;
+    outline-offset: 2px;
+  }
   &.small {
     font-size: 0.85rem;
     padding: 5px 10px;
@@ -57,6 +61,18 @@ button, input[type=submit], .btn {
   &:visited {
     color: white;
   }
+  &.pushup {
+    transform: translateY(-4px);
+  }
+}
+
+form:invalid button[type="submit"], form:invalid input[type="submit"] {
+  cursor: not-allowed;
+  background-color: $disabled-color;
+  border-color: transparent;
+  &:hover {
+    box-shadow: none;
+  }
 }
 
 select {
@@ -75,17 +91,19 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
   margin: 16px auto;
   padding: 8px 16px;
   font-size: 1rem;
-  border: 1px solid #aaa;
-  border-radius: 16px;
+  border: none;
+  border-bottom: 2px solid #bbb;
+  border-radius: 8px 8px 0 0;
   outline: none;
   background: white;
   &:focus {
     border-color: $primary-color;
+    box-shadow: none;
   }
 }
 
 input:invalid {
-  border: 1px solid red;
+  border-bottom: 2px solid $warning-color;
 }
 
 .inputlabel {
@@ -94,12 +112,11 @@ input:invalid {
     padding: 0;
     margin: 0;
     &.error {
-      color: red;
+      color: $warning-color;
     }
   }
   input {
     margin: 0;
-    border-top-left-radius: 0;
   }
 }
 
@@ -155,7 +172,7 @@ input[type=radio].lbl, input[type=checkbox].lbl {
     }
   }
   &:invalid + label {
-    color: red;
+    color: $warning-color;
   }
 }
 
@@ -166,6 +183,7 @@ input[type=range] {
 .fullpagesubmit {
   display: block;
   position: fixed;
+  z-index: 1200;
   bottom: 0;
   left: 25%;
   @media screen and (min-width: 1000px) {
@@ -181,20 +199,24 @@ input[type=range] {
   background: $primary-color-dark;
   color: white;
   font-weight: bold;
-  &:hover {
+  &:hover:not(:disabled) {
     font-size: 25px;
     background-color: $primary-color;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $disabled-color;
   }
 }
 form:invalid .fullpagesubmit {
   cursor: not-allowed;
   &:hover {
     font-size: 20px;
-    background-color: $primary-color-dark;
+    background-color: $disabled-color;
   }
 }
 
-.search-block {
+.input-btn-block {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -218,19 +240,22 @@ textarea {
   display: block;
   width: 100%;
   height: 350px;
-  border: 1px solid #aaa;
+  border: 2px solid #bbb;
   padding: 12px;
   font-family: 'Nunito', Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  border-radius: 16px;
-  border-top-left-radius: 0;
+  border-radius: 8px;
   outline: none;
   resize: vertical;
   &:focus {
     border-color: $primary-color;
+    box-shadow: none;
   }
   &.short {
     height: 120px;
+  }
+  &:invalid {
+    border-color: $warning-color;
   }
 }
 
@@ -238,4 +263,29 @@ textarea {
   + label {
     font-size: 0.9rem;
   }
+}
+
+
+.EasyMDEContainer {
+  color: #333;
+  font-family: 'Zilla Slab', serif;
+  .CodeMirror-fullscreen {
+    z-index: 10000;
+  }
+  img {
+    max-width: 100%;
+    max-height: 500px;
+  }
+  button {
+    color: black;
+    &:hover {
+      color: black;
+    }
+  }
+}
+.editor-toolbar.fullscreen {
+  z-index: 10000;
+}
+.editor-preview-side {
+  z-index: 10000;
 }

@@ -1,14 +1,18 @@
 {% extends "app/appbase.twig" %}
 
 {% block title %}Admin Petitionen{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+{% endblock %}
 
 {% block content %}
   <div class="wrapper-2-col">
     <section class="grid-col left">
-      <div class="card">
+      <div class="card mb">
         <h1>Tags</h1>
         <form method="post">
-          <div class="search-block">
+          <div class="input-btn-block">
             <div class="inputlabel">
               <label for="newtaginput">neues Tag</label>
               <input type="text" name="newTag" id="newtaginput" placeholder="Block IX">
@@ -27,6 +31,14 @@
           </form>
         </p>
       </div>
+      <div class="card">
+        <h1>Tutorial</h1>
+        <form method="post">
+          <label>Tutorial für Petitionsersteller</label>
+          <textarea name="howTo" id="mdeditor" placeholder="Petitionstutorial">{{howTo}}</textarea>
+          <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
+        </form>
+      </div>
     </section>
     <section class="grid-col right">
       <div class="card mb">
@@ -42,7 +54,7 @@
       {% if petitionsRequireAdminConfirmation %}
       <div class="card">
         <h1>neue Petitionen</h1>
-        <ul>
+        <ul class="striped">
           {% for p in petitionsAwaitingConfirmation %}
             <li>
               <a href="/app/petitions/{{p.id}}" class="main-text small">
@@ -59,4 +71,19 @@
 {% endblock %}
 
 {% block js %}
+<script>
+  document.getElementById('newtaginput').focus()
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('mdeditor'),
+    spellChecker: false,
+    toolbar: [
+      "bold", "italic", "heading", "|",
+      "quote", "unordered-list", "ordered-list", "|",
+      "link", "image", "|",
+      "preview", "side-by-side", "fullscreen", "|",
+      "undo", "redo", "|",
+      "guide"
+      ]
+  })
+</script>
 {% endblock %}

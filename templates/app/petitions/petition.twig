@@ -13,6 +13,7 @@
 {% block content %}
   <div class="petitionlayout">
     <section class="titlearea">
+      <a href="#" style="float: right" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
       <h1 class="mtop0">{{petition.title}}</h1>
       <div class="petitionprogress progress{{petition.status}}">
         <div class="progressStep"><i class="material-icons">edit_note</i></div>
@@ -22,9 +23,15 @@
         <div class="progressText">{{petition.statusReadable}}</div>
       </div>
       <i class="material-icons primary">edit_note</i> {{petition.dateReadable}} - {{petition.author}}<br>
-      <i class="material-icons accent">send</i> {{petition.recipient}}
+      <i class="material-icons accent">send</i> {{petition.recipient}}<br>
       <q>{{petition.shortText | nl2br }}</q>
-      {% for tag in petition.Tags %} <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a> {% endfor %}
+      {% for tag in petition.Tags %}
+        {% if isLoggedIn %}
+          <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a>
+        {% else %}
+          <span class="tag">{{tag.name}}</span>
+        {% endif %}
+      {% endfor %}
     </section>
     <section class="maintextarea">
       <div class="usertext">
@@ -34,7 +41,7 @@
     <section class="dataarea">
       <div class="card mb">
         <h3>Unterstützung</h3>
-        {% if supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
+        {% if isLoggedIn and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
         <div class="supportersdisplay">
           <div class="current">{{petition.supporterCount}}</div>
           <div class="supportbar"><div class="indicator" style="width: {{indicatorLength}}%"></div><div class="percentage">{{indicatorLength}}%</div></div>
@@ -43,7 +50,7 @@
         {% if isSupporting %}
           <p>Du unterstützt diese Petition.</p>
         {% endif %}
-        {% if isActive %}
+        {% if isActive and isLoggedIn %}
         {% if isSupporting %}
           <form method="post">
             <button type="submit" name="support" value="0">nicht mehr unterstützen</button>
@@ -54,7 +61,7 @@
           </form>
         {% endif %}
         {% endif %}
-        <small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>
+        {% if isLoggedIn %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
         <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
       </div>
       {% if user.id == petition.UserId or isAdmin %}
@@ -82,29 +89,46 @@
       </div>
       {% endif %}
     </section>
-    <section class="commentsarea">
-      <h1>Kommentare</h1>
-      {% for comment in petition.PetitionComments %}
-      <div class="card mb">
-        {{comment.User.displayName}} <small>({{comment.datetimeReadable}})</small>
-        <hr>
-        {% if comment.User.id == user.id or isAdmin %}
-        <form method="post" class="inline" style="float: right"><button type="submit" class="small iconbtn important" name="deletecomment" value="{{comment.id}}"><i class="material-icons">delete</i></button></form>
-        {% endif %}
-        <div class="usertext">{{comment.text}}</div>
-      </div>
-      {% endfor %}
-      <div class="card mb">
-      <h4>Du hast Gedanken dazu?</h4>
-        <small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>
-        <form method="post">
-          <div class="inputlabel">
-            <label>Bitte sei freundlich zu anderen Studierenden und dem Adressaten!</label>
-            <textarea name="comment" class="short usertext" placeholder="Dein Kommentar..."></textarea>
-          </div><br>
-          <button type="submit">Kommentar abschicken</button>
-        </form>
-      </div>
-    </section>
+    {% if isLoggedIn %}
+      <section class="commentsarea">
+        <h1>Kommentare</h1>
+        {% for comment in petition.PetitionComments %}
+        <div class="card mb" id="comment{{comment.id}}">
+          {% if isAdmin %}<a href="/app/admin/user/{{comment.User.id}}">{% endif %}{{comment.User.displayName}}{% if isAdmin %}</a>{% endif %} <small>({{comment.dateReadable}})</small>
+          <hr>
+          {% if comment.User.id == user.id or isAdmin %}
+          <form method="post" class="inline" style="float: right"><button type="submit" class="small iconbtn important" name="deletecomment" value="{{comment.id}}"><i class="material-icons">delete</i></button></form>
+          {% endif %}
+          <div class="usertext">{{comment.text}}</div>
+        </div>
+        {% endfor %}
+        <div class="card mb">
+        <h4>Du hast Gedanken dazu?</h4>
+          <small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>
+          <form method="post">
+            <div class="inputlabel">
+              <label>Bitte sei freundlich zu anderen Studierenden und dem Adressaten!</label>
+              <textarea name="comment" class="short usertext" placeholder="Dein Kommentar..."></textarea>
+            </div><br>
+            <button type="submit">Kommentar abschicken</button>
+          </form>
+        </div>
+      </section>
+    {% endif %}
   </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  const shareData = {
+    title: "FSmed HD Petition: {{petition.title}}",
+    url: "{{currentUrl}}"
+  }
+  function share () {
+    navigator.share(shareData)
+    .catch(_ => {
+      navigator.clipboard.writeText(shareData.url)
+    })
+  }
+</script>
 {% endblock %}

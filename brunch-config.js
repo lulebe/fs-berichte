@@ -5,7 +5,7 @@ exports.config = {
   },
   files: {
     stylesheets: {
-      joinTo: 'style5.css'
+      joinTo: 'style6.css'
     }
   },
   plugins: {

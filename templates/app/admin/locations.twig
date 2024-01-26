@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Orte</h1>
   <form method="get">
-    <div class="search-block">
+    <div class="input-btn-block">
       <div class="inputlabel">
         <label for="locationsearchinput">Ortssuche</label>
         <input type="search" name="searchLocation" id="locationsearchinput" value="{{searchQuery}}" placeholder="Name">
@@ -11,21 +11,23 @@
       <button type="submit"><i class="material-icons">search</i></button>
     </div>
   </form>
-  <ul>
+  <ul class="striped">
     {% for location in locations %}
       <li>
         <a href="examLocation/{{location.id}}" class="main-text">{{location.name}}<small> - seit {{location.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>
+  {% if pageCount > 1 %}
   Seiten:
-  {% for p in 1..pageCount %}
-    {% if loop.index == pageIndex %}
-      <strong>{{p}}</strong>
-    {% else %}
-      <a href="?page={{p}}">{{p}}</a>
-    {% endif %}
-  {% endfor %}
+    {% for p in 1..pageCount %}
+      {% if loop.index == pageIndex %}
+        <strong>{{p}}</strong>
+      {% else %}
+        <a href="?page={{p}}">{{p}}</a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 
 {% block js %}

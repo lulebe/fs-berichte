@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Prüfungsarten</h1>
   <a href="examtype/new" class="btn iconbtn"><i class="material-icons">add</i>Neue Prüfungsart anlegen</a>
-  <ul>
+  <ul class="striped">
     {% for examType in examTypes %}
       <li>
         <a href="examtype/{{examType.id}}" class="main-text">{{examType.name}}<small> - seit {{examType.createdAtReadable}}</small></a>

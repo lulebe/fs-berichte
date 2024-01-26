@@ -1,0 +1,142 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+
+{% block content %}
+<div class="wrapper-2-col" v-scope @vue:mounted="mounted()">
+  <section class="grid-col left">
+    <div id="error-msg" class="mb" v-if="errorMsg">${errorMsg}</div>
+    <div class="card" v-if="!editing">
+      <h1 class="mtop0">${award.title} <button class="iconbtn" style="float: right" @click="editing=true"><i class="material-icons">edit</i> bearbeiten</button></h1>
+      <h4>${award.statusReadable}</h4>
+      Voting bis ${award.votingDeadlineReadable}
+      <p v-if="!editing" class="usertext">${award.description}</p>
+    </div>
+    <div class="card" v-if="editing">
+      <div class="inputlabel">
+        <label for="usersearchinput">Titel</label>
+        <input type="text" v-model="award.title" v-effect="editing && $el.focus()">
+      </div>
+      <small>Status</small>
+      <div class="radiorow">
+        <div class="grouper">
+          <input type="radio" class="lbl" name="awardstatus" id="awardstatus0" v-model="award.status" :value="0">
+          <label class="check" for="awardstatus0">Unveröffentlicht</label>
+        </div>
+        <div class="grouper">
+          <input type="radio" class="lbl" name="awardstatus" id="awardstatus1" v-model="award.status" :value="1">
+          <label class="check" for="awardstatus1">Veröffentlicht</label>
+        </div>
+        <div class="grouper">
+          <input type="radio" class="lbl" name="awardstatus" id="awardstatus2" v-model="award.status" :value="2">
+          <label class="check" for="awardstatus2">Abgeschlossen</label>
+        </div>
+      </div>
+      <div class="inputlabel">
+        <label>Deadline</label>
+        <input type="date" v-model="award.votingDeadline" min="{{currentDate}}">
+      </div>
+      <div class="inputlabel">
+        <label>Beschreibung</label>
+        <textarea class="short usertext" v-model="award.description"></textarea>
+      </div>
+      <br>
+      <button type="button" class="iconbtn" @click="saveChanges()"><i class="material-icons">save</i> speichern</button>
+      <button type="button" class="iconbtn important" style="float: right" @click="deleteAward()"><i class="material-icons">delete</i> löschen</button>
+    </div>
+  </section>
+  <section class="grid-col right">
+    <h2>Kandidaten</h2>
+    <a href="/app/admin/awards/{{award.id}}/candidates/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Kandidaten hinzufügen</a>
+    <p>Drag &amp; Drop zum Ändern der Reihenfolge</p>
+    <div id="candidatesList">
+      {% for candidate in award.AwardCandidates %}
+        <div class="card mb" data-candidate-id="{{candidate.id}}" style="cursor: move;">
+          <a href="{{award.id}}/candidates/{{candidate.id}}"><h4 class="mtop0">{{candidate.name}}</h4></a>
+          <p class="usertext">{{candidate.shortDescription}}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<script>
+  const award = {{award | json_encode | raw }}
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+
+  award,
+  editing: false,
+  errorMsg: null,
+
+  saveChanges () {
+    fetch(this.award.id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.award),
+    })
+    .then(response => response.json())
+    .then(data => {
+      this.award = data
+      this.editing = false
+      this.errorMsg = null
+    })
+    .catch(error => {
+      console.log(error)
+      this.errorMsg = "Speichern fehlgeschlagen."
+    })
+  },
+
+  deleteAward () {
+    confirm('Wirklich löschen?') && fetch(this.award.id, {
+      method: 'DELETE'
+    }).then(res => {
+      if (res.ok) window.location = '/app/admin/awards'
+      else this.errorMsg = "Löschen fehlgeschlagen."
+    })
+    .catch(error => {
+      this.errorMsg = "Löschen fehlgeschlagen."
+    })
+  },
+
+  mounted () {
+    if (window.location.hash === '#edit') this.editing = true
+  }
+}).mount()
+</script>
+<script type="module">
+  import Sortable from 'https://cdn.jsdelivr.net/npm/@shopify/draggable/build/esm/Sortable/Sortable.mjs'
+
+  const sortable = new Sortable(document.querySelector('#candidatesList'), {
+    draggable: 'div',
+    distance: 5
+  })
+  let saveSortTimeout = null
+  sortable.on('sortable:start', () => {
+    if (saveSortTimeout) clearTimeout(saveSortTimeout)
+  })
+  sortable.on('sortable:stop', () => {
+    if (saveSortTimeout) clearTimeout(saveSortTimeout)
+    saveSortTimeout = setTimeout(() => {
+      const newOrder = [...document.getElementById('candidatesList').children].map(el => el.dataset.candidateId)
+      fetch({{award.id}}, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ candidateOrder: newOrder.map(id => parseInt(id)) }),
+    })
+    .then(response => response.json())
+    .catch(error => {
+      console.log(error)
+      this.errorMsg = "Speichern fehlgeschlagen."
+    })
+    }, 200)
+  })
+</script>
+{% endblock %}

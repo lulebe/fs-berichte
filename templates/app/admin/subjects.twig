@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Fächer</h1>
   <form method="get">
-    <div class="search-block">
+    <div class="input-btn-block">
       <div class="inputlabel">
         <label for="subjectsearchinput">Fachsuche</label>
         <input type="search" name="searchSubject" id="subjectsearchinput" value="{{searchQuery}}" placeholder="Name">
@@ -11,21 +11,23 @@
       <button type="submit"><i class="material-icons">search</i></button>
     </div>
   </form>
-  <ul>
+  <ul class="striped">
     {% for subject in subjects %}
       <li>
         <a href="examSubject/{{subject.id}}" class="main-text">{{subject.name}}<small> - seit {{subject.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>
+  {% if pageCount > 1 %}
   Seiten:
-  {% for p in 1..pageCount %}
-    {% if loop.index == pageIndex %}
-      <strong>{{p}}</strong>
-    {% else %}
-      <a href="?page={{p}}">{{p}}</a>
-    {% endif %}
-  {% endfor %}
+    {% for p in 1..pageCount %}
+      {% if loop.index == pageIndex %}
+        <strong>{{p}}</strong>
+      {% else %}
+        <a href="?page={{p}}">{{p}}</a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% endblock %}
 
 {% block js %}

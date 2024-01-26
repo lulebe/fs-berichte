@@ -3,7 +3,7 @@
 {% block title %}Prüfungen{% endblock %}
 
 {% block content %}
-  <div class="wrapper">
+  <div class="wrapper narrow">
     <section>
       <div class="card">
         <h1>Prüfungssuche</h1>
@@ -37,7 +37,7 @@
       {% if results %}
       <a href="/app/pdfmulti?exams={{multiDLIds}}&q={{multiDLquery}}" class="btn iconbtn"><i class="material-icons">save</i> alle als PDF speichern</a>
       {% endif %}
-      <ul>
+      <ul class="striped">
         {% for result in results %}
           <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}

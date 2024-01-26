@@ -3,63 +3,86 @@
 {% block title %}Profil{% endblock %}
 
 {% block content %}
-  <div class="wrapper">
-    {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
-    <section class="card">
-      <h1>Account</h1>
-      <h3>Passwort ändern</h3>
-      <form method="POST">
-        <div class="pwinput" id="pw-old">
-          <input type="password" name="oldpw" required placeholder="altes Passwort">
-          <i class="material-icons on">visibility</i>
-          <i class="material-icons off">visibility_off</i>
-        </div>
-        <div class="pwinput" id="pw-new">
-          <input type="password" name="newpw" required placeholder="neues Passwort">
-          <i class="material-icons on">visibility</i>
-          <i class="material-icons off">visibility_off</i>
-        </div>
-        <div class="pwinput" id="pw-repeat">
-          <input type="password" name="repeatpw" required placeholder="Passwort wiederholen">
-          <i class="material-icons on">visibility</i>
-          <i class="material-icons off">visibility_off</i>
-        </div>
-        <button type="submit" class="iconbtn" name="changepw" value="1"><i class="material-icons">key</i> Passwort ändern</button>
-      </form>
-      <h3>Nickname ändern</h3>
-      <p>Dein Nickname erscheint in Kommentaren, Petitionen, etc..</p>
-      <form method="POST">
-        <div class="inputlabel">
-          <label>Nickname</label>
-          <input type="text" name="nickname" value="{{user.nickname}}">
-        </div><br>
-        <input type="checkbox" class="lbl" name="anonymous" id="cbanonymous" value="true" {% if user.anonymous %}checked{% endif %}>
-        <label class="check" for="cbanonymous">anonym bleiben</label><br><br>
-        <button type="submit" class="iconbtn" name="changename" value="1"><i class="material-icons">save</i> speichern</button>
-      </form>
-      <h3>Account löschen</h3>
-      <p style="color: red;">
-        <i class="material-icons">warning</i> Wenn du deinen Account löschst, werden alle deine Berichte ebenfalls unwiderruflich gelöscht!
-      </p>
-      <form action="deleteAccount" method="POST" onsubmit="return confirm('Soll der Account wirklich gelöscht werden?')">
-        <input type="hidden" name="doit" value="yes">
-        <button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> Account löschen</button>
-      </form>
-      
-    </section>
-    <section>
-      <h1>Meine Berichte</h1>
-      {% if reports %}
-      {% endif %}
-      <ul>
-        {% for result in reports %}
-          <li><a href="exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
-        {% endfor %}
-        {% for result in research %}
-          <li><a href="research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
-        {% endfor %}
-      </ul>
-    </section>
+  <div class="wrapper-2-col right-over">
+    <div class="grid-col left">
+      <h1 class="mtop0">Meine Berichte</h1>
+      <section>
+        {% if noContent %}
+          <div class="no-content">
+            <i class="material-icons">new_releases</i><br><br>
+            Du hast noch keine Inhalte eingetragen.
+          </div>
+          <div class="resultsgrid morecols" style="padding: 16px">
+            <a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>
+            <a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>
+          </div>
+        {% endif %}
+        <ul class="striped">
+          {% for result in petitions %}
+            <li><a href="/app/petitions/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.title}}</strong> ({{result.statusReadable}})</a></li>
+          {% endfor %}
+          {% for result in reports %}
+            <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+          {% endfor %}
+          {% for result in research %}
+            <li><a href="/app/research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
+          {% endfor %}
+          {% for result in petitionComments %}
+            <li><a href="/app/petitions/{{result.Petition.id}}#comment{{result.id}}" class="main-text">
+              {{result.dateReadable}} - <strong>{{result.Petition.title}}</strong>: <small>{{result.text | slice(0,30)}}{% if result.text|length > 30 %}...{% endif %}</small>
+            </a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+    <div class="grid-col right">
+      <h1 class="mtop0">Account</h1>
+      {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
+      <section class="card mb">
+        <h3>Passwort ändern</h3>
+        <form method="POST">
+          <div class="pwinput" id="pw-old">
+            <input type="password" name="oldpw" required placeholder="altes Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+          <div class="pwinput" id="pw-new">
+            <input type="password" name="newpw" required placeholder="neues Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+          <div class="pwinput" id="pw-repeat">
+            <input type="password" name="repeatpw" required placeholder="Passwort wiederholen">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+          <button type="submit" class="iconbtn" name="changepw" value="1"><i class="material-icons">key</i> Passwort ändern</button>
+        </form>
+      </section>
+      <section class="card mb">
+        <h3>Nickname ändern</h3>
+        <p>Dein Nickname erscheint in Kommentaren, Petitionen, etc..</p>
+        <form method="POST">
+          <div class="inputlabel">
+            <label>Nickname</label>
+            <input type="text" name="nickname" value="{{user.nickname}}">
+          </div><br>
+          <input type="checkbox" class="lbl" name="anonymous" id="cbanonymous" value="true" {% if user.anonymous %}checked{% endif %}>
+          <label class="check" for="cbanonymous">anonym bleiben</label><br><br>
+          <button type="submit" class="iconbtn" name="changename" value="1"><i class="material-icons">save</i> speichern</button>
+        </form>
+      </section>
+      <section class="card mb">
+        <h3>Account löschen</h3>
+        <p style="color: red;">
+          <i class="material-icons">warning</i> Wenn du deinen Account löschst, werden alle deine Berichte ebenfalls unwiderruflich gelöscht!
+        </p>
+        <form action="deleteAccount" method="POST" onsubmit="return confirm('Soll der Account wirklich gelöscht werden?')">
+          <input type="hidden" name="doit" value="yes">
+          <button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> Account löschen</button>
+        </form>
+      </section>
+    </div>
   </div>
 {% endblock %}
 

@@ -4,9 +4,12 @@
 
 {% block content %}
 <div class="wrapper">
-  <p class="usertext" style="text-align: center">
-    Leider ist PaLMe erst noch in der Entstehung.
-  </p>
+  <a href="/app/admin/awards/new" class="btn iconbtn"><i class="material-icons">add</i> neuen Award anlegen</a>
+  <ul  class="striped">
+    {% for award in awards %}
+    <li><a href="/app/admin/awards/{{award.id}}" class="main-text">{{award.title}} <small>({{award.statusReadable}})</small></a></li>
+    {% endfor %}
+  </ul>
 </div>
 {% endblock %}
 

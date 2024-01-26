@@ -1,0 +1,167 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+{% block head %}
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
+  type="text/css"
+/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<style>
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" v-scope @vue:mounted="mounted()">
+  <div class="error-container" v-if="store.errorMsg">
+    <div id="error-msg" @click="store.errorMsg=null">${store.errorMsg} <i class="material-icons">close</i></div>
+  </div>
+  <form action="" method="post" id="mainform" @submit.prevent="submit()">
+  <a href="../../{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
+  <h1>${store.candidate.name}</h1>
+  <a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}/delete" class="btn iconbtn important" onclick="return confirm('Wirklich löschen?')"><i class="material-icons">delete</i> löschen</a><br><br>
+    <div class="card mb">
+      <div class="inputlabel">
+        <label>Name des Kandidaten</label>
+        <input type="text" name="name" v-model="store.candidate.name" @input="store.hasChanges = true" placeholder="Joachim Kirsch" required />
+      </div>
+      <div class="inputlabel">
+        <label>Kurzbeschreibung</label>
+        <textarea v-model="store.candidate.shortDescription" class="short usertext" minlength="30" maxlength="250" required @input="store.hasChanges = true"></textarea>
+      </div>
+    </div>
+    <div class="card mb">
+      <div class="image-list">
+        <div v-for="image in store.candidate.CandidateImages" style="text-align: center; padding: 8px; border-radius: 8px; border: 1px solid #ccc">
+          <img :src="'/app/awards/image/'+image.id+'.'+image.type"><br>
+          <a href="#" @click.prevent="deleteImage(image)">löschen</a>
+        </div>
+      </div>
+      <br>
+      <div class="dropzone"></div>
+    </div>
+    <div class="card">
+      <div class="inputlabel">
+      <label>Ausführliche Beschreibung</label>
+      <textarea id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
+      </div>
+    </div>
+    <div style="height: 64px">&nbsp;</div>
+    <button type="submit" class="fullpagesubmit" :disabled="store.submitting" v-if="store.hasChanges">Änderungen speichern</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+   const store = PetiteVue.reactive({
+    award: {{award | json_encode | raw }},
+    candidate: {{candidate | json_encode | raw}},
+    submitting: false,
+    errorMsg: null,
+    hasChanges: false
+  })
+
+  Dropzone.autoDiscover = false
+  const dropzone = new Dropzone("div.dropzone", {
+    url: `/app/admin/awards/{{award.id}}/candidates/${store.candidate.id}/images`,
+    parallelUploads: 1,
+    maxFilesize: 5,
+    acceptedFiles: "image/*",
+    dictDefaultMessage: "Bilder (5mb max) für den Kandidaten hinzufügen",
+    addRemoveLinks: true
+  })
+  dropzone.on('complete', file => {
+    dropzone.removeFile(file)
+  })
+  dropzone.on('success', file => {
+    const imageData = JSON.parse(file.xhr.responseText).data.filePath.split('/').slice(-1)[0].split('.')
+    store.candidate.CandidateImages.push({id: imageData[0], type: imageData[1]})
+  })
+  dropzone.on('error', (f,m) => {
+    dropzone.removeFile(f)
+    store.errorMsg = "Upload fehlgeschlagen."
+  })
+
+  
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('mdeditor'),
+    spellChecker: false,
+    toolbar: [
+      "bold", "italic", "heading", "|",
+      "quote", "unordered-list", "ordered-list", "|",
+      "link", "image", "|",
+      "preview", "side-by-side", "fullscreen", "|",
+      "undo", "redo", "|",
+      "guide"
+      ],
+    autosave: {
+      enabled: true,
+      uniqueId: "newcandidate"
+    }
+  })
+
+
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+  store,
+
+  get imagePaths () {
+    return this.store.candidate.CandidateImages.map(ci => `/app/awards/image/${ci.id}.${ci.type}`)
+  },
+
+  submit () {
+    this.store.submitting = true
+    fetch('/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.store.candidate)
+    })
+    .then(res => {
+      this.store.submitting = false
+      console.log(res)
+      if (!res.ok) {
+        this.store.errorMsg = "Speichern fehlgeschlagen."
+        throw new Error(res.statusText)
+      }
+      return res.json()
+    })
+    .then(data => {
+      store.candidate = data
+      store.hasChanges = false
+    })
+    .catch(error => {
+      this.store.submitting = false
+      console.log(error)
+      this.store.errorMsg = "Speichern fehlgeschlagen."
+    })
+  },
+  deleteImage (image) {
+    if (!confirm('Bild wirklich löschen?')) return
+    fetch(`/app/admin/awards/images/${image.id}`, {
+      method: 'DELETE'
+    })
+    .then(res => {
+      if (res.ok) {
+        store.candidate.CandidateImages.splice(store.candidate.CandidateImages.indexOf(image), 1)
+      }
+    })
+  },
+  mounted () {
+    easyMDE.codemirror.doc.setValue(store.candidate.longDescription)
+  }
+}).mount()
+
+easyMDE.codemirror.on("change", () => {
+    store.candidate.longDescription = easyMDE.value()
+    store.hasChanges = true
+})
+</script>
+</script>
+{% endblock %}

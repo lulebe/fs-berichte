@@ -1,9 +1,12 @@
 $primary-color: #296ea7;
+$secondary-color: #2e9f43;
 $accent-color: #c10b1d;
 $accent-color-dark: #8f111e;
 $primary-color-dark: #014178;
-$menu-color-dark: #1d1d1d;
+$menu-color-dark: #1D1D1D;
 $menu-color: #292929;
+$warning-color: #f3723a;
+$disabled-color: darkgrey;
 
 $shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
 $shadow-s: 0 1px 3px rgba(0,0,0,0.4);
@@ -45,20 +48,44 @@ a {
   &:hover {
     color: $primary-color-dark;
   }
+  &.block {
+    color: inherit;
+    display: block;
+    &:visited {
+      color: inherit;
+    }
+    &:hover {
+      color: inherit;
+      > * {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        background-color: lighten($primary-color, 57%);
+      }
+    }
+  }
 }
 
+blockquote {
+  border-left: 4px solid grey;
+  margin: 0 0 1rem 1rem;
+  font-style: italic;
+  background: #eee;
+  padding: 1rem;
+  p {
+    margin: 0;
+  }
+}
 
 hr {
   border: none;
   height: 1px;
   background-color: lightgrey;
-  margin: 6px 0;
+  margin: 16px 0;
 }
 
 .mtop0 {
   margin-top: 0;
 }
-.mb {
+.mb:not(:last-child) {
   margin-bottom: 16px;
 }
 
@@ -84,12 +111,32 @@ i.material-icons {
 
 #error-msg {
   border-radius: 8px;
-  background: #ff6633;
+  background: $warning-color;
   display: block;
   padding: 16px;
   color: white;
   font-weight: 600;
-  padding-bottom: 24px;
+  text-align: center;
+}
+.error-container {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  right: 0;
+  padding: 16px;
+  bottom: 64px;
+  @media (min-width: 1000px) {
+    bottom: auto;
+    top: 64px;
+    width: 500px;
+  }
+}
+.error-container .material-icons {
+  float: right;
+  top: 0;
+}
+.error-container #error-msg {
+  cursor: pointer;
 }
 
 .tag {
@@ -139,3 +186,4 @@ q {
 @import "forms";
 @import "researchreport";
 @import "petitions";
+@import "awards";

@@ -35,13 +35,27 @@
       </form>
       
     <p>
-      <h1>Berichte</h1>
-      <ul>
+      <h2>Berichte</h2>
+      <ul class="striped">
         {% for result in reports %}
           <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
         {% endfor %}
         {% for result in research %}
-          <li><a href="/app/research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.work}}</a></li>
+          <li><a href="/app/research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.workReadable}}</a></li>
+        {% endfor %}
+      </ul>
+      <h2>Petitionen</h2>
+      <ul class="striped">
+        {% for result in petitions %}
+          <li><a href="/app/petitions/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.title}}</strong> ({{result.statusReadable}})</a></li>
+        {% endfor %}
+      </ul>
+      <h2>Kommentare</h2>
+      <ul class="striped">
+        {% for result in petitionComments %}
+          <li><a href="/app/petitions/{{result.Petition.id}}#comment{{result.id}}" class="main-text">
+            {{result.dateReadable}} - <strong>{{result.Petition.title}}</strong>: <small>{{result.text | slice(0,30)}}{% if result.text|length > 30 %}...{% endif %}</small>
+          </a></li>
         {% endfor %}
       </ul>
     </p>

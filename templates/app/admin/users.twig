@@ -3,7 +3,7 @@
 {% block admincontent %}
   <h1>Nutzer</h1>
   <form method="get">
-    <div class="search-block">
+    <div class="input-btn-block">
       <div class="inputlabel">
         <label for="usersearchinput">Nutzersuche</label>
         <input type="search" name="searchUser" id="usersearchinput" value="{{searchQuery}}" placeholder="E-Mailadresse">
@@ -11,10 +11,10 @@
       <button type="submit"><i class="material-icons">search</i></button>
     </div>
   </form>
-  <ul>
+  <ul class="striped">
     {% for user in users %}
       <li>
-        <a href="user/{{user.id}}" class="main-text">{% if user.isAdmin %}<strong>{% endif %}{{user.email}}{% if user.isAdmin %}</strong>{% endif %}<small> - seit {{user.createdAtReadable}}</small></a>
+        <a href="user/{{user.id}}" class="main-text">{% if user.isAdmin %}<strong>{% endif %}{{user.email}}{% if user.isAdmin %}</strong>{% endif %}{% if user.nickname %} ({{user.nickname}}){% endif %} <small style="white-space: nowrap;">- seit {{user.createdAtReadable}}</small></a>
       </li>
     {% endfor %}
   </ul>

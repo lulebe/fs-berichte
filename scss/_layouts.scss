@@ -1,27 +1,19 @@
 #appcontainer {
-  display: flex;
-  flex-direction: row;
-  #sidebarspacer {
-    display: none;
-    flex-basis: 300px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    @media screen and (min-width: 1000px) {
-      display: block;
+  padding-left: 0;
+  @media screen and (min-width: 1000px) {
+    &.loggedin {
+      padding-left: 300px;
     }
-  }
-  #appcontent {
-    flex-grow: 1;
   }
 }
 
 .wrapper {
   width: 100%;
   padding: 16px;
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   &.narrow {
-    max-width: 600px;
+    max-width: 700px;
   }
 }
 
@@ -35,6 +27,9 @@
   grid-template-columns: 2fr 1fr;
   align-items: start;
   gap: 16px;
+  .grid-col {
+    min-width: 0;
+  }
   .grid-col.left {
     grid-column: 1 / span 1;
     grid-row: 1 / span 1;
@@ -140,7 +135,7 @@
   bottom: 0;
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(10px);
-  z-index: 1000;
+  z-index: 11000;
   .modalwrapper {
     position: absolute;
     top: 16px;
@@ -217,5 +212,29 @@
     &.visible {
       display: inline-block;
     }
+  }
+}
+
+.splide {
+  img {
+    height: 100%;
+  }
+}
+
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  justify-items: center;
+  align-items: center;
+  img {
+    max-width: 100%;
+    max-height: 150px;
+  }
+}
+
+#candidatesList {
+  @media (max-width: 1150px) and (pointer: coarse) {
+    width: 80%;
   }
 }

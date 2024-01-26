@@ -29,7 +29,7 @@
       </form>
       <p>
         <h1>Berichte</h1>
-        <ul>
+        <ul class="striped">
           {% for result in reports %}
             <li><a href="/app/exam/{{result.Exam.id}}" class="main-text">{{result.Exam.dateReadable}} - <strong>{{result.Exam.ExamType.name}}</strong>: {{result.Subject.name}}</a></li>
           {% endfor %}

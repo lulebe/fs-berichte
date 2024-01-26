@@ -3,10 +3,11 @@
 {% block title %}Admin Umfragen{% endblock %}
 
 {% block content %}
-  <div class="wrapper">
+  <div class="wrapper narrow">
     <h1 class="mtop0">Umfragen</h1>
     <div class="card">
       <h3>Umfrage eintragen</h3>
+      <p>Umfragen aus Google Formularen können hier eingebettet werden. Dazu im Google Formular den Code zum "einbetten" ("embed") kopieren und hier einfügen.</p>
       <form method="post">
         <div class="inputlabel">
           <label>Titel</label>
@@ -14,13 +15,13 @@
         </div><br>
         <div class="inputlabel">
           <label>Google Forms embed-code</label>
-          <input type="text" name="embedCode" placeholder="https://......." required>
+          <input type="text" name="embedCode" placeholder='<iframe src="https://docs.google.com/forms.....' required>
         </div><br>
         <button type="submit" class="iconbtn">eintragen</button>
       </form>
     </div>
     <h3>laufende Umfragen</h3>
-    <ul>
+    <ul class="striped">
       {% for form in forms %}
         <li><a href="/app/forms/{{form.id}}" class="main-text">
           {{form.title}} - <small>{{form.dateReadable}}</small>

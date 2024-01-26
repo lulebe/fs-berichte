@@ -3,7 +3,7 @@
 {% block title %}Arbeitsgruppenbericht{% endblock %}
 
 {% block content %}
-  <div class="wrapper">
+  <div class="wrapper narrow">
     <section>
       <h1>Bericht vom {{report.dateReadable}}</h1>
       {% if isAdmin %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}

@@ -1,0 +1,181 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}PaLMe Admin{% endblock %}
+{% block head %}
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
+  type="text/css"
+/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<style>
+  .error-container {
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    left: 0;
+    padding: 16px;
+    bottom: 64px;
+  }
+  .error-container .material-icons {
+    float: right;
+    top: 0;
+  }
+  .error-container #error-msg {
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" v-scope>
+  <div class="error-container" v-if="store.errorMsg">
+    <div id="error-msg" @click="store.errorMsg=null">${store.errorMsg} <i class="material-icons">close</i></div>
+  </div>
+  <form action="" method="post" id="mainform" @submit.prevent="submit()">
+  <a href="../../{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
+  <h1>${header} aufstellen</h1>
+    <div class="card mb">
+      <div class="inputlabel">
+        <label>Name des Kandidaten</label>
+        <input type="text" name="name" v-model="store.candidate.name" placeholder="Joachim Kirsch" required />
+      </div>
+      <div class="inputlabel">
+        <label>Kurzbeschreibung</label>
+        <textarea v-model="store.candidate.shortDescription" class="short usertext" minlength="30" maxlength="250" required></textarea>
+      </div>
+    </div>
+    <div class="card mb">
+      <div id="imageList">
+        <img :src="image" v-for="image in store.imagePaths">
+      </div>
+      <div class="dropzone"></div>
+    </div>
+    <div class="card">
+      <div class="inputlabel">
+      <label>Ausführliche Beschreibung (<i class="fa fa-columns"></i> für Vollbild)</label>
+      <textarea v-model="store.candidate.longDescription" id="mdeditor" placeholder="Kandidatenbeschreibung"></textarea>
+      </div>
+    </div>
+    <div style="height: 64px">&nbsp;</div>
+    <button type="submit" class="fullpagesubmit" :disabled="store.submitting">hinzufügen</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+   const store = PetiteVue.reactive({
+    award: {{award | json_encode | raw }},
+    candidate: {
+      name: "",
+      shortDescription: "",
+      longDescription: `# Fach?
+
+In diesem Textfeld sollte eine ausführliche Beschreibung stehen. Warum ist diese Person aufgestellt? Details zu Lehre, Projekten, auch bisschen was zur Person an sich vielleicht.
+
+
+## Krasser Typ
+
+1. Dies macht der
+2. Und jenes auch
+3. Und sogar das
+
+
+## Leute sagen
+
+> Ich fand das beste ja, dass wir sogar selbst n Whipple im Blockpraktikum machen durften
+
+> Dank Prof. Müller konnte ich gestern meinen eigenen Blinddarm operieren!`
+    },
+    submitting: false,
+    errorMsg: null
+  })
+
+  Dropzone.autoDiscover = false
+  const dropzone = new Dropzone("div.dropzone", {
+    url: `/awards/{{award.id}}/candidates/${store.candidate.id}/images`,
+    parallelUploads: 1,
+    maxFilesize: 5,
+    acceptedFiles: "image/*",
+    dictDefaultMessage: "Bilder (5mb max) für den Kandidaten hinzufügen",
+    autoProcessQueue: false,
+    addRemoveLinks: true
+  })
+  dropzone.on('complete', (file) => {
+    if (store.submitting)
+    dropzone.processQueue()
+  })
+  dropzone.on('error', (f,m) => {
+    dropzone.removeFile(f)
+    store.errorMsg = "Upload fehlgeschlagen."
+  })
+  PetiteVue.createApp({
+  $delimiters: ['${', '}'],
+
+  store,
+
+  get header () {
+    return this.store.candidate.name || 'Kadidaten'
+  },
+
+  submit () {
+    this.store.submitting = true
+    fetch('/app/admin/awards/{{award.id}}/candidates/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.store.candidate)
+    }).then(res => {
+      if (!res.ok) {
+        this.errorMsg = "Speichern fehlgeschlagen."
+        this.store.submitting = false
+        throw new Error(res.statusText)
+      }
+      return res.json()
+    })
+    .then(data => {
+      store.candidate.id = data.id
+      dropzone.options.url = `/app/admin/awards/{{award.id}}/candidates/${store.candidate.id}/images`
+      dropzone.processQueue()
+      const completeHandler = () => {
+        dropzone.off('queuecomplete', completeHandler)
+        console.log('done')
+        window.location = '/app/admin/awards/{{award.id}}/candidates/' + this.store.candidate.id
+      }
+      dropzone.on('queuecomplete', completeHandler)
+    })
+    .catch(error => {
+      this.store.submitting = false
+      console.log(error)
+      this.errorMsg = "Speichern fehlgeschlagen."
+    })
+  }
+
+}).mount()
+
+const easyMDE = new EasyMDE({
+  element: document.getElementById('mdeditor'),
+  spellChecker: false,
+  toolbar: [
+    "bold", "italic", "heading", "|",
+    "quote", "unordered-list", "ordered-list", "|",
+    "link", "image", "|",
+    "preview", "side-by-side", "fullscreen", "|",
+    "undo", "redo", "|",
+    "guide"
+    ],
+  autosave: {
+    enabled: true,
+    uniqueId: "newcandidate"
+  }
+})
+easyMDE.codemirror.on("change", () => {
+    store.candidate.longDescription = easyMDE.value()
+})
+</script>
+{% endblock %}
