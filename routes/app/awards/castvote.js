@@ -5,6 +5,7 @@ module.exports = async (req, res, next) => {
   if (!award) return res.status(404).send()
   const candidate = await AwardCandidate.findByPk(req.params.candidateid)
   if (!candidate) return res.status(404).send()
+  if (!award.canVote) return res.status(403).send()
   const vote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}})
   if (vote) {
     vote.AwardCandidateId = candidate.id

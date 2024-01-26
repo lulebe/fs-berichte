@@ -404,6 +404,12 @@ const Award = sequelize.define('Awards', {
     get () {
       return new Date(this.votingDeadline) >= new Date()
     }
+  },
+  canVote: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.beforeDeadline && this.status === Award.STATUS.PUBLISHED
+    }
   }
 })
 Award.STATUS = Object.freeze({UNPUBLISHED: 0, PUBLISHED: 1, DONE: 2})

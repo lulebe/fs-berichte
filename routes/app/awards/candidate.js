@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   const award = await Award.findByPk(candidate.AwardId, {include: [
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
-  if (!award || award.status < Award.STATUS.PUBLISHED) return res.status(404).send()
+  if (!award || (award.status < Award.STATUS.PUBLISHED && !(req.user &&req.user.isAdmin))) return res.status(404).send()
   res.tmplOpts.award = award
   candidate.longDescriptionHtml = md.render(candidate.longDescription)
   res.tmplOpts.candidate = candidate
