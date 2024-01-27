@@ -32,20 +32,44 @@
         </div>
         {% endif %}
       </div>
-      <div class="card mb">
+      <div class="card mb" v-scope='{editing: false, loginTexts: {{loginTexts | json_encode | raw}}}'>
         <h1>Login-Seite</h1>
-        <form method="post">
+        <div v-if="!editing">
           <div class="inputlabel">
             <label>Beschreibungstext Website</label>
-            <textarea name="loginDescription" class="short">{{loginDescription}}</textarea>
+            <p style="white-space: pre-wrap;">{{loginTexts.loginDescription}}</p>
           </div>
+          <br>
           <div class="inputlabel">
             <label>Registrierung Erklärungstext</label>
-            <textarea name="loginRegisterExplainer" class="short">{{loginRegisterExplainer}}</textarea>
-          </div><br>
-          <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
-        </form>
+            <div style="white-space: pre-wrap;">{{loginTexts.loginRegisterExplainerRendered | raw}}</div>
+          </div>
+          <button type="button" class="iconbtn" @click="editing = !editing"><i class="material-icons">edit</i> Bearbeiten</button>
+        </div>
+        {% verbatim %}
+          <form method="post" v-if="editing">
+            <div class="inputlabel">
+              <label>Beschreibungstext Website</label>
+              <textarea name="loginDescription" class="short" v-model="loginTexts.loginDescription"></textarea>
+            </div>
+            <div class="inputlabel">
+              <label>Registrierung Erklärungstext</label>
+              <textarea name="loginRegisterExplainer" v-model="loginTexts.loginRegisterExplainer"></textarea>
+              <small><a href="https://github.com/lifeparticle/Markdown-Cheatsheet/tree/e087e9703830ab4c6282b6cc1d3bb7319d7cc7ca" target="_blank">Markdown</a> verfügbar</small>
+            </div><br>
+            <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
+          </form>
+        {% endverbatim %}
       </div>
     </section>
   </div>
 {% endblock %}
+
+{% block js %}
+<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js" init></script>
+<script>
+  
+</script>
+{% endblock %}
+
+{% block userjs %}{% endblock %}

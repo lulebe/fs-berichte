@@ -1,7 +1,7 @@
-const md = require('markdown-it')()
 const Sequelize = require('sequelize')
 const tmpl = requiremain('./templates')
 
+const md = requiremain('./markdownrender')
 const { Award, AwardCandidate, CandidateImage, AwardVote } = requiremain('./db/db')
 
 module.exports = async (req, res) => {

@@ -1,6 +1,6 @@
-const md = require('markdown-it')()
 const Sequelize = require('sequelize')
 
+const md = requiremain('./markdownrender')
 const tmpl = requiremain('./templates')
 const { Award, AwardCandidate, CandidateImage, AwardVote } = requiremain('./db/db')
 
@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
   res.tmplOpts.award = award
-  candidate.longDescriptionHtml = md.render(candidate.longDescription).replaceAll('<a', '<a target="_blank"')
+  candidate.longDescriptionHtml = md(candidate.longDescription)
   res.tmplOpts.candidate = candidate
   if (req.user && req.user.hasAuthorizedDomain)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: req.params.awardid}, include: [AwardCandidate]})

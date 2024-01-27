@@ -1,6 +1,6 @@
-const md = require('markdown-it')
-const sequelize = require('sequelize');
+const sequelize = require('sequelize')
 
+const md = requiremain('./markdownrender')
 const tmpl = requiremain('./templates')
 
 const { Petition, PetitionComment, Tag, User } = requiremain('./db/db')

@@ -89,7 +89,7 @@
     </section>
     <section class="login-area card card-register">
       <h3>Registrierung</h3>
-      {{loginRegisterExplainer | nl2br}}
+      {{loginRegisterExplainer | raw}}
       <form action="/register{{loginGoto}}" method="POST">
         <input type="email" name="email" id="regemail-inp" placeholder="E-Mail">
         <div class="pwinput" id="pw-reg">

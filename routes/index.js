@@ -1,3 +1,4 @@
+const md = requiremain('./markdownrender')
 const tmpl = requiremain('./templates')
 const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
@@ -10,7 +11,7 @@ module.exports = async (req, res) => {
   res.tmplOpts.errorMsg = makeMsg(parseInt(req.query.status))
   res.tmplOpts.loginGoto = req.query.goto ? '?goto=' + req.query.goto : ''
   res.tmplOpts.loginDescription = await getSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION)
-  res.tmplOpts.loginRegisterExplainer = await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER)
+  res.tmplOpts.loginRegisterExplainer = md(await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER))
   tmpl.render('index.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
 

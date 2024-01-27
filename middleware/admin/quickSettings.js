@@ -1,3 +1,5 @@
+const md = requiremain('./markdownrender')
+
 const { User } = requiremain('./db/db')
 const { getSetting, setSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
@@ -22,8 +24,10 @@ module.exports = async function (req, res, next) {
     await setSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION, req.body.loginDescription)
   if (req.body.loginRegisterExplainer)
     await setSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER, req.body.loginRegisterExplainer)
-  res.tmplOpts.loginDescription = await getSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION)
-  res.tmplOpts.loginRegisterExplainer = await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER)
+  res.tmplOpts.loginTexts = {}
+  res.tmplOpts.loginTexts.loginDescription = await getSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION)
+  res.tmplOpts.loginTexts.loginRegisterExplainer = await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER)
+  res.tmplOpts.loginTexts.loginRegisterExplainerRendered = md(res.tmplOpts.loginTexts.loginRegisterExplainer)
   res.tmplOpts.pendingAuths = await User.findAll({where: {authorized: false}})
   res.tmplOpts.researchReportsPublic = (await getSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC)) === '1'
   next()
