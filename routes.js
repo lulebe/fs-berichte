@@ -81,6 +81,7 @@ appRouter.get('/awards/image/:filename', require('./routes/app/awards/image_get'
 //admin area
 adminRouter.use(require('./middleware/admin/quickSettings'))
 adminRouter.get('/users', require('./routes/app/admin/users'))
+adminRouter.post('/users', require('./routes/app/admin/users'))
 adminRouter.get('/user/:id', require('./routes/app/admin/user'))
 adminRouter.post('/user/:id', [require('./routes/app/admin/user_post')], require('./routes/app/admin/user'))
 adminRouter.get('/examiners', require('./routes/app/admin/examiners'))

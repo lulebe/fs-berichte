@@ -10,7 +10,7 @@
       </div>
     </section>
     <section class="grid-col right">
-      <div class="card">
+      <div class="card mb">
         <h1>ausstehende Autorisierungen</h1>
         {% if pendingAuths %}
         <ul class="striped pending-auths">
@@ -31,6 +31,20 @@
           Derzeit warten keine Nutzer auf Autorisierung.
         </div>
         {% endif %}
+      </div>
+      <div class="card mb">
+        <h1>Login-Seite</h1>
+        <form method="post">
+          <div class="inputlabel">
+            <label>Beschreibungstext Website</label>
+            <textarea name="loginDescription" class="short">{{loginDescription}}</textarea>
+          </div>
+          <div class="inputlabel">
+            <label>Registrierung Erklärungstext</label>
+            <textarea name="loginRegisterExplainer" class="short">{{loginRegisterExplainer}}</textarea>
+          </div><br>
+          <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
+        </form>
       </div>
     </section>
   </div>

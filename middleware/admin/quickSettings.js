@@ -18,6 +18,12 @@ module.exports = async function (req, res, next) {
   if (req.query.setResearch) {
     await setSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC, req.query.setResearch === 'public')
   }
+  if (req.body.loginDescription)
+    await setSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION, req.body.loginDescription)
+  if (req.body.loginRegisterExplainer)
+    await setSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER, req.body.loginRegisterExplainer)
+  res.tmplOpts.loginDescription = await getSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION)
+  res.tmplOpts.loginRegisterExplainer = await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER)
   res.tmplOpts.pendingAuths = await User.findAll({where: {authorized: false}})
   res.tmplOpts.researchReportsPublic = (await getSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC)) === '1'
   next()

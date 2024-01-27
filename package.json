@@ -31,7 +31,6 @@
     "markdown-it": "^14.0.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.1",
-    "nunjucks": "^3.2.3",
     "pdfkit": "^0.13.0",
     "sequelize": "^6.28.0",
     "twing": "^5.1.2"

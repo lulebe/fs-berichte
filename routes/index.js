@@ -1,16 +1,17 @@
 const tmpl = requiremain('./templates')
+const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   if (req.session.userId)
     return res.redirect('/app/exam')
-  const opts = {
-    isLoggedIn: false,
-    isAdmin: false,
-    hasError: !!req.query.status,
-    errorMsg: makeMsg(parseInt(req.query.status)),
-    loginGoto: req.query.goto ? '?goto=' + req.query.goto : ''
-  }
-  tmpl.render('index.twig', opts).then(rendered => res.end(rendered))
+  res.tmplOpts.isLoggedIn = false
+  res.tmplOpts.isAdmin = false
+  res.tmplOpts.hasError = !!req.query.status
+  res.tmplOpts.errorMsg = makeMsg(parseInt(req.query.status))
+  res.tmplOpts.loginGoto = req.query.goto ? '?goto=' + req.query.goto : ''
+  res.tmplOpts.loginDescription = await getSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION)
+  res.tmplOpts.loginRegisterExplainer = await getSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER)
+  tmpl.render('index.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
 
 function makeMsg (code) {
