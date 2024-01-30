@@ -44,5 +44,8 @@
 </header>
 <div id="appcontainer" class="{% if isLoggedIn %}loggedin{% endif %}">
   {% block content %}{% endblock %}
+  {% if not isLoggedIn %}
+    <div id="bottom-copyright"><a href="https://github.com/lulebe/fs-berichte" target="_blank">&copy; Leander Berg 2024</a></div>
+  {% endif %}
 </div>
 {% endblock %}

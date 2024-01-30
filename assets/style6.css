@@ -825,6 +825,16 @@ ul.selectionlist li {
   }
 }
 
+#bottom-copyright {
+  padding: 16px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.7rem;
+}
+#bottom-copyright a {
+  color: #bbb;
+}
+
 .inline {
   display: inline-block;
 }
