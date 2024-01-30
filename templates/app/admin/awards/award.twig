@@ -6,13 +6,13 @@
 <div class="wrapper-2-col" v-scope @vue:mounted="mounted()">
   <section class="grid-col left">
     <div id="error-msg" class="mb" v-if="errorMsg">${errorMsg}</div>
-    <div class="card" v-if="!editing">
+    <div class="card mb" v-if="!editing">
       <h1 class="mtop0">${award.title} <button class="iconbtn" style="float: right" @click="editing=true"><i class="material-icons">edit</i> bearbeiten</button></h1>
       <h4>${award.statusReadable}</h4>
       Voting bis ${award.votingDeadlineReadable}
       <p v-if="!editing" class="usertext" style="white-space: pre-wrap">${award.description}</p>
     </div>
-    <div class="card" v-if="editing">
+    <div class="card mb" v-if="editing">
       <div class="inputlabel">
         <label for="usersearchinput">Titel</label>
         <input type="text" v-model="award.title" v-effect="editing && $el.focus()">
@@ -44,6 +44,12 @@
       <button type="button" class="iconbtn" @click="saveChanges()"><i class="material-icons">save</i> speichern</button>
       <button type="button" class="iconbtn important" style="float: right" @click="deleteAward()"><i class="material-icons">delete</i> löschen</button>
     </div>
+    <div class="card">
+      <h1>Wählende anzeigen</h1>
+      <p>Zeigt zufällig einen Nutzer aus allen Wählenden. Z.b. Für Gewinnspiele unter den Abstimmenden.</p>
+      <button class="iconbtn" @click="showRandomVoter()"><i class="material-icons">visibility</i> anzeigen</button>
+      <div v-if="randomVoter" style="font-family: monospace;"><br>${randomVoter.email}</div>
+    </div>
   </section>
   <section class="grid-col right">
     <h2>Kandidaten</h2>
@@ -71,6 +77,7 @@
   award,
   editing: false,
   errorMsg: null,
+  randomVoter: null,
 
   saveChanges () {
     fetch(this.award.id, {
@@ -102,6 +109,13 @@
     .catch(error => {
       this.errorMsg = "Löschen fehlgeschlagen."
     })
+  },
+
+  showRandomVoter () {
+    fetch(this.award.id + '/randomVoter')
+    .then(res => res.json())
+    .then(data => this.randomVoter = data)
+    .catch(e => {})
   },
 
   mounted () {

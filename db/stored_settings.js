@@ -16,7 +16,8 @@ async function getSetting (key) {
 }
 
 async function setSetting (key, value) {
-  const entry = await Settings.upsert({id: key, value: value.substring(0, 4000)})
+  const cappedValue = value && value.length && value.length > 4000 ? value.substring(0, 4000) : value
+  const entry = await Settings.upsert({id: key, value: cappedValue})
   return entry
 }
 
