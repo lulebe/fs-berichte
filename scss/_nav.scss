@@ -73,14 +73,14 @@ header#top-bar {
 }
 #sidebar {
   background-color: $menu-color;
-  width: 300px;
+  width: 280px;
   position: fixed;
   top: 64px;
   bottom: 0;
   left: 0;
   overflow-y: auto;
   transition: transform 0.2s;
-  transform: translateX(-300px);
+  transform: translateX(-280px);
   @media screen and (min-width: 1000px) {
     transform: translateX(0);
   }
