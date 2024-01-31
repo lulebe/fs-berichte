@@ -90,14 +90,14 @@ header#top-bar {
     margin: 0;
     li {
       padding-left: 8px;
-      line-height: 64px;
+      line-height: 54px;
       color: #ddd;
       background: none;
       border-left: 8px solid transparent;
       border-bottom: 1px solid $menu-color-dark;
       .material-icons {
         top: 12px;
-        font-size: 2.5em;
+        font-size: 1.9em;
         color: #cba;
         height: 0;
       }
@@ -133,7 +133,7 @@ header#top-bar {
     }
   }
   #sidebar-copyright {
-    padding: 24px 0;
+    padding: 16px 0;
     width: 100%;
     text-align: center;
     font-size: 0.8rem;
