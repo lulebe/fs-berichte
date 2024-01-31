@@ -88,7 +88,12 @@ class ModalHandler {
   }
 
   notFoundClicked () {
-    this.page2Inputs.slice(-1)[0].value = this.page1Input.value
+    if (this.page2Inputs.length > 1 && this.page1Input.value.split(' ').length > 1) {
+      const parts = this.page1Input.value.split(' ')
+      this.page2Inputs.slice(-1)[0].value = parts.pop()
+      this.page2Inputs.slice(-2)[0].value = parts.join(' ')
+    } else
+      this.page2Inputs.slice(-1)[0].value = this.page1Input.value
     this.resetPage1()
     this.modal.classList.add('onPage2')
     this.page2Validate()
