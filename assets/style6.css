@@ -1292,7 +1292,8 @@ textarea:invalid {
   color: #c5ddf1;
   font-weight: bold;
   opacity: 0;
-  backdrop-filter: blur(5px) brightness(50%);
+  backdrop-filter: blur(5px);
+  background-color: rgba(73, 87, 103, 0.75);
   transition: opacity 0.2s;
 }
 .petitionprogress .progressText:hover {
