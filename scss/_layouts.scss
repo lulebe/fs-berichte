@@ -1,5 +1,6 @@
 #appcontainer {
   padding-left: 0;
+  padding-top: 64px;
   @media screen and (min-width: 1000px) {
     &.loggedin {
       padding-left: 280px;
