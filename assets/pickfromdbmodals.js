@@ -90,8 +90,8 @@ class ModalHandler {
   notFoundClicked () {
     if (this.page2Inputs.length > 1 && this.page1Input.value.split(' ').length > 1) {
       const parts = this.page1Input.value.split(' ')
-      this.page2Inputs.slice(-1)[0].value = parts.pop()
-      this.page2Inputs.slice(-2)[0].value = parts.join(' ')
+      this.page2Inputs.slice(-2)[0].value = parts.shift()
+      this.page2Inputs.slice(-1)[0].value = parts.join(' ')
     } else
       this.page2Inputs.slice(-1)[0].value = this.page1Input.value
     this.resetPage1()
