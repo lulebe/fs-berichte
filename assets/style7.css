@@ -286,7 +286,7 @@ header#top-bar .material-icons {
   border-bottom: 1px solid #1D1D1D;
 }
 #sidebar ul li .material-icons {
-  top: 12px;
+  top: 10px;
   font-size: 1.9em;
   color: #cba;
   height: 0;
