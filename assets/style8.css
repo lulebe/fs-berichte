@@ -596,6 +596,11 @@ ul.selectionlist li {
   grid-column: 2/span 1;
   grid-row: 1/span 2;
 }
+@media (max-width: 1450px) {
+  .wrapper-2-col {
+    grid-template-columns: 5fr 3fr;
+  }
+}
 @media (max-width: 1150px) {
   .wrapper-2-col {
     grid-template-columns: 100%;
@@ -609,11 +614,6 @@ ul.selectionlist li {
   .wrapper-2-col .grid-col.right {
     grid-column: 1/span 1;
     grid-row: 2/span 1;
-  }
-}
-@media (max-width: 1450px) {
-  .wrapper-2-col {
-    grid-template-columns: 5fr 3fr;
   }
 }
 
