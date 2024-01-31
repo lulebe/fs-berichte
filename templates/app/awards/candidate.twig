@@ -26,12 +26,14 @@
 <div class="wrapper-2-col" v-scope>
   <div class="grid-col left">
     {% if candidate.CandidateImages|length > 0 %}
-      <div class="card mb" style="padding: 0;">
+      <div class="card mb" style="padding: 0; background: linear-gradient(-20deg, #43132e 0%, #1D1D30 50%, #151515 100%);">
         <div class="splide">
           <div class="splide__track">
             <ul class="splide__list">
               {% for image in candidate.CandidateImages %}
-                <li class="splide__slide"><img src="/app/awards/image/{{image.id}}.{{image.type}}"></li>
+                <li class="splide__slide">
+                  <img src="/app/awards/image/{{image.id}}.{{image.type}}">
+                </li>
               {% endfor %}
             </ul>
           </div>
@@ -84,27 +86,27 @@
 <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.js"></script>
 <script>
   {% if candidate.CandidateImages|length > 0 %}
-  new Splide('.splide', {
+  const splide = new Splide('.splide', {
     type: 'loop',
-    height: '600px',
+    height: '500px',
     focus: 'center',
     breakpoints: {
       400: {
         height: '200px'
       },
       600: {
-        height: '300px'
+        height: '280px'
       },
       800: {
-        height: '400px'
+        height: '350px'
       },
       1000: {
-        height: '500px'
+        height: '400px'
       }
     },
-    autoWidth: true,
     autoplay: true
   }).mount()
+  document.getElementById('splide01-list').style.transform = 'translateX(0)'
   {% endif %}
 
   const voteData = {{voteCounts | json_encode | raw }}

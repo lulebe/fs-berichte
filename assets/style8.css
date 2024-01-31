@@ -611,6 +611,11 @@ ul.selectionlist li {
     grid-row: 2/span 1;
   }
 }
+@media (max-width: 1450px) {
+  .wrapper-2-col {
+    grid-template-columns: 5fr 3fr;
+  }
+}
 
 .title-2-col {
   padding-bottom: 0;
@@ -805,6 +810,8 @@ ul.selectionlist li {
 
 .splide img {
   height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
 .image-list {
@@ -1354,4 +1361,4 @@ textarea:invalid {
 }
 
 
-/*# sourceMappingURL=style7.css.map*/
+/*# sourceMappingURL=style8.css.map*/
