@@ -105,9 +105,10 @@ header#top-bar {
         padding-left: 13px;
       }
       &.noimg {
-        line-height: 48px;
+        line-height: 40px;
+        font-size: 1rem;
         .sidebar-text {
-          padding-left: 60px;
+          padding-left:52px;
         }
       }
       &.selected {

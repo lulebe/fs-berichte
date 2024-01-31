@@ -295,10 +295,11 @@ header#top-bar .material-icons {
   padding-left: 13px;
 }
 #sidebar ul li.noimg {
-  line-height: 48px;
+  line-height: 40px;
+  font-size: 1rem;
 }
 #sidebar ul li.noimg .sidebar-text {
-  padding-left: 60px;
+  padding-left: 52px;
 }
 #sidebar ul li.selected {
   border-left-color: #8f111e;
