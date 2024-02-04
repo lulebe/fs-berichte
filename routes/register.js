@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const config = require('../config')
-const { User } = requiremain('./db/db')
+const { User, Settings } = requiremain('./db/db')
 const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
   }
   
 
-  const userIsAuthorizedDomain = req.body.email.endsWith('@' + config.AUTHORIZED_DOMAIN)
+  const userIsAuthorizedDomain = req.body.email.toLowerCase().endsWith(await Settings.get(Settings.KEYS.AUTHORIZED_DOMAIN))
   if (userIsAuthorizedDomain) {
     const user = await User.create({
-      email: req.body.email,
+      email: req.body.email.toLowerCase(),
       authorized: userIsAuthorizedDomain,
       password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
     })
@@ -51,15 +51,15 @@ function sendActivationEmail (user, goto) {
   return mailer(
     user.email,
     'Aktivierungslink',
-    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token+goto,
-    'Dein neuer FSmed Berichte Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token+goto + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
+    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token+goto,
+    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token+goto + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
   )
 }
 
 function sendAdminEmail (user, reason) {
   return mailer(
     config.ADMIN_EMAIL,
-    'Berichte Freischaltungsanfrage',
+    'Lehre Freischaltungsanfrage',
     'Der Nutzer ' + user.email + ' bittet um Freischaltung mit folgender Begründung:\n\n' + reason + '\n\n Er kann unter ' + config.ROOT_URL + '/app/admin/users freigeschaltet werden.',
     'Der Nutzer <pre>' + user.email + '</pre> bittet um Freischaltung mit folgender Begründung:<br><br>' + reason + '<br><br> Er kann unter <a href="' + config.ROOT_URL + '/app/admin/users">' + config.ROOT_URL + '/app/admin/users</a> freigeschaltet werden.'
   )

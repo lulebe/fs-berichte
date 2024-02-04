@@ -55,6 +55,10 @@ const User = sequelize.define('User', {
     defaultValue: false,
     allowNull: false
   },
+  extendedUntil: {
+    type: DataTypes.DATEONLY,
+    allowNull: true
+  },
   createdAtReadable: {
     type: DataTypes.VIRTUAL,
     get () {
@@ -66,14 +70,23 @@ const User = sequelize.define('User', {
     get () {
       return this.anonymous ? false : ((this.nickname != null) ? this.nickname : this.email.split('@')[0])
     }
-  },
-  hasAuthorizedDomain: {
-    type: DataTypes.VIRTUAL,
-    get () {
-      return this.isAdmin || this.email.split('@')[1] === config.AUTHORIZED_DOMAIN
-    }
   }
 })
+User.prototype.hasAuthorizedDomain = async function () {
+  return this.isAdmin || this.email.endsWith(await Settings.get(Settings.KEYS.AUTHORIZED_DOMAIN))
+}
+User.prototype.activeUntil = async function () {
+  if (this.extendedUntil) return new Date(this.extendedUntil)
+  const activeUntil = new Date(this.createdAt)
+  activeUntil.setFullYear(activeUntil.getFullYear() + await Settings.get(Settings.KEYS.USER_ACTIVE_DURATION))
+  return activeUntil 
+}
+User.prototype.stillActive = async function () {
+  return new Date() < await this.activeUntil()
+}
+User.prototype.activeUntilReadable = async function () {
+  return (await this.activeUntil()).toLocaleDateString('de-DE')
+}
 
 //Fach
 const Subject = sequelize.define('Subject', {
@@ -476,7 +489,29 @@ const Settings = sequelize.define('Settings', {
     allowNull: false
   }
 }, {timestamps: false})
-
+Settings.KEYS = {
+  RESEARCH_REPORTS_PUBLIC: 1,
+  PETITIONS_REQUIRE_ADMIN_CONFIRMATION: 2,
+  PETITION_HOW_TO: 3,
+  AWARD_DESCRIPTION: 4,
+  LOGIN_DESCRIPTION: 5,
+  LOGIN_REGISTER_EXPLAINER: 6,
+  USER_ACTIVE_DURATION: 7,
+  AUTHORIZED_DOMAIN: 8
+}
+Settings.cache = {}
+Settings.get = async function (key) {
+  if (!Settings.cache.hasOwnProperty(key))
+    (await Settings.findAll()).forEach(entry => Settings.cache[entry.id] = !isNaN(parseInt(entry.value)) ? parseInt(entry.value) : entry.value)
+  if (!Settings.cache.hasOwnProperty(key)) throw new Error("Key not in DB")
+  return Settings.cache[key]
+}
+Settings.set = async function (key, value) {
+  const cappedValue = value && value.length && value.length > 4000 ? value.substring(0, 4000) : value
+  const entry = await Settings.upsert({id: key, value: cappedValue})
+  Settings.cache[key] = cappedValue
+  return entry
+}
 
 User.hasMany(Exam,
   {

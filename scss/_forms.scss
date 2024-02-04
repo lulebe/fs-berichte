@@ -152,6 +152,7 @@ input[type=radio].lbl, input[type=checkbox].lbl {
     border-radius: 20px;
     padding: 4px 8px;
     border: 1px solid grey;
+    color: #666;
     &:hover {
       box-shadow: $shadow-s;
     }

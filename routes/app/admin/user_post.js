@@ -16,6 +16,14 @@ module.exports = async (req, res, next) => {
     await user.save()
     res.tmplOpts.adminChanged = true
   }
+  if (req.body.extendAccount == "yes") {
+    const extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)
+    if (await user.activeUntil() < extendedUntil) {
+      user.extendedUntil = extendedUntil
+      await user.save()
+      res.tmplOpts.extended = true
+    }
+  }
   if (req.body.deleteAccount == "yes") {
     await user.destroy()
     return res.redirect('/app/admin/users')

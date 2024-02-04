@@ -18,6 +18,7 @@ router.get('/activate', require('./routes/activate'))
 router.post('/login', require('./routes/login'))
 router.post('/register', require('./routes/register'))
 router.post('/forgotpwd', require('./routes/forgotpwd'))
+router.get('/recover', require('./routes/recover'))
 
 
 router.use('/app', require('./middleware/userHandler'))

@@ -73,6 +73,18 @@ hr {
   margin-top: 0;
 }
 
+.mtop8 {
+  margin-top: 8px;
+}
+
+.mtop16 {
+  margin-top: 16px;
+}
+
+.mv8 {
+  margin: 8px 0;
+}
+
 .mb:not(:last-child) {
   margin-bottom: 16px;
 }
@@ -844,6 +856,14 @@ ul.selectionlist li {
   color: #bbb;
 }
 
+.flex-lr-stack {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .inline {
   display: inline-block;
 }
@@ -997,6 +1017,7 @@ input[type=radio].lbl + label, input[type=checkbox].lbl + label {
   border-radius: 20px;
   padding: 4px 8px;
   border: 1px solid grey;
+  color: #666;
 }
 input[type=radio].lbl + label:hover, input[type=checkbox].lbl + label:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);

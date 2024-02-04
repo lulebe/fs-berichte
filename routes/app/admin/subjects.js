@@ -8,6 +8,7 @@ const filename = require('path').parse(__filename).name
 
 module.exports = async (req, res) => {
   const searchTerm = req.query.searchSubject ? '%'+req.query.searchSubject.toLowerCase().trim()+'%' : null
+  const order = req.query.newestFirst ? [['createdAt', 'DESC'], ['name', 'ASC']] : [['name', 'ASC']]
   const SubjectCount = await (
     (searchTerm) ?
     Subject.count({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm})}) :
@@ -18,8 +19,8 @@ module.exports = async (req, res) => {
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
   const allSubjects = await (
     (searchTerm) ?
-    Subject.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order: [['name', 'DESC']], limit: 50, offset}) :
-    Subject.findAll({order: [['name', 'DESC']], limit: 50, offset})
+    Subject.findAll({where: sequelize.where(sequelize.fn('lower', sequelize.col('name')), {[Op.like]: searchTerm}), order, limit: 50, offset}) :
+    Subject.findAll({order, limit: 50, offset})
   )
   res.tmplOpts.subjects = allSubjects
   res.tmplOpts.searchQuery = req.query.searchSubject

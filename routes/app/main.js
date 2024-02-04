@@ -4,8 +4,7 @@ const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
-const { Award, AwardCandidate, Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation, ResearchReport, Form, Petition, PETITION_STATUS } = requiremain('./db/db')
-const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { Settings, Award, AwardCandidate, Exam, SubjectExam, ExamType, Subject, Examiner, ExamLocation, ResearchReport, Form, Petition, PETITION_STATUS } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const cookies = new Cookies(req, res)
@@ -13,12 +12,12 @@ module.exports = async (req, res) => {
   //reports
   const exams = (await getExams(cookieToArray('exams', cookies))).map(e => ({type: 'exam', data: e}))
   let researchReports = []
-  if (req.user.isAdmin || (await getSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC)) === '1')
+  if (req.user.isAdmin || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC)))
     researchReports = await getResearchReports(cookieToArray('researchs', cookies))
   researchReports = researchReports.map(r => ({type: 'research', data: r}))
   
   //petitions
-  const petitions = req.user.hasAuthorizedDomain ?  (await Petition.findAll({
+  const petitions = (await req.user.hasAuthorizedDomain()) ?  (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
@@ -31,14 +30,14 @@ module.exports = async (req, res) => {
   }))
 
   //awards
-  const awards = req.user.hasAuthorizedDomain ? (await Award.findAll({
+  const awards = (await req.user.hasAuthorizedDomain()) ? (await Award.findAll({
     where: {status:  Award.STATUS.PUBLISHED},
     include: [{model: AwardCandidate, attributes: ['id', 'name']}],
     order: [['createdAt', 'DESC']]
   })).map(a => ({type: 'awards', data: a})) : []
 
   //forms
-  const forms = req.user.hasAuthorizedDomain ? (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f})) : []
+  const forms = (await req.user.hasAuthorizedDomain()) ? (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f})) : []
 
   const reports = [...exams, ...researchReports].sort(() => 0.5 - Math.random())
   res.tmplOpts.results = [...awards, ...petitions, ...forms, ...reports]

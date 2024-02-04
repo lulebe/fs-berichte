@@ -4,11 +4,9 @@
 
 {% block content %}
   <div class="wrapper-2-col">
-    <section class="grid-col left">
-      <div class="card">
-        {% block admincontent %}{% endblock %}
-      </div>
-    </section>
+    <div class="grid-col left">
+      {% block admincontent %}{% endblock %}
+    </div>
     <section class="grid-col right">
       <div class="card mb">
         <h1>ausstehende Autorisierungen</h1>
@@ -31,6 +29,25 @@
           Derzeit warten keine Nutzer auf Autorisierung.
         </div>
         {% endif %}
+      </div>
+      <div class="card mb" v-scope='{userActiveDuration: {{userActiveDuration}}}'>
+        <h1>Aktivierung</h1>
+        <form method="post">
+          Wie lange bleiben neue Nutzer aktiviert?<br>
+          <input type="range" name="userActiveDuration" v-model="userActiveDuration" min="1" max="10" step="1">
+          <div style="text-align: center;">
+            {% verbatim %}{{userActiveDuration}}{% endverbatim %} Jahre
+          </div>
+          <small>
+          Nutzer können danach ihren Account um 1 Jahre verlängern, indem sie ihre E-Mail erneut verifizieren.
+          Dies geht nur, wenn sie eine {{authorizedDomain}} E-Mail nutzen.
+          Ansonsten können sie von Admins manuell für ein Jahr verlängert werden.
+          </small>
+          <hr>
+          automatisch zugelassene E-Mail Domain <br>
+          <input type="text" name="authorizedDomain" placeholder="example.com" value="{{authorizedDomain}}">
+          <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
+        </form>
       </div>
       <div class="card mb" v-scope='{editing: false, loginTexts: {{loginTexts | json_encode | raw}}}'>
         <h1>Login-Seite</h1>

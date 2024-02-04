@@ -11,9 +11,7 @@
         <a href="/app/admin/examLocations" class="tab {% if activeAdminTab == "locations" %}active {% endif %}">Orte</a>
         <a href="/app/admin/examiners" class="tab {% if activeAdminTab == "examiners" %}active {% endif %}">Dozenten</a>
       </nav>
-      <div class="card">
-        {% block admincontent %}{% endblock %}
-      </div>
+      {% block admincontent %}{% endblock %}
     </section>
     <section class="grid-col right">
       <div class="card">

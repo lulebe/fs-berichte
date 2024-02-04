@@ -1,16 +1,18 @@
 const db = require('./db')
 const bcrypt = require('bcryptjs')
 const config = require('../config')
-const { setSetting, SETTINGS_KEYS } = require('./stored_settings')
+const { Settings } = require('./db/db')
 
 module.exports = new Promise(resolve => {
   db.init().then(() => {
-    setSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC, false)
-    setSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, false)
-    setSetting(SETTINGS_KEYS.PETITION_HOW_TO, '')
-    setSetting(SETTINGS_KEYS.AWARD_DESCRIPTION, '')
-    setSetting(SETTINGS_KEYS.LOGIN_DESCRIPTION, '')
-    setSetting(SETTINGS_KEYS.LOGIN_REGISTER_EXPLAINER, '')
+    Settings.set(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC, false)
+    Settings.set(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, false)
+    Settings.set(Settings.KEYS.PETITION_HOW_TO, '')
+    Settings.set(Settings.KEYS.AWARD_DESCRIPTION, '')
+    Settings.set(Settings.KEYS.LOGIN_DESCRIPTION, '')
+    Settings.set(Settings.KEYS.LOGIN_REGISTER_EXPLAINER, '')
+    Settings.set(Settings.KEYS.USER_ACTIVE_DURATION, 7)
+    Settings.set(Settings.KEYS.AUTHORIZED_DOMAIN, 'example.com')
     const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(config.SALT_ROUNDS))
     db.User.create({email: "test@example.com", activated: true, authorized: true, isAdmin: true, password})
     .then(() => {

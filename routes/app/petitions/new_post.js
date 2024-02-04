@@ -1,5 +1,4 @@
-const { Petition } = requiremain('./db/db')
-const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { Petition, Settings } = requiremain('./db/db')
 const { User } = requiremain('./db/db')
 const mailer = requiremain('./email')
 
@@ -11,7 +10,7 @@ module.exports = async (req, res) => {
     if (!Array.isArray(req.body.Tags)) req.body.Tags = [req.body.Tags]
     await petition.setTags(req.body.Tags)
   }
-  if (!req.user.isAdmin && (await getSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION)) === '1') notifyAdmin(petition)
+  if (!req.user.isAdmin && !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) notifyAdmin(petition)
   res.redirect('/app/petitions/'+petition.id)
 }
 

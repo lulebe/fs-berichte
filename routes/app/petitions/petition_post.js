@@ -1,5 +1,4 @@
-const { Petition, PetitionComment, PETITION_STATUS } = requiremain('./db/db')
-const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { Petition, PetitionComment, PETITION_STATUS, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res, next) => {
   if (!req.params.id) return res.status(404).send()
@@ -29,7 +28,7 @@ module.exports = async (req, res, next) => {
   if (req.body.advance) {
     if (req.user.isAdmin || req.user.id === petition.UserId) {
       if (petition.status < 4) {
-        if (req.user.isAdmin ||petition.status !== 0 || (await getSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION)) === '0') {
+        if (req.user.isAdmin ||petition.status !== 0 || !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) {
           petition.status++
           await petition.save()
         } else {

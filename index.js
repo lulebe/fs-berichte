@@ -27,5 +27,5 @@ app.use('/assets', require('express').static('./assets'))
 
 
 app.listen(config.PORT, () => {
-  console.log("Berichte Server started on port", config.PORT)
+  console.log("Lehre Server started on port", config.PORT)
 })

@@ -1,16 +1,23 @@
 {% extends "app/admin/adminuserbase.twig" %}
 
 {% block admincontent %}
-  <h1>Nutzer</h1>
-  <form method="get">
-    <div class="input-btn-block">
+  <h1 class="mtop0">Nutzer</h1>
+  <div class="card">
+    <h3>Suche</h3>
+    <form method="get">
       <div class="inputlabel">
-        <label for="usersearchinput">Nutzersuche</label>
-        <input type="search" name="searchUser" id="usersearchinput" value="{{searchQuery}}" placeholder="E-Mailadresse">
+        <label for="usersearchinput">E-Mail / Nickname</label>
+        <input type="search" name="searchUser" id="usersearchinput" value="{{searchQuery}}" placeholder="Tom.Test@email.org">
       </div>
-      <button type="submit"><i class="material-icons">search</i></button>
-    </div>
-  </form>
+      <div class="flex-lr-stack mtop16">
+        <div>
+          <input type="checkbox" name="onlyExternal" id="cbOnlyExternal" class="lbl" {% if onlyExternalShown %}checked{% endif %}>
+          <label class="check" for="cbOnlyExternal">Nur externe Nutzer</label>
+        </div>
+        <button type="submit" class="iconbtn"><i class="material-icons">search</i> suchen</button>
+      </div>
+    </form>
+  </div>
   <ul class="striped">
     {% for user in users %}
       <li>

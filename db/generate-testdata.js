@@ -2,6 +2,7 @@ const db = require('./db')
 const bcrypt = require('bcryptjs')
 
 const init = require('./init-db')
+const config = require('../config')
 
 
 const USER_COUNT = 100
@@ -17,10 +18,14 @@ async function generateTestData () {
 }
 
 async function generateTestUsers () {
-  const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(5))
+  const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(config.SALT_ROUNDS))
   return Promise.all(Array.from(Array(USER_COUNT-1))
-  .map((u, i) => ({email: `test${i}@example.com`, activated: true, authorized: true, password}))
+  .map((u, i) => ({email: `test${i}@${randomDomain()}`, activated: true, authorized: true, password}))
   .map(userdata => db.User.create(userdata)))
+}
+
+function randomDomain () {
+  return ['example.com', 'example.org'][Math.floor(Math.random() * 2)]
 }
 
 async function generateTestAwards () {

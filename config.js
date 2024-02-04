@@ -11,7 +11,6 @@ module.exports = {
   MAIL_USER: process.env.MAIL_USER || "test@example.com",
   MAIL_PASSWORD: process.env.MAIL_PASSWORD || "testpw",
   MAIL_SENDER: process.env.MAIL_SENDER || '"Test" <test@example.com>',
-  AUTHORIZED_DOMAIN: process.env.AUTHORIZED_DOMAIN || "stud.uni-heidelberg.de",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "demo@example.com",
   ROOT_URL: process.env.ROOT_URL || "http://localhost:8080",
   JWT_SECRET: process.env.JWT_SECRET || "secret",

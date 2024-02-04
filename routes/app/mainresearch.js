@@ -2,12 +2,11 @@ const tmpl = requiremain('./templates')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
-const { ResearchReport } = requiremain('./db/db')
-const { getSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { ResearchReport, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const where = {publishDate: {[Op.lte]: new Date()}}
-  res.tmplOpts.canView = req.user.isAdmin || (await getSetting(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC)) === '1'
+  res.tmplOpts.canView = req.user.isAdmin || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC))
   if (req.query.subject)
     where.subject = {[Op.like]: '%'+req.query.subject+'%'}
   if (req.query.head)

@@ -2,8 +2,10 @@
 
 {% block admincontent %}
     {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i> Passwort wurde geändert.</section><br>{% endif %}
+    {% if extended %}<section class="card" id="error-msg"><i class="material-icons">timer</i> Account wurde verlängert.</section><br>{% endif %}
     {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i> Der Nutzer ist {% if viewedUser.isAdmin %}nun{% else %}nicht mehr{% endif %} Administrator.</section><br>{% endif %}
-      <h1>{{viewedUser.email}}</h1>
+      <h1 class="mtop0">{{viewedUser.email}}</h1>
+      {% if viewedUser.nickname %}Nickname "{{viewedUser.nickname}}"<br>{% endif %}
       <h3>Passwort ändern</h3>
       <form method="POST">
         <div class="pwinput" id="pw-new">
@@ -22,9 +24,20 @@
       {% if viewedUser.isAdmin %}{{viewedUser.email}} ist ein <strong>Administrator</strong>.<br>{% endif %}
       <form method="POST" onsubmit="return confirm('Bist du sicher, {{viewedUser.email}} die Adminrechte zu {% if viewedUser.isAdmin %}entziehen{% else %}erteilen{% endif %}?')">
         <input type="hidden" name="toggleAdmin" value="yes">
-        <button type="submit" class="btn iconbtn">Adminrechte {% if viewedUser.isAdmin %}entziehen{% else %}erteilen{% endif %}</button>
+        <button type="submit" class="btn">Adminrechte {% if viewedUser.isAdmin %}entziehen{% else %}erteilen{% endif %}</button>
       </form>
       
+      <h3>Account verlängern</h3>
+      <p>Der Account ist noch bis <strong>{{viewedUser.activeUntilReadable}}</strong> aktiv.</p>
+      {% if canExtendActivation %}
+        <form method="POST">
+        <input type="hidden" name="extendAccount" value="yes">
+        <button type="submit" class="btn">verlängern</button>
+      </form>
+      {% else %}
+        Ab einem Jahr vor Ablauf kann der Account verlängert werden.
+      {% endif %}
+
       <h3>Account löschen</h3>
       <p style="color: red;">
         <i class="material-icons">warning</i> Wenn du diesen Account löschst, werden dessen Berichte ebenfalls unwiderruflich gelöscht!

@@ -102,7 +102,7 @@
           <i class="material-icons on">visibility</i>
           <i class="material-icons off">visibility_off</i>
         </div>
-        <small class="nohd" style="display: block;">Weshalb benötigst du Zugriff (nur bei Registrierung ohne stud.uni-heidelberg.de Adresse notwendig)</small>
+        <small class="nohd" style="display: block;">Weshalb benötigst du Zugriff (nur bei Registrierung ohne {{authorizedDomain}} Adresse notwendig)</small>
         <textarea class="nohd" name="reason" style="height: 5rem; display: block;" placeholder="Begründung zur Freischaltung, wenn du von einer anderen Uni kommst"></textarea>
         <br>
         <input type="submit" value="registrieren">
@@ -148,7 +148,7 @@
 
   const nohdElements = document.querySelectorAll('.nohd')
   document.getElementById('regemail-inp').addEventListener('input', e => {
-    if (e.target.value.toLowerCase().endsWith('@stud.uni-heidelberg.de') || !e.target.value.includes('@')) {
+    if (e.target.value.toLowerCase().endsWith('{{authorizedDomain}}') || !e.target.value.includes('@')) {
       for (let i = 0; i < nohdElements.length; i++) {
         nohdElements[i].style.display = 'none'
       }

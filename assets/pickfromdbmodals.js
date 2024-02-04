@@ -100,7 +100,7 @@ class ModalHandler {
   }
 
   page2Validate () {
-    if (this.page2Inputs.every(input => input.value.length > 2))
+    if (this.page2Inputs.every(input => input.value.length > =2))
       this.modal.querySelector('.confirmNewBtn').classList.add('visible')
     else
       this.modal.querySelector('.confirmNewBtn').classList.remove('visible')

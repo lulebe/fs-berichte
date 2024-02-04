@@ -1,8 +1,8 @@
-const { setSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { Settings } = requiremain('./db/db')
 
 module.exports = async (req, res, next) => {
   if (req.body.awardDescription) {
-    await setSetting(SETTINGS_KEYS.AWARD_DESCRIPTION, req.body.awardDescription)
+    await Settings.set(Settings.KEYS.AWARD_DESCRIPTION, req.body.awardDescription)
   }
   next()
 }

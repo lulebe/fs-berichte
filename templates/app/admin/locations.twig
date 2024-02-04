@@ -2,15 +2,22 @@
 
 {% block admincontent %}
   <h1>Orte</h1>
-  <form method="get">
-    <div class="input-btn-block">
+  <div class="card mb">
+    <h3>Suche</h3>
+    <form method="get">
       <div class="inputlabel">
         <label for="locationsearchinput">Ortssuche</label>
-        <input type="search" name="searchLocation" id="locationsearchinput" value="{{searchQuery}}" placeholder="Name">
+        <input type="search" name="searchLocation" id="locationsearchinput" value="{{searchQuery}}" placeholder="Heidelberg">
       </div>
-      <button type="submit"><i class="material-icons">search</i></button>
-    </div>
-  </form>
+      <div class="flex-lr-stack mtop16">
+        <div>
+          <input type="checkbox" name="newestFirst" id="cbNewestFirst" class="lbl" {% if newestFirst %}checked{% endif %}>
+          <label class="check" for="cbNewestFirst">neueste zuerst</label>
+        </div>
+        <button type="submit" class="iconbtn"><i class="material-icons">search</i> suchen</button>
+      </div>
+    </form>
+  </div>
   <ul class="striped">
     {% for location in locations %}
       <li>

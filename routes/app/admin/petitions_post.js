@@ -1,9 +1,8 @@
-const { Tag } = requiremain('./db/db')
-const { setSetting, SETTINGS_KEYS } = requiremain('./db/stored_settings')
+const { Tag, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res, next) => {
   if (req.body.setPetitions) {
-    await setSetting(SETTINGS_KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, req.body.setPetitions === 'private')
+    await Settings.set(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, req.body.setPetitions === 'private')
   }
   if (req.body.newTag) {
     await Tag.create({name: req.body.newTag})
@@ -14,7 +13,7 @@ module.exports = async (req, res, next) => {
     await deletions
   }
   if (req.body.howTo) {
-    await setSetting(SETTINGS_KEYS.PETITION_HOW_TO, req.body.howTo)
+    await Settings.set(Settings.KEYS.PETITION_HOW_TO, req.body.howTo)
   }
   next()
 }

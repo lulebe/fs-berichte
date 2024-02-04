@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const generator = require('generate-password')
+const signJWT = require('util').promisify(require('jsonwebtoken').sign)
 
 const mailer = requiremain('./email')
 const config = requiremain('./config')
@@ -18,11 +19,13 @@ module.exports = async (req, res) => {
   res.redirect('/?status=2')
 }
 
-function sendEmail (email, pw) {
+async function sendEmail (email, pw) {
+  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '3 days'})
+  const url = `${config.ROOT_URL}/recover?token=${jwt}`
   return mailer(
     email,
     'Passwort zurückgesetzt',
-    'Dein neues FSmed Berichte Passwort lautet:\n\n' + pw + '\n\n Du solltest es unter "Profil" ändern.',
-    'Dein neues FSmed Berichte Passwort lautet:<br><pre>' + pw + '</pre><br><br>Du solltest es unter "Profil" ändern.'
+    `Du kannst dich mit folgendem Link wieder in FSmed Lehre anmelden. Ändere danach dein Passwort.\n\n${url}`,
+    `Du kannst dich mit folgendem Link wieder in FSmed Lehre anmelden. Ändere danach dein Passwort.<br><br><a href="${url}">${url}</a>`
   )
 }
