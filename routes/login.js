@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
       return res.redirect('/?status=11')
   req.session.userId = foundUser.id
   req.session.isAdmin = foundUser.isAdmin
+  if (foundUser.isAdmin) autoExtendValidityForAdmins(foundUser)
   if (req.query.goto)
     res.redirect(req.query.goto)
   else
@@ -39,4 +40,11 @@ async function sendReactivationEmail (user) {
     `Um deinen FSmed Lehre Account für ein Jahr zu verlängern, klicke hier:\n\n${url}`,
     `Um deinen FSmed Lehre Account für ein Jahr zu verlängern, klicke hier:<br><br><a href="${url}">${url}</a>`
   )
+}
+
+async function autoExtendValidityForAdmins (usr) {
+  if (await usr.validUntil() < new Date().setFullYear(new Date().getFullYear() + 1)) {
+    usr.extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)
+    await usr.save()
+  }
 }
