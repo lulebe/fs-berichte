@@ -78,6 +78,7 @@ User.prototype.hasAuthorizedDomain = async function () {
 User.prototype.activeUntil = async function () {
   if (this.extendedUntil) return new Date(this.extendedUntil)
   const activeUntil = new Date(this.createdAt)
+  console.log('\n\nactive until', activeUntil.getFullYear(),  await Settings.get(Settings.KEYS.USER_ACTIVE_DURATION), '\n\n')
   activeUntil.setFullYear(activeUntil.getFullYear() + await Settings.get(Settings.KEYS.USER_ACTIVE_DURATION))
   return activeUntil 
 }
@@ -502,14 +503,14 @@ Settings.KEYS = {
 Settings.cache = {}
 Settings.get = async function (key) {
   if (!Settings.cache.hasOwnProperty(key))
-    (await Settings.findAll()).forEach(entry => Settings.cache[entry.id] = !isNaN(parseInt(entry.value)) ? parseInt(entry.value) : entry.value)
+    (await Settings.findAll()).forEach(entry => {Settings.cache[entry.id] = !isNaN(parseInt(entry.value)) ? parseInt(entry.value) : entry.value})
   if (!Settings.cache.hasOwnProperty(key)) throw new Error("Key not in DB")
   return Settings.cache[key]
 }
 Settings.set = async function (key, value) {
   const cappedValue = value && value.length && value.length > 4000 ? value.substring(0, 4000) : value
   const entry = await Settings.upsert({id: key, value: cappedValue})
-  Settings.cache[key] = cappedValue
+  Settings.cache[key] = !isNaN(parseInt(cappedValue)) ? parseInt(cappedValue) : cappedValue
   return entry
 }
 
