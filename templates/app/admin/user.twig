@@ -28,12 +28,12 @@
       </form>
       
       <h3>Account verlängern</h3>
-      <p>Der Account ist noch bis <strong>{{viewedUser.activeUntilReadable}}</strong> aktiv.</p>
+      Der Account ist noch bis <strong>{{viewedUser.activeUntilReadable}}</strong> aktiv.<br>
       {% if canExtendActivation %}
         <form method="POST">
-        <input type="hidden" name="extendAccount" value="yes">
-        <button type="submit" class="btn">verlängern</button>
-      </form>
+          <input type="hidden" name="extendAccount" value="yes">
+          <button type="submit" class="btn">verlängern</button>
+        </form>
       {% else %}
         Ab einem Jahr vor Ablauf kann der Account verlängert werden.
       {% endif %}
