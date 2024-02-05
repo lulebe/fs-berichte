@@ -21,7 +21,7 @@ function makeMsg (code) {
     case 1:
       return "Bitte die benötigten Felder ausfüllen."
     case 2:
-      return "Ein neues Passwort wurde per E-Mail zugestellt."
+      return "Ein Link zum Einloggen wurde per E-Mail zugestellt."
     case 3:
       return "Passwörter stimmen nicht überein."
     case 4:
