@@ -6,5 +6,5 @@ module.exports = async (req, res) => {
     res.status(200).send(data)
   } catch (err) {
     res.status(200).send(err.message)
-  
+  }
 }
