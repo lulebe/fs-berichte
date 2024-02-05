@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   const foundUser = await User.findOne({where: {email: req.body.email.toLowerCase()}})
   if (!foundUser)
     return res.redirect('/?status=4')
-  return res.status(200).send(await sendEmail(foundUser))
+  await sendEmail(foundUser)
   res.redirect('/?status=2')
 }
 
