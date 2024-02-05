@@ -5,7 +5,7 @@ const { User } = requiremain('./db/db')
 
 module.exports = async (req, res, next) => {
   const user = await User.findByPk(req.params.id)
-  if (req.body.newpw) {
+  if (req.body.changePW) {
     if (req.body.newpw != req.body.repeatpw) return res.status(400).send()
     req.user.password = await bcrypt.hash(req.body.newpw, await bcrypt.genSalt(config.SALT_ROUNDS))
     await req.user.save()

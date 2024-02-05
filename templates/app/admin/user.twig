@@ -8,7 +8,7 @@
       {% if viewedUser.nickname %}Nickname "{{viewedUser.nickname}}"<br>{% endif %}
       {% if user.isAdmin %}
         <h3>Passwort ändern</h3>
-        <form method="POST">
+        <form method="POST" autocomplete="off">
           <div class="pwinput" id="pw-new">
             <input type="password" name="newpw" required placeholder="neues Passwort" autocomplete="off">
             <i class="material-icons on">visibility</i>
@@ -19,7 +19,7 @@
             <i class="material-icons on">visibility</i>
             <i class="material-icons off">visibility_off</i>
           </div>
-          <input type="submit" value="Passwort ändern">
+          <input type="submit" name="changePW" value="Passwort ändern">
         </form>
         <h3>Berechtigungen</h3>
         <form method="POST">
