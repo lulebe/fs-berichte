@@ -8,6 +8,7 @@
       {% block admincontent %}{% endblock %}
     </div>
     <section class="grid-col right">
+      {% if user.isModerator %}
       <div class="card mb">
         <h1>ausstehende Autorisierungen</h1>
         {% if pendingAuths %}
@@ -30,6 +31,7 @@
         </div>
         {% endif %}
       </div>
+      {% endif %}
       {% if user.isAdmin %}
       <div class="card mb" v-scope='{userActiveDuration: {{userActiveDuration}}}'>
         <h1>Aktivierung</h1>
