@@ -1,11 +1,11 @@
 const db = require('./db')
 const bcrypt = require('bcryptjs')
 const config = require('../config')
-const { Settings } = require('./db/db')
+const { Settings } = require('./db')
 
 module.exports = new Promise(resolve => {
   db.init().then(() => {
-    Settings.set(SETTINGS_KEYS.RESEARCH_REPORTS_PUBLIC, false)
+    Settings.set(Settings.KEYS.RESEARCH_REPORTS_PUBLIC, false)
     Settings.set(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION, false)
     Settings.set(Settings.KEYS.PETITION_HOW_TO, '')
     Settings.set(Settings.KEYS.AWARD_DESCRIPTION, '')

@@ -118,7 +118,7 @@ i.material-icons {
   }
 }
 
-#error-msg {
+#error-msg, .error-msg {
   border-radius: 8px;
   background: $warning-color;
   display: block;

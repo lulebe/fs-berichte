@@ -43,7 +43,7 @@ async function sendReactivationEmail (user) {
 }
 
 async function autoExtendValidityForAdmins (usr) {
-  if (await usr.validUntil() < new Date().setFullYear(new Date().getFullYear() + 1)) {
+  if (await usr.activeUntil() < new Date().setFullYear(new Date().getFullYear() + 1)) {
     usr.extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)
     await usr.save()
   }

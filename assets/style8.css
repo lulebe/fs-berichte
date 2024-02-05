@@ -109,7 +109,7 @@ i.material-icons.up {
   top: 2px;
 }
 
-#error-msg {
+#error-msg, .error-msg {
   border-radius: 8px;
   background: #f3723a;
   display: block;

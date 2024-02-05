@@ -125,7 +125,6 @@
     })
     .then(res => {
       this.store.submitting = false
-      console.log(res)
       if (!res.ok) {
         this.store.errorMsg = "Speichern fehlgeschlagen."
         throw new Error(res.statusText)

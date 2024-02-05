@@ -55,6 +55,21 @@ const User = sequelize.define('User', {
     defaultValue: false,
     allowNull: false
   },
+  awardsAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  moderator: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  petitionsAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
   extendedUntil: {
     type: DataTypes.DATEONLY,
     allowNull: true
@@ -70,6 +85,24 @@ const User = sequelize.define('User', {
     get () {
       return this.anonymous ? false : ((this.nickname != null) ? this.nickname : this.email.split('@')[0])
     }
+  },
+  isAwardsAdmin: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.awardsAdmin
+    }
+  },
+  isModerator: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.moderator
+    }
+  },
+  isPetitionsAdmin: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.petitionsAdmin
+    }
   }
 })
 User.prototype.hasAuthorizedDomain = async function () {
@@ -78,7 +111,6 @@ User.prototype.hasAuthorizedDomain = async function () {
 User.prototype.activeUntil = async function () {
   if (this.extendedUntil) return new Date(this.extendedUntil)
   const activeUntil = new Date(this.createdAt)
-  console.log('\n\nactive until', activeUntil.getFullYear(),  await Settings.get(Settings.KEYS.USER_ACTIVE_DURATION), '\n\n')
   activeUntil.setFullYear(activeUntil.getFullYear() + await Settings.get(Settings.KEYS.USER_ACTIVE_DURATION))
   return activeUntil 
 }

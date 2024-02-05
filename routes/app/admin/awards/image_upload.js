@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
   let fileBuffer = null
   let filename = null
   bb.on('file', (name, file, info) => {
-    console.log(info)
     filename = info.filename
     const bufArr = []
     file.on('data', (data) => {
@@ -16,9 +15,7 @@ module.exports = async (req, res) => {
       fileBuffer = Buffer.concat(bufArr)
     })
   })
-  bb.on('field', (name, val, info) => {
-    console.log(`Field [${name}]: value: %j`, val)
-  })
+  bb.on('field', (name, val, info) => {})
   bb.on('close', () => {
     saveAndRespond(req, res, fileBuffer, filename)
   })

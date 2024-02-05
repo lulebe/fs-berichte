@@ -18,10 +18,7 @@ module.exports = async (req, res) => {
       oldProtocol.pdate = oldProtocol.pdate.replace(',', '.')
       if (oldProtocol.pdate.length == 10)
         oldProtocol.pdate = oldProtocol.pdate.split('.').reverse().join('/')
-      if (isNaN(new Date(oldProtocol.pdate).getTime())) {
-        console.log(oldProtocol.pdate)
-        return
-      }
+      if (isNaN(new Date(oldProtocol.pdate).getTime())) return
       const oldSubjectProtocols = oldData.protocol_examiner.filter(pe => pe.protocol == oldProtocol.id)
       const isM1 = oldSubjectProtocols[0].subject < 5
       const newProtocol = await Exam.create({

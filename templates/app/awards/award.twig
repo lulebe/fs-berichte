@@ -8,6 +8,9 @@
 {% block content %}
 <div class="wrapper-2-col" style="gap: 0; padding-bottom: 0;">
   <div>
+    <div class="error-container" id="clipboardHint" style="display: none">
+      <div class="error-msg"><i class="material-icons">content_paste</i> Link kopiert!</div>
+    </div>
     <a href="#" style="float: right; margin-left: 8px" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
     <h1 style="margin: 0">{{award.title}}</h1>
   </div>
@@ -67,8 +70,18 @@
     url: "{{currentUrl}}"
   }
   function share () {
-    navigator.share(shareData)
-    .catch(_ => {})
+    if ('share' in navigator)
+      navigator.share(shareData)
+      .catch(_ => {})
+    else if ('clipboard' in navigator)
+      copyClipboard()
+  }
+  function copyClipboard () {
+    navigator.clipboard.writeText(shareData.url)
+    document.getElementById('clipboardHint').style.display = 'block'
+    setTimeout(() => {
+      document.getElementById('clipboardHint').style.display = 'none'
+    }, 2000)
   }
 </script>
 {% endblock %}

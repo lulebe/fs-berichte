@@ -13,6 +13,9 @@
 {% block content %}
   <div class="petitionlayout">
     <section class="titlearea">
+      <div class="error-container" id="clipboardHint" style="display: none">
+        <div class="error-msg"><i class="material-icons">content_paste</i> Link kopiert!</div>
+      </div>
       <a href="#" style="float: right; margin-left: 8px" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
       <h1 class="mtop0">{{petition.title}}</h1>
       <div class="petitionprogress progress{{petition.status}}">
@@ -127,8 +130,18 @@
     url: "{{currentUrl}}"
   }
   function share () {
-    navigator.share(shareData)
-    .catch(_ => {})
+    if ('share' in navigator)
+      navigator.share(shareData)
+      .catch(_ => {})
+    else if ('clipboard' in navigator)
+      copyClipboard()
+  }
+  function copyClipboard () {
+    navigator.clipboard.writeText(shareData.url)
+    document.getElementById('clipboardHint').style.display = 'block'
+    setTimeout(() => {
+      document.getElementById('clipboardHint').style.display = 'none'
+    }, 2000)
   }
 </script>
 {% endblock %}
