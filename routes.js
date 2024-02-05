@@ -118,3 +118,5 @@ adminRouter.put('/awards/:awardid/candidates/:candidateid', [admFilt(u=>u.isAwar
 adminRouter.get('/awards/:awardid/candidates/:candidateid/delete', [admFilt(u=>u.isAwardsAdmin)], require('./routes/app/admin/awards/candidate_delete'))
 adminRouter.post('/awards/:awardid/candidates/:candidateid/images', [admFilt(u=>u.isAwardsAdmin)], require('./routes/app/admin/awards/image_upload'))
 adminRouter.delete('/awards/images/:id', [admFilt(u=>u.isAwardsAdmin)], require('./routes/app/admin/awards/image_delete'))
+
+adminRouter.get('/mailtest', [admFilt(u=>u.isAdmin)], require('./routes/app/admin/mailtest'))

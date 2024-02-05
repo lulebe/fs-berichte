@@ -20,7 +20,7 @@ async function sendEmail (user) {
   const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '3 days'})
   const url = `${config.ROOT_URL}/recover?token=${jwt}`
   return mailer(
-    email,
+    user.email,
     'Passwort zurückgesetzt',
     `Du kannst dich mit folgendem Link wieder in FSmed Lehre anmelden. Ändere danach dein Passwort.\n\n${url}`,
     `Du kannst dich mit folgendem Link wieder in FSmed Lehre anmelden. Ändere danach dein Passwort.<br><br><a href="${url}">${url}</a>`
