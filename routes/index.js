@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
   if (req.session.userId)
     return res.redirect('/app/exam')
   res.tmplOpts.isLoggedIn = false
-  res.tmplOpts.isAdmin = false
   res.tmplOpts.hasError = !!req.query.status
   res.tmplOpts.errorMsg = makeMsg(parseInt(req.query.status))
   res.tmplOpts.loginGoto = req.query.goto ? '?goto=' + req.query.goto : ''

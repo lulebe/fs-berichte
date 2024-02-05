@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
     } else
       return res.redirect('/?status=11')
   req.session.userId = foundUser.id
-  req.session.isAdmin = foundUser.isAdmin
   if (foundUser.isAdmin) autoExtendValidityForAdmins(foundUser)
   if (req.query.goto)
     res.redirect(req.query.goto)

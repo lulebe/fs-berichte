@@ -60,12 +60,17 @@ const User = sequelize.define('User', {
     defaultValue: false,
     allowNull: false
   },
-  moderator: {
+  petitionsAdmin: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false
   },
-  petitionsAdmin: {
+  formsAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  moderator: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false
@@ -92,16 +97,28 @@ const User = sequelize.define('User', {
       return this.isAdmin || this.awardsAdmin
     }
   },
+  isPetitionsAdmin: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.petitionsAdmin
+    }
+  },
+  isFormsAdmin: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return this.isAdmin || this.formsAdmin
+    }
+  },
   isModerator: {
     type: DataTypes.VIRTUAL,
     get () {
       return this.isAdmin || this.moderator
     }
   },
-  isPetitionsAdmin: {
+  hasAnyPermissions: {
     type: DataTypes.VIRTUAL,
     get () {
-      return this.isAdmin || this.petitionsAdmin
+      return this.isAdmin || this.awardsAdmin || this.petitionsAdmin || this.formsAdmin || this.moderator
     }
   }
 })

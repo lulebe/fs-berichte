@@ -22,7 +22,7 @@
       <h2>{{totalVotes}} Stimmen</h2>
       <div class="wide award-vote-chart"></div>
     </div>
-    {% if isAdmin %}
+    {% if user.isAwardsAdmin %}
       <br><a href="/app/admin/awards/{{award.id}}#edit" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>
     {% endif %}
   </div>

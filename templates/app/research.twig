@@ -6,8 +6,8 @@
   <div class="wrapper narrow">
     <section>
       <h1>Bericht vom {{report.dateReadable}}</h1>
-      {% if isAdmin %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}
-      {% if user.id == report.UserId or isAdmin %}
+      {% if user.isModerator %}<a href="/app/admin/user/{{report.UserId}}"><i class="material-icons">person</i> von {{report.User.email}}</a><br><br>{% endif %}
+      {% if user.id == report.UserId or user.isModerator %}
       Einsehbar ab {{report.publishDateReadable}}<br><br>
       <form method="post" action="{{report.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>
       {% endif %}

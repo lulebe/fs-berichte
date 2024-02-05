@@ -5,7 +5,7 @@ const tmpl = requiremain('./templates')
 const { Petition, Tag } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
-  const where = {status: {[Op.gte]: req.user.isAdmin ? 0 : 1}}
+  const where = {status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1}}
   let tagInclude = Tag
   if (req.query.tags) {
     if (!Array.isArray(req.query.tags)) req.query.tags = [req.query.tags]

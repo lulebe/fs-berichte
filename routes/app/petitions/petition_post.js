@@ -15,20 +15,20 @@ module.exports = async (req, res, next) => {
   }
   if (req.body.deletecomment) {
     const comment = await PetitionComment.findByPk(req.body.deletecomment)
-    if (comment && (comment.UserId === req.user.id || req.user.isAdmin)) {
+    if (comment && (comment.UserId === req.user.id || req.user.isPetitionsAdmin)) {
       await comment.destroy()
     }
   }
   if (req.body.deletepetition) {
-    if (req.user.isAdmin || req.user.id === petition.UserId) {
+    if (req.user.isPetitionsAdmin || req.user.id === petition.UserId) {
       await petition.destroy()
       return res.redirect('/app/petitions')
     }
   }
   if (req.body.advance) {
-    if (req.user.isAdmin || req.user.id === petition.UserId) {
+    if (req.user.isPetitionsAdmin || req.user.id === petition.UserId) {
       if (petition.status < 4) {
-        if (req.user.isAdmin ||petition.status !== 0 || !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) {
+        if (req.user.isPetitionsAdmin ||petition.status !== 0 || !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) {
           petition.status++
           await petition.save()
         } else {
@@ -38,7 +38,7 @@ module.exports = async (req, res, next) => {
     }
   }
   if (req.body.back) {
-    if (req.user.isAdmin || req.user.id === petition.UserId) {
+    if (req.user.isPetitionsAdmin || req.user.id === petition.UserId) {
       if (petition.status > 0) {
         petition.status--
         await petition.save()

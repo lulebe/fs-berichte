@@ -46,7 +46,7 @@
     <div class="card maintextarea usertext">
       {{candidate.longDescriptionHtml | raw}}    
     </div>
-    {% if isAdmin %}
+    {% if user.isAwardsAdmin %}
       <br><a href="/app/admin/awards/{{award.id}}/candidates/{{candidate.id}}" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>
     {% endif %}
   </div>

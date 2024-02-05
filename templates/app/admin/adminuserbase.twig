@@ -30,6 +30,7 @@
         </div>
         {% endif %}
       </div>
+      {% if user.isAdmin %}
       <div class="card mb" v-scope='{userActiveDuration: {{userActiveDuration}}}'>
         <h1>Aktivierung</h1>
         <form method="post">
@@ -78,6 +79,7 @@
           </form>
         {% endverbatim %}
       </div>
+      {% endif %}
     </section>
   </div>
 {% endblock %}

@@ -67,9 +67,9 @@
         {% if isAuthDomainUser %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
         <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
       </div>
-      {% if user.id == petition.UserId or isAdmin %}
+      {% if user.id == petition.UserId or user.isPetitionsAdmin %}
       <div class="card">
-        {% if isAdmin %}<a href="/app/admin/user/{{petition.UserId}}"><i class="material-icons">person</i> von {{petition.User.email}}</a><br><br>{% endif %}
+        {% if user.isPetitionsAdmin or user.isModerator %}<a href="/app/admin/user/{{petition.UserId}}"><i class="material-icons">person</i> von {{petition.User.email}}</a><br><br>{% endif %}
         {% if requireAdminConfirmationMsg %}
           <div class="card" style="width: 100%; max-width: 500px" id="error-msg">
             <i class="material-icons">warning</i> Nur Admins dürfen derzeit Petitionen von "inaktiv" auf "aktiv" schalten.
@@ -97,9 +97,9 @@
         <h1>Kommentare</h1>
         {% for comment in petition.PetitionComments %}
         <div class="card mb" id="comment{{comment.id}}">
-          {% if isAdmin %}<a href="/app/admin/user/{{comment.User.id}}">{% endif %}{{comment.User.displayName}}{% if isAdmin %}</a>{% endif %} <small>({{comment.dateReadable}})</small>
+          {% if user.isModerator or user.isPetitionsAdmin %}<a href="/app/admin/user/{{comment.User.id}}">{% endif %}{{comment.User.displayName}}{% if user.isModerator or user.isPetitionsAdmin %}</a>{% endif %} <small>({{comment.dateReadable}})</small>
           <hr>
-          {% if comment.User.id == user.id or isAdmin %}
+          {% if comment.User.id == user.id or user.isModerator or user.isPetitionsAdmin %}
           <form method="post" class="inline" style="float: right" onsubmit="return confirm('Kommentar wirklich löschen?')">
             <button type="submit" class="small iconbtn important" name="deletecomment" value="{{comment.id}}"><i class="material-icons">delete</i></button>
           </form>

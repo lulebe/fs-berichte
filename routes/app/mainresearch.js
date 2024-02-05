@@ -6,7 +6,7 @@ const { ResearchReport, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const where = {publishDate: {[Op.lte]: new Date()}}
-  res.tmplOpts.canView = req.user.isAdmin || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC))
+  res.tmplOpts.canView = req.user.isModerator || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC))
   if (req.query.subject)
     where.subject = {[Op.like]: '%'+req.query.subject+'%'}
   if (req.query.head)

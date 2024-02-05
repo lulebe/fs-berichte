@@ -114,6 +114,7 @@ i.material-icons.up {
   background: #f3723a;
   display: block;
   padding: 16px;
+  padding-top: 13px;
   color: white;
   font-weight: 600;
   text-align: center;
@@ -151,11 +152,17 @@ i.material-icons.up {
   padding: 4px 12px;
   color: #296ea7;
   white-space: nowrap;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 .tag.small {
   padding: 2px 6px;
   font-size: 0.9rem;
+  line-height: 0.9rem;
+}
+.tag.important {
+  color: #c10b1d;
+  border-color: #c10b1d;
 }
 
 a.tag:hover {
@@ -483,13 +490,19 @@ ul.striped {
   list-style: none;
   padding: 0;
 }
+ul.striped > :nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 ul.striped li {
-  line-height: 48px;
   display: flex;
   flex-direction: row;
+  line-height: 48px;
+  align-items: center;
+  gap: 4px;
 }
-ul.striped li:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+ul.striped li:not(:has(> .main-text)) {
+  line-height: 1rem;
+  min-height: 48px;
 }
 ul.striped li.endpad {
   padding-right: 12px;
@@ -862,6 +875,39 @@ ul.selectionlist li {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
+
+ul.admin-permissions {
+  list-style: none;
+  padding: 0;
+}
+ul.admin-permissions li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0;
+  color: #666;
+}
+ul.admin-permissions li.has-permission {
+  color: green;
+}
+@media (max-width: 470px) {
+  ul.admin-permissions li {
+    flex-direction: column;
+  }
+}
+ul.admin-permissions li:not(:last-child) {
+  border-bottom: 1px solid lightgrey;
+}
+ul.admin-permissions li .permission-name {
+  font-weight: bold;
+}
+ul.admin-permissions li .permission-description {
+  flex-grow: 1;
+}
+ul.admin-permissions li .btn {
+  flex-shrink: 0;
 }
 
 .inline {
