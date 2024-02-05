@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   res.tmplOpts.pageIndex = parseInt(req.query.page) || 1
   res.tmplOpts.pageCount = Math.ceil(userCount / 50)
   const offset = req.query.page ? (req.query.page-1) * 50 : 0
-  const allUsers = await User.findAll({where, order: [['isAdmin', 'DESC'], ['awardsAdmin', 'DESC'], ['petitionsAdmin', 'DESC'], ['moderator', 'DESC'], ['id', 'DESC']], limit: 50, offset})
+  const allUsers = await User.findAll({where, order: [['isAdmin', 'DESC'], ['awardsAdmin', 'DESC'], ['petitionsAdmin', 'DESC'], ['formsAdmin', 'DESC'], ['moderator', 'DESC'], ['id', 'DESC']], limit: 50, offset})
   res.tmplOpts.users = allUsers
   res.tmplOpts.searchQuery = req.query.searchUser
   res.tmplOpts.onlyExternalShown = req.query.onlyExternal
