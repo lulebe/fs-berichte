@@ -40,7 +40,6 @@ function showAutocomplete (e) {
   attachedField = e.target
   fillMenu(e.target.value, atData[e.target.dataset.autocomplete])
   e.target.parentElement.appendChild(autocompleteMenu)
-  console.log(autocompleteMenu)
 }
 
 function fillMenu (text, list) {

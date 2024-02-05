@@ -274,3 +274,34 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+ul.admin-permissions {
+  list-style: none;
+  padding: 0;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 0;
+    color: #666;
+    &.has-permission {
+      color: green;
+    }
+    @media (max-width: 470px) {
+      flex-direction: column;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid lightgrey;
+    }
+    .permission-name {
+      font-weight: bold;
+    }
+    .permission-description {
+      flex-grow: 1;
+    }
+    .btn {
+      flex-shrink: 0;
+    }
+  }
+}

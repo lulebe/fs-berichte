@@ -1,4 +1,6 @@
-module.exports = async function (req, res, next) {
-  if (req.user && req.user.isAdmin) next()
-  else res.redirect('/app/main')
+module.exports = function (filter) {
+  return async function (req, res, next) {
+    if (req.user && filter(req.user)) next()
+    else res.redirect('/app/main')
+  }
 }

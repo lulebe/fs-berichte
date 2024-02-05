@@ -144,7 +144,6 @@ In diesem Textfeld sollte eine ausführliche Beschreibung stehen. Warum ist dies
       dropzone.processQueue()
       const completeHandler = () => {
         dropzone.off('queuecomplete', completeHandler)
-        console.log('done')
         window.location = '/app/admin/awards/{{award.id}}/candidates/' + this.store.candidate.id
       }
       dropzone.on('queuecomplete', completeHandler)

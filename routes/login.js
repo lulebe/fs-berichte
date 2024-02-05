@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
     } else
       return res.redirect('/?status=11')
   req.session.userId = foundUser.id
-  req.session.isAdmin = foundUser.isAdmin
   if (foundUser.isAdmin) autoExtendValidityForAdmins(foundUser)
   if (req.query.goto)
     res.redirect(req.query.goto)
@@ -43,7 +42,7 @@ async function sendReactivationEmail (user) {
 }
 
 async function autoExtendValidityForAdmins (usr) {
-  if (await usr.validUntil() < new Date().setFullYear(new Date().getFullYear() + 1)) {
+  if (await usr.activeUntil() < new Date().setFullYear(new Date().getFullYear() + 1)) {
     usr.extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)
     await usr.save()
   }

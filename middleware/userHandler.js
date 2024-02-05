@@ -6,7 +6,6 @@ module.exports = async function (req, res, next) {
   res.tmplOpts.isLoggedIn = false
   res.tmplOpts.isAuthDomainUser = false
   res.tmplOpts.user = null
-  res.tmplOpts.isAdmin = false
   res.tmplOpts.currentPath = req.originalUrl
   res.tmplOpts.currentUrl = req.protocol + '://' + req.get('host') + req.originalUrl
   if (req.session.userId) {
@@ -16,7 +15,6 @@ module.exports = async function (req, res, next) {
       res.tmplOpts.isLoggedIn = true
       res.tmplOpts.isAuthDomainUser = await req.user.hasAuthorizedDomain()
       res.tmplOpts.user = req.user
-      res.tmplOpts.isAdmin = req.user.isAdmin
     }
   } else {
     if (!onPublicRoute(req)) {

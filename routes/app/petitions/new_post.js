@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     if (!Array.isArray(req.body.Tags)) req.body.Tags = [req.body.Tags]
     await petition.setTags(req.body.Tags)
   }
-  if (!req.user.isAdmin && !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) notifyAdmin(petition)
+  if (!req.user.isPetitionsAdmin && !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) notifyAdmin(petition)
   res.redirect('/app/petitions/'+petition.id)
 }
 

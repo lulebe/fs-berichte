@@ -20,6 +20,5 @@ module.exports = async (req, res) => {
     await user.save()
   }
   req.session.userId = user.id
-  req.session.isAdmin = user.isAdmin
   res.redirect('/app/profile')
 }

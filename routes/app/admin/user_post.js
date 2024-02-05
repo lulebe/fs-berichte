@@ -16,6 +16,26 @@ module.exports = async (req, res, next) => {
     await user.save()
     res.tmplOpts.adminChanged = true
   }
+  if (req.body.toggleAwardsAdmin == "yes") {
+    user.awardsAdmin = !user.awardsAdmin
+    await user.save()
+    res.tmplOpts.adminChanged = true
+  }
+  if (req.body.togglePetitionsAdmin == "yes") {
+    user.petitionsAdmin = !user.petitionsAdmin
+    await user.save()
+    res.tmplOpts.adminChanged = true
+  }
+  if (req.body.toggleFormsAdmin == "yes") {
+    user.formsAdmin = !user.formsAdmin
+    await user.save()
+    res.tmplOpts.adminChanged = true
+  }
+  if (req.body.toggleModerator == "yes") {
+    user.moderator = !user.moderator
+    await user.save()
+    res.tmplOpts.adminChanged = true
+  }
   if (req.body.extendAccount == "yes") {
     const extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)
     if (await user.activeUntil() < extendedUntil) {

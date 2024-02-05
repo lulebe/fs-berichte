@@ -12,13 +12,13 @@ module.exports = async (req, res) => {
   //reports
   const exams = (await getExams(cookieToArray('exams', cookies))).map(e => ({type: 'exam', data: e}))
   let researchReports = []
-  if (req.user.isAdmin || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC)))
+  if (req.user.isModerator || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC)))
     researchReports = await getResearchReports(cookieToArray('researchs', cookies))
   researchReports = researchReports.map(r => ({type: 'research', data: r}))
   
   //petitions
   const petitions = (await req.user.hasAuthorizedDomain()) ?  (await Petition.findAll({
-    where: {[Op.and]: [{ status: {[Op.gte]: req.user.isAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
+    where: {[Op.and]: [{ status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
   await Promise.all(petitions.map(p => {
