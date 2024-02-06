@@ -27,7 +27,7 @@
             <li class="{% if viewedUser.isAdmin %}has-permission{% endif %}">
               <span class="permission-name">Admin</span>
               <span class="permission-description">
-                Darf alles der anderen auch, Vor allem Nutzer löschen, freischalten etc.
+                Darf alles der anderen auch, und außerdem Accounts bearbeiten.
               </span>
               {% if viewedUser.isAdmin %}
                 <button type="submit" name="toggleAdmin" value="yes" class="btn important">entziehen</a>
@@ -71,7 +71,7 @@
             <li class="{% if viewedUser.isModerator %}has-permission{% endif %}">
               <span class="permission-name">Moderator</span>
               <span class="permission-description">
-                Darf Berichte und Kommentare bearbeiten und löschen.
+                Darf Berichte und Kommentare bearbeiten und löschen, sowie externe Nutzer freischalten.
               </span>
               {% if viewedUser.moderator %}
                 <button type="submit" name="toggleModerator" value="yes" class="btn important">entziehen</a>
