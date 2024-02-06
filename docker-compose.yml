@@ -1,0 +1,33 @@
+version: '3'
+services:
+  nodejs:
+    image: node:alpine
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=mysql_database
+    ports:
+      - "8080:8080"
+    networks:
+    - my-network
+    command: sh -c "sleep 5 && npm install && npm run build && npm run init-with-testdata && npm start"
+  mysql_database:
+    image: mariadb:lts
+    restart: always
+    expose:
+      - 3306
+    networks:
+    - my-network
+    volumes:
+      - ./dbdata:/var/lib/mysql:rw
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MARIADB_DATABASE: "db-berichte"
+      MARIADB_USER: "dbu-berichte"
+      MARIADB_PASSWORD: testpw
+networks:
+  my-network:
+    driver: bridge

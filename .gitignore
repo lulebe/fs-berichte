@@ -1,4 +1,6 @@
 node_modules/
+dbdata/
+database.sql/
 
 # Logs
 logs
