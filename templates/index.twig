@@ -91,16 +91,29 @@
       <h3>Registrierung</h3>
       {{loginRegisterExplainer | raw}}
       <form action="/register{{loginGoto}}" method="POST">
-        <input type="email" name="email" id="regemail-inp" placeholder="E-Mail">
-        <div class="pwinput" id="pw-reg">
-          <input type="password" name="password" placeholder="Passwort">
-          <i class="material-icons on">visibility</i>
-          <i class="material-icons off">visibility_off</i>
+        <div class="inputlabel">
+          <label>E-Mail</label>
+          <input type="email" name="email" id="regemail-inp" placeholder="name@email.com">
         </div>
-        <div class="pwinput" id="pw-reg-repeat">
-          <input type="password" name="repeatPassword" placeholder="Passwort wiederholen">
-          <i class="material-icons on">visibility</i>
-          <i class="material-icons off">visibility_off</i>
+        <div class="inputlabel">
+          <label>Name (optional, erscheint in Petitionen, Kommentaren...)</label>
+          <input type="text" name="nickname" placeholder="Nickname">
+        </div>
+        <div class="inputlabel">
+          <label>Passwort</label>
+          <div class="pwinput" id="pw-reg">
+            <input type="password" name="password" placeholder="Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+        </div>
+        <div class="inputlabel">
+          <label>Passwort wiederholen</label>
+          <div class="pwinput" id="pw-reg-repeat">
+            <input type="password" name="repeatPassword" placeholder="Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
         </div>
         <small class="nohd" style="display: block;">Weshalb benötigst du Zugriff (nur bei Registrierung ohne {{authorizedDomain}} Adresse notwendig)</small>
         <textarea class="nohd" name="reason" style="height: 5rem; display: block;" placeholder="Begründung zur Freischaltung, wenn du von einer anderen Uni kommst"></textarea>

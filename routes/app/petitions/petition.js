@@ -1,4 +1,5 @@
 const sequelize = require('sequelize')
+const Op = sequelize.Op
 
 const md = requiremain('./markdownrender')
 const tmpl = requiremain('./templates')
@@ -15,7 +16,7 @@ module.exports = async (req, res) => {
   if (req.user)
     res.tmplOpts.isSupporting = await petition.hasSupporter(req.user)
   res.tmplOpts.daysLeft = Math.ceil((new Date(petition.deadline) - new Date()) / (1000 * 60 * 60 * 24))
-  const publicSupporters = await petition.getSupporters({where: {anonymous: false}, order: sequelize.literal('rand()'), limit: 4})
+  const publicSupporters = await petition.getSupporters({where: {[Op.and]: [{anonymous: false}, {nickname: {[Op.ne]: null}}]}, order: sequelize.literal('rand()'), limit: 4})
   res.tmplOpts.supporterNames = publicSupporters.map(u => u.displayName).join(', ')
   res.tmplOpts.isActive = petition.status === PETITION_STATUS.ACTIVE && petition.beforeDeadline
   res.tmplOpts.isCancelled = petition.status === PETITION_STATUS.CANCELLED
