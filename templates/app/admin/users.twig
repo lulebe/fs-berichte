@@ -22,14 +22,16 @@
     {% for user in users %}
       <a href="user/{{user.id}}" class="main-text">
         <li>
-          {% if user.hasAnyPermissions %}<strong>{% endif %}{{user.email}}{% if user.hasAnyPermissions %}</strong>{% endif %}
-          {% if user.isAdmin %}<span class="important small tag">Admin</span>{% endif %}
-          {% if user.awardsAdmin %}<span class="small tag">PaLMe</span>{% endif %}
-          {% if user.petitionsAdmin %}<span class="small tag">Petitionen</span>{% endif %}
-          {% if user.formsAdmin %}<span class="small tag">Umfragen</span>{% endif %}
-          {% if user.moderator %}<span class="small tag">Mod</span>{% endif %}
-          {% if user.nickname %} ({{user.nickname}}){% endif %}
-          <small style="white-space: nowrap;">- seit {{user.createdAtReadable}}</small>
+          <span>
+            {% if user.hasAnyPermissions %}<strong>{% endif %}{{user.email}}{% if user.hasAnyPermissions %}</strong>{% endif %}
+            {% if user.isAdmin %}<span class="important small tag">Admin</span>{% endif %}
+            {% if user.awardsAdmin %}<span class="small tag">PaLMe</span>{% endif %}
+            {% if user.petitionsAdmin %}<span class="small tag">Petitionen</span>{% endif %}
+            {% if user.formsAdmin %}<span class="small tag">Umfragen</span>{% endif %}
+            {% if user.moderator %}<span class="small tag">Mod</span>{% endif %}
+            {% if user.nickname %} ({{user.nickname}}){% endif %}
+            <small style="white-space: nowrap;">- seit {{user.createdAtReadable}}</small>
+          </span>
         </li>
       </a>
     {% endfor %}

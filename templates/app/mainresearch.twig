@@ -11,7 +11,9 @@
     <div class="grid-col left">
       <ul class="striped">
         {% for result in results %}
-          <li><a href="research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
+          <a href="research/{{result.id}}" class="main-text"><li><span>
+            {{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}
+          </span></li></a>
         {% endfor %}
       </ul>
     </div>

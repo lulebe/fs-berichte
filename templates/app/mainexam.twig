@@ -13,7 +13,9 @@
       {% endif %}
       <ul class="striped">
         {% for result in results %}
-          <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+          <a href="/app/exam/{{result.id}}" class="main-text"><li><span>
+            {{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}
+          </span></li></a>
         {% endfor %}
       </ul>
     </div>
