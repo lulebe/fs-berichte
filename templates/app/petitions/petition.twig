@@ -25,9 +25,9 @@
         <div class="progressStep"><i class="material-icons">groups</i></div>
         <div class="progressText">{{petition.statusReadable}}</div>
       </div>
-      <i class="material-icons primary">edit_note</i> {{petition.dateReadable}} - {{petition.author}}<br>
-      <i class="material-icons accent">send</i> {{petition.recipient}}<br>
-      <q>{{petition.shortText | nl2br }}</q>
+      <i class="material-icons primary">edit_note</i> von {{petition.dateReadable}} - {{petition.author}}<br>
+      <i class="material-icons accent">send</i> an {{petition.recipient}}<br>
+      <div class="card mtop16">{{petition.shortText | nl2br }}</div>
       {% for tag in petition.Tags %}
         {% if isAuthDomainUser %}
           <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a>
@@ -42,21 +42,19 @@
       </div>
     </section>
     <section class="dataarea">
-      <div class="card mb">
+      <div class="card mb {% if isSupporting %}voted{% endif %}">
         <h3>Unterstützung</h3>
+        <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
         {% if isAuthDomainUser and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
         <div class="supportersdisplay">
           <div class="current">{{petition.supporterCount}}</div>
           <div class="supportbar"><div class="indicator" style="width: {{indicatorLength}}%"></div><div class="percentage">{{indicatorLength}}%</div></div>
           <div class="goal">{{petition.goal}}</div>
         </div>
-        {% if isSupporting %}
-          <p>Du unterstützt diese Petition.</p>
-        {% endif %}
         {% if isActive and isAuthDomainUser %}
         {% if isSupporting %}
           <form method="post">
-            <button type="submit" class="important iconbtn" name="support" value="0"><i class="material-icons">remove_circle_outline</i> nicht mehr unterstützen</button>
+            <button type="submit" class="secondary iconbtn" name="support" value="0"><i class="material-icons">remove_circle_outline</i> nicht mehr unterstützen</button>
           </form>
         {% else %}
           <form method="post">
@@ -65,13 +63,13 @@
         {% endif %}
         {% endif %}
         {% if isAuthDomainUser %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
-        <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
       </div>
       {% if user.id == petition.UserId or user.isPetitionsAdmin %}
       <div class="card">
-        {% if user.isPetitionsAdmin or user.isModerator %}<a href="/app/admin/user/{{petition.UserId}}"><i class="material-icons">person</i> von {{petition.User.email}}</a><br><br>{% endif %}
+        <h3>Verwaltung</h3>
+        {% if user.isPetitionsAdmin %}<a href="/app/admin/user/{{petition.UserId}}"><i class="material-icons">person</i> von {{petition.User.email}}</a><br><br>{% endif %}
         {% if requireAdminConfirmationMsg %}
-          <div class="card" style="width: 100%; max-width: 500px" id="error-msg">
+          <div class="card error-msg" style="width: 100%; max-width: 500px">
             <i class="material-icons">warning</i> Nur Admins dürfen derzeit Petitionen von "inaktiv" auf "aktiv" schalten.
           </div>
         {% endif %}
