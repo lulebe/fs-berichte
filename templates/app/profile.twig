@@ -13,8 +13,8 @@
             Du hast noch keine Inhalte eingetragen.
           </div>
           <div class="resultsgrid morecols" style="padding: 16px">
-            <a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>
-            {% if isAuthDomainUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
+            {% if user.isReportsUser %}<a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>{% endif %}
+            {% if user.isPetitionsUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
           </div>
         {% endif %}
         <ul class="striped">
@@ -54,10 +54,10 @@
           <button type="submit" class="iconbtn" name="changepw" value="1"><i class="material-icons">key</i> Passwort ändern</button>
         </form>
       </section>
-      {% if isAuthDomainUser %}
+      {% if user.isPetitionsUser %}
       <section class="card mb">
         <h3>Nickname ändern</h3>
-        <p>Dein Nickname erscheint in Kommentaren, Petitionen, etc..</p>
+        <p>Dein Nickname erscheint in Kommentaren und Petitionen</p>
         <form method="POST">
           <div class="inputlabel">
             <label>Nickname</label>

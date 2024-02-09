@@ -16,7 +16,7 @@
       <div class="error-container" id="clipboardHint" style="display: none">
         <div class="error-msg"><i class="material-icons">content_paste</i> Link kopiert!</div>
       </div>
-      <a href="#" style="float: right; margin-left: 8px" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
+      <button type="button" style="float: right; margin-left: 8px" class="iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</button>
       <h1 class="mtop0">{{petition.title}}</h1>
       <div class="petitionprogress progress{{petition.status}}">
         <div class="progressStep"><i class="material-icons">edit_note</i></div>
@@ -29,7 +29,7 @@
       <i class="material-icons accent">send</i> an {{petition.recipient}}<br>
       <div class="card mtop16 mb">{{petition.shortText | nl2br }}</div>
       {% for tag in petition.Tags %}
-        {% if isAuthDomainUser %}
+        {% if user.isPetitionsUser %}
           <a href="/app/petitions?tags={{tag.id}}" class="tag">{{tag.name}}</a>
         {% else %}
           <span class="tag">{{tag.name}}</span>
@@ -45,13 +45,13 @@
       <div class="card mb {% if isSupporting %}voted{% endif %}">
         <h3>Unterstützung</h3>
         <p><i class="material-icons">event</i>{{petition.deadlineReadable}}{% if isActive %} - {{daysLeft}} Tage verbleibend{% endif %}</p>
-        {% if isAuthDomainUser and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
+        {% if user.isPetitionsUser and supporterNames %}<small>u.a. {{supporterNames}}</small>{% endif %}
         <div class="supportersdisplay">
           <div class="current">{{petition.supporterCount}}</div>
           <div class="supportbar"><div class="indicator" style="width: {{indicatorLength}}%"></div><div class="percentage">{{indicatorLength}}%</div></div>
           <div class="goal">{{petition.goal}}</div>
         </div>
-        {% if isActive and isAuthDomainUser %}
+        {% if isActive and user.isPetitionsUser %}
         {% if isSupporting %}
           <form method="post">
             <button type="submit" class="secondary iconbtn mv8" name="support" value="0"><i class="material-icons">remove_circle_outline</i> nicht mehr unterstützen</button>
@@ -62,7 +62,7 @@
           </form>
         {% endif %}
         {% endif %}
-        {% if isAuthDomainUser %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
+        {% if user.isPetitionsUser %}<small>Du kannst in deinem <a href="/app/profile">Profil</a> ändern, ob und wie dein Name hier erscheinen darf.</small>{% endif %}
       </div>
       {% if user.id == petition.UserId or user.isPetitionsAdmin %}
       <div class="card">
@@ -90,7 +90,7 @@
       </div>
       {% endif %}
     </section>
-    {% if isAuthDomainUser %}
+    {% if user.isPetitionsUser %}
       <section class="commentsarea">
         <h1>Kommentare</h1>
         {% for comment in petition.PetitionComments %}

@@ -20,7 +20,7 @@ async function generateTestData () {
 async function generateTestUsers () {
   const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(config.SALT_ROUNDS))
   return Promise.all(Array.from(Array(USER_COUNT-1))
-  .map((u, i) => ({email: `test${i}@${randomDomain()}`, activated: true, authorized: true, password}))
+  .map((u, i) => ({email: `test${i}@${randomDomain()}`, password,  activated: true, authorized: true, isReportsUser: true, isAwardsUser: true, isPetitionsUser: true}))
   .map(userdata => db.User.create(userdata)))
 }
 

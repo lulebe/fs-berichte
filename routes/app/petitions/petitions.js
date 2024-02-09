@@ -2,7 +2,7 @@ const { Op } = require("sequelize")
 
 const tmpl = requiremain('./templates')
 
-const { Petition, Tag } = requiremain('./db/db')
+const { Petition, Tag, PETITION_STATUS } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const where = {status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1}}
@@ -20,8 +20,8 @@ module.exports = async (req, res) => {
   await Promise.all(results.map(p => {
     return p.countSupporters().then(count => {
       p.supporterCount = count
-      p.percentage = count / p.data.goal * 100
-      p.isActive =p.data.status === PETITION_STATUS.ACTIVE && p.beforeDeadline
+      p.percentage = count / p.goal * 100
+      p.isActive =p.status === PETITION_STATUS.ACTIVE && p.beforeDeadline
     })
   }))
   res.tmplOpts.tags = await Tag.findAll({order: [['name', 'ASC']]})

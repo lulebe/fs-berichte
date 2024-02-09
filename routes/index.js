@@ -5,7 +5,7 @@ const config = requiremain('./config')
 
 module.exports = async (req, res) => {
   if (req.session.userId)
-    return res.redirect('/app/exam')
+    return res.redirect('/app/main')
   res.tmplOpts.isLoggedIn = false
   res.tmplOpts.hasError = !!req.query.status
   res.tmplOpts.errorMsg = makeMsg(parseInt(req.query.status))
@@ -40,5 +40,7 @@ function makeMsg (code) {
       return "Dein Account ist abgelaufen. Du hast eine E-Mail mit einem Link zur Verlängerung erhalten."
     case 11:
       return `Dein Account ist abgelaufen. Da du eine externe Mailadresse hast, können dich nur unsere Admins (${config.ADMIN_EMAIL}) verlängern.`
+    case 12:
+      return `Die Admins haben deinen Account noch nicht aktiviert.`
   }
 }

@@ -10,14 +10,14 @@ module.exports = async (req, res) => {
   const cookies = new Cookies(req, res)
 
   //reports
-  const exams = (await getExams(cookieToArray('exams', cookies))).map(e => ({type: 'exam', data: e}))
+  const exams = req.user.isReportsUser ? (await getExams(cookieToArray('exams', cookies))).map(e => ({type: 'exam', data: e})) : []
   let researchReports = []
-  if (req.user.isModerator || !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC)))
+  if (req.user.isModerator || (req.user.isReportsUser && !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC))))
     researchReports = await getResearchReports(cookieToArray('researchs', cookies))
   researchReports = researchReports.map(r => ({type: 'research', data: r}))
   
   //petitions
-  const petitions = (await req.user.hasAuthorizedDomain()) ?  (await Petition.findAll({
+  const petitions = req.user.isPetitionsUser ? (await Petition.findAll({
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
@@ -30,14 +30,14 @@ module.exports = async (req, res) => {
   }))
 
   //awards
-  const awards = (await req.user.hasAuthorizedDomain()) ? (await Award.findAll({
+  const awards = req.user.isAwardsUser ? (await Award.findAll({
     where: {status:  Award.STATUS.PUBLISHED},
     include: [{model: AwardCandidate, attributes: ['id', 'name']}],
     order: [['createdAt', 'DESC']]
   })).map(a => ({type: 'awards', data: a})) : []
 
   //forms
-  const forms = (await req.user.hasAuthorizedDomain()) ? (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f})) : []
+  const forms = req.user.isFormsUser ? (await Form.findAll({order: [['id', 'DESC']]})).map(f => ({type: 'forms', data: f})) : []
 
   const reports = [...exams, ...researchReports].sort(() => 0.5 - Math.random())
   res.tmplOpts.results = [...awards, ...petitions, ...forms, ...reports]

@@ -14,7 +14,7 @@ module.exports = new Promise(resolve => {
     Settings.set(Settings.KEYS.USER_ACTIVE_DURATION, 7)
     Settings.set(Settings.KEYS.AUTHORIZED_DOMAIN, 'example.com')
     const password = bcrypt.hashSync("testpw", bcrypt.genSaltSync(config.SALT_ROUNDS))
-    db.User.create({email: "test@example.com", activated: true, authorized: true, isAdmin: true, password})
+    db.User.create({email: "test@example.com", password, activated: true, authorized: true, isAdmin: true, isReportsUser: true, isFormsUser: true, isPetitionsUser: true, isAwardsUser: true})
     .then(() => {
       console.log('DB initialized, PLEASE REMOVE TESTUSER')
       resolve()

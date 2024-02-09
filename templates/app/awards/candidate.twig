@@ -21,7 +21,7 @@
     <div class="error-container" id="clipboardHint" style="display: none">
       <div class="error-msg"><i class="material-icons">content_paste</i> Link kopiert!</div>
     </div>
-    <a href="#" style="float: right; margin-left: 8px" class="btn iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</a>
+    <button type="button" style="float: right; margin-left: 8px" class="iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</button>
     <a href="/app/awards/{{award.id}}"><i class="material-icons">arrow_back</i> {{award.title}}</a>
     <h1 style="margin: 0.2em 0;">{{candidate.name}}</h1>
   </div>
@@ -55,14 +55,14 @@
       <h2>Abstimmung</h2>
       <div class="award-vote-chart"></div>
     </div>
-    {% if not userVote and isAuthDomainUser %}
+    {% if not userVote and user.isAwardsUser %}
       {% if award.canVote %}
         <strong>Du hast noch nicht abgestimmt.</strong>
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>
       {% endif %}
     {% elseif userVote.AwardCandidateId==candidate.id %}
       <strong>Deine Stimme wurde für {{candidate.name}} gezählt.</strong>
-    {% elseif isAuthDomainUser %}
+    {% elseif user.isAwardsUser %}
       <strong>Deine Stimme gilt derzeit {{userVote.AwardCandidate.name}}.</strong>
       {% if award.canVote %}
         <a href="/app/awards/{{award.id}}/candidates/{{candidate.id}}/vote" class="btn iconbtn important"><i class="material-icons">task_alt</i> Für {{candidate.name}} abstimmen</a><br><br>

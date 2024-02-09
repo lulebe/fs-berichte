@@ -23,7 +23,7 @@
       <a href="user/{{user.id}}" class="main-text">
         <li>
           <span>
-            {% if user.hasAnyPermissions %}<strong>{% endif %}{{user.email}}{% if user.hasAnyPermissions %}</strong>{% endif %}
+            {% if user.isAnyAdmin %}<strong>{% endif %}{{user.email}}{% if user.isAnyAdmin %}</strong>{% endif %}
             {% if user.isAdmin %}<span class="important small tag">Admin</span>{% endif %}
             {% if user.awardsAdmin %}<span class="small tag">PaLMe</span>{% endif %}
             {% if user.petitionsAdmin %}<span class="small tag">Petitionen</span>{% endif %}

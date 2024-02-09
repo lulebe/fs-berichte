@@ -25,8 +25,12 @@ module.exports = async (req, res) => {
     const user = await User.create({
       email: req.body.email.toLowerCase(),
       nickname: req.body.nickname,
-      authorized: userIsAuthorizedDomain,
-      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
+      authorized: true,
+      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS)),
+      isReportsUser: true,
+      isPetitionsUser: true,
+      isFormsUser: true,
+      isAwardsUser: true
     })
     sendActivationEmail(user, goto)
     res.redirect('/?status=6' + goto)
@@ -38,9 +42,10 @@ module.exports = async (req, res) => {
     const user = await User.create({
       email: req.body.email,
       nickname: req.body.nickname,
-      authorized: userIsAuthorizedDomain,
+      authorized: false,
       authReason: req.body.reason,
-      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS))
+      password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS)),
+      isReportsUser: true
     })
     //send admin email
     sendAdminEmail (user, req.body.reason)
@@ -49,7 +54,7 @@ module.exports = async (req, res) => {
 }
 
 function sendActivationEmail (user, goto) {
-  const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '24h' })
+  const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '7 days' })
   return mailer(
     user.email,
     'Aktivierungslink',

@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
 }
 
 async function sendEmail (user) {
-  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '3 days'})
+  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '7 days'})
   const url = `${config.ROOT_URL}/recover?token=${jwt}`
   return mailer(
     user.email,

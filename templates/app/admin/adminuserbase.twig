@@ -33,6 +33,11 @@
       </div>
       {% endif %}
       {% if user.isAdmin %}
+      <div class="card mb">
+        <h1>Nutzer einladen</h1>
+        Du kannst Einladungslinks für bestimmte Berechtigungen und Zeitdauern vergeben.
+        <a href="/app/admin/users/invite" class="small btn iconbtn"><i class="material-icons">mail</i> einladen</a>
+      </div>
       <div class="card mb" v-scope='{userActiveDuration: {{userActiveDuration}}}'>
         <h1>Aktivierung</h1>
         <form method="post">

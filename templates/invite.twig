@@ -1,0 +1,91 @@
+{% extends "base.twig" %}
+
+{% block title %}Registrierung{% endblock %}
+
+{% block head %}
+<style>
+  body {
+    background: rgb(229,69,69);
+    background: linear-gradient(159deg, rgba(229,69,69,1) 0%, rgba(193,11,29,1) 24%, rgba(61,132,192,1) 90%);
+    min-height: 100vh;
+  }
+  body a {
+    color: #ccc;
+  }
+  body a:visited:not(:hover) {
+    color: #ccc;
+  }
+
+  #error-msg {
+    margin: 0 auto;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+  <section id="splash">
+    FSmed Lehre
+  </section>
+  {% if hasError %}<section class="card" style="width: 100%; max-width: 500px" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
+  <div class="wrapper narrow">
+    <section class="card mb">
+      <h2>Registrierung</h2>
+      <form method="POST">
+        <div class="inputlabel">
+          <label>E-Mail</label>
+          <input type="email" name="email" id="regemail-inp" placeholder="name@email.com">
+        </div>
+        <div class="inputlabel">
+          <label>Passwort</label>
+          <div class="pwinput" id="pw-reg">
+            <input type="password" name="password" placeholder="Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+        </div>
+        <div class="inputlabel mb">
+          <label>Passwort wiederholen</label>
+          <div class="pwinput" id="pw-reg-repeat">
+            <input type="password" name="repeatPassword" placeholder="Passwort">
+            <i class="material-icons on">visibility</i>
+            <i class="material-icons off">visibility_off</i>
+          </div>
+        </div>
+        <input type="submit" value="registrieren" class="btn important">
+      </form>
+    </section>
+    <section class="card mb">
+      <h3>Account schon erstellen? Passwort vergessen?</h3>
+      <a href="/" class="btn">zur Startseite</a>
+    </section>
+  </div>
+  <section style="text-align: center; padding: 24px 0; color: white;">
+    &copy; Leander Berg, 2024. Licensed under <a href="/assets/LICENSE.txt" target="_blank">MIT License</a>.<br>
+    Code at <a href="https://github.com/lulebe/fs-berichte">GitHub</a><br>
+    <a href="https://www.fsmed-hd.de/impressum/">Impressum</a>
+  </section>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  function makePWVisibilityToggle (container) {
+    const elContainer = document.getElementById(container)
+    const elOn = elContainer.querySelector('i.on')
+    const elOff = elContainer.querySelector('i.off')
+    const elInput = elContainer.querySelector('input')
+    elOff.style.display = 'none'
+    elOn.addEventListener('click', e => {
+      elOn.style.display = 'none'
+      elOff.style.display = 'block'
+      elInput.type = 'text'
+    })
+    elOff.addEventListener('click', e => {
+      elOff.style.display = 'none'
+      elOn.style.display = 'block'
+      elInput.type = 'password'
+    })
+  }
+  makePWVisibilityToggle('pw-reg')
+  makePWVisibilityToggle('pw-reg-repeat')
+</script>
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block admincontent %}
     {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">key</i> Passwort wurde geändert.</section><br>{% endif %}
     {% if extended %}<section class="card" id="error-msg"><i class="material-icons">timer</i> Account wurde verlängert.</section><br>{% endif %}
-    {% if adminChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i> Die Berechtigungen wurden geändert.</section><br>{% endif %}
+    {% if permissionsChanged %}<section class="card" id="error-msg"><i class="material-icons">local_police</i> Die Berechtigungen wurden geändert.</section><br>{% endif %}
       <h1 class="mtop0">{{viewedUser.email}}</h1>
       {% if viewedUser.nickname %}Nickname "{{viewedUser.nickname}}"<br>{% endif %}
       {% if user.isAdmin %}
@@ -23,6 +23,7 @@
         </form>
         <h3>Berechtigungen</h3>
         <form method="POST">
+          <h4>Adminberechtigungen</h4>
           <ul class="admin-permissions">
             <li class="{% if viewedUser.isAdmin %}has-permission{% endif %}">
               <span class="permission-name">Admin</span>
@@ -36,7 +37,7 @@
               {% endif %}
             </li>
             <li class="{% if viewedUser.isAwardsAdmin %}has-permission{% endif %}">
-              <span class="permission-name">PaLMe</span>
+              <span class="permission-name">PaLMe-Admin</span>
               <span class="permission-description">
                 Darf PaLMe-Preise und -Kandidaten bearbeiten und erstellen.
               </span>
@@ -47,7 +48,7 @@
               {% endif %}
             </li>
             <li class="{% if viewedUser.isPetitionsAdmin %}has-permission{% endif %}">
-              <span class="permission-name">Petitionen</span>
+              <span class="permission-name">Petitionsadmin</span>
               <span class="permission-description">
                 Darf Petitionen freischalten und Petitionen anderer Nutzer bearbeiten.
               </span>
@@ -58,7 +59,7 @@
               {% endif %}
             </li>
             <li class="{% if viewedUser.isFormsAdmin %}has-permission{% endif %}">
-              <span class="permission-name">Umfragen</span>
+              <span class="permission-name">Umfragenadmin</span>
               <span class="permission-description">
                 Darf Umfragen erstellen und löschen.
               </span>
@@ -77,6 +78,53 @@
                 <button type="submit" name="toggleModerator" value="yes" class="btn important">entziehen</a>
               {% else %}
                 <button type="submit" name="toggleModerator" value="yes" class="btn secondary">erteilen</a>
+              {% endif %}
+            </li>
+          </ul>
+          <h4>Nutzerberechtigungen</h4>
+          <ul class="admin-permissions">
+            <li class="{% if viewedUser.isReportsUser %}has-permission{% endif %}">
+              <span class="permission-name">Berichte</span>
+              <span class="permission-description">
+                Darf Berichte lesen und schreiben.
+              </span>
+              {% if viewedUser.isReportsUser %}
+                <button type="submit" name="toggleReportsUser" value="yes" class="btn important">entziehen</a>
+              {% else %}
+                <button type="submit" name="toggleReportsUser" value="yes" class="btn secondary">erteilen</a>
+              {% endif %}
+            </li>
+            <li class="{% if viewedUser.isAwardsUser %}has-permission{% endif %}">
+              <span class="permission-name">PaLMe</span>
+              <span class="permission-description">
+                Darf bei PaLMe abstimmen.
+              </span>
+              {% if viewedUser.isAwardsUser %}
+                <button type="submit" name="toggleAwardsUser" value="yes" class="btn important">entziehen</a>
+              {% else %}
+                <button type="submit" name="toggleAwardsUser" value="yes" class="btn secondary">erteilen</a>
+              {% endif %}
+            </li>
+            <li class="{% if viewedUser.isPetitionsUser %}has-permission{% endif %}">
+              <span class="permission-name">Petitionen</span>
+              <span class="permission-description">
+                Darf Petitionen unterstützen und schreiben.
+              </span>
+              {% if viewedUser.isPetitionsUser %}
+                <button type="submit" name="togglePetitionsUser" value="yes" class="btn important">entziehen</a>
+              {% else %}
+                <button type="submit" name="togglePetitionsUser" value="yes" class="btn secondary">erteilen</a>
+              {% endif %}
+            </li>
+            <li class="{% if viewedUser.isFormsUser %}has-permission{% endif %}">
+              <span class="permission-name">Umfragen</span>
+              <span class="permission-description">
+                Darf an Umfragen teilnehmen.
+              </span>
+              {% if viewedUser.isFormsUser %}
+                <button type="submit" name="toggleFormsUser" value="yes" class="btn important">entziehen</a>
+              {% else %}
+                <button type="submit" name="toggleFormsUser" value="yes" class="btn secondary">erteilen</a>
               {% endif %}
             </li>
           </ul>
