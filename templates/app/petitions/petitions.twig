@@ -42,13 +42,21 @@
     {% for result in results %}
       <a href="petitions/{{result.id}}" class="card selectable">
         <h3>{{result.title}}</h3>
-        <div class="petitionprogress progress{{result.status}}">
+        {% if result.isActive %}
+          <div class="supportersdisplay">
+          <div class="current">{{result.supporterCount}}</div>
+          <div class="supportbar"><div class="indicator" style="width: {{result.percentage}}%"></div><div class="percentage">{{result.percentage}}%</div></div>
+          <div class="goal">{{result.goal}}</div>
+        </div>
+        {% else %}
+          <div class="petitionprogress progress{{result.status}}">
           <div class="progressStep"><i class="material-icons">edit_note</i></div>
           <div class="progressStep"><i class="material-icons">draw</i></div>
           <div class="progressStep"><i class="material-icons">verified</i></div>
           <div class="progressStep"><i class="material-icons">groups</i></div>
           <div class="progressText">{{result.statusReadable}}</div>
         </div>
+        {% endif %}
         <small><i class="material-icons primary">edit_note</i> {{result.dateReadable}} - {{result.author}}</small><br>
         <i class="material-icons accent">send</i> {{result.recipient}}
         <p class="usertext">{{result.shortText | nl2br }}</p>

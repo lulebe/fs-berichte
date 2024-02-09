@@ -17,6 +17,13 @@ module.exports = async (req, res) => {
     }
   }
   const results = await Petition.findAll({where, limit: 50, offset: 0, order: [['createdAt', 'DESC']], include: [tagInclude]})
+  await Promise.all(results.map(p => {
+    return p.countSupporters().then(count => {
+      p.supporterCount = count
+      p.percentage = count / p.data.goal * 100
+      p.isActive =p.data.status === PETITION_STATUS.ACTIVE && p.beforeDeadline
+    })
+  }))
   res.tmplOpts.tags = await Tag.findAll({order: [['name', 'ASC']]})
   res.tmplOpts.results = results
   res.tmplOpts.selectedTags = req.query.tags || []
