@@ -1,0 +1,62 @@
+{% extends "app/admin/adminuserbase.twig" %}
+
+{% block admincontent %}
+  <h1 class="mtop0">Nutzer einladen</h1>
+  <form method="get">
+    <div class="inputquestion">Zugriff erlauben auf:</div>
+    <div class="radiorow">
+      <div class="grouper">
+        <input type="checkbox" class="lbl" name="reportsuser" id="ireportsuser" value="true" {% if query.reportsuser %}checked{% endif %}>
+        <label class="check" for="ireportsuser">Berichte</label>
+      </div>
+      <div class="grouper">
+        <input type="checkbox" class="lbl" name="petitionsuser" id="ipetitionsuser" value="true" {% if query.petitionsuser %}checked{% endif %}>
+        <label class="check" for="ipetitionsuser">Petitionen</label></div>
+      <div class="grouper">
+        <input type="checkbox" class="lbl" name="formsuser" id="iformsuser" value="true" {% if query.formsuser %}checked{% endif %}>
+        <label class="check" for="iformsuser">Umfragen</label>
+      </div>
+      <div class="grouper">
+        <input type="checkbox" class="lbl" name="awardsuser" id="iawardsuser" value="true" {% if query.awardsuser %}checked{% endif %}>
+        <label class="check" for="iawardsuser">PaLMe</label>
+      </div>
+    </div>
+    <div class="inputlabel">
+      <label>Account aktivieren für:</label>
+      <input type="range" name="duration" required value="{{ query.duration | default(10)}}" min="1" max="30" step="1" oninput="this.nextElementSibling.innerText = this.value + ' Jahre'">
+      <div style="text-align: center;">10 Jahre</div>
+    </div>
+    <hr>
+    <button type="submit">Einladungslink erstellen</button>
+  </form>
+  {% if inviteLink %}
+    <p>Dieser Einladungslink ist für 180 Tage gültig:</p>
+    <p><a href="{{inviteLink}}" style="word-break: break-word">{{ inviteLink }}</a></p>
+    <button type="button" class="iconbtn" onclick="share()"><i class="material-icons">share</i> Link teilen</button>
+    <br><br>
+    <div class="error-msg" id="clipboardHint" style="display: none"><i class="material-icons">content_paste</i> Link kopiert!</div>
+  {% endif %}
+{% endblock %}
+
+{% block userjs %}
+<script>
+  const shareData = {
+    title: "FSmed HD Lehre Einladung",
+    url: "{{inviteLink}}"
+  }
+  function share () {
+    if ('share' in navigator)
+      navigator.share(shareData)
+      .catch(_ => {})
+    else if ('clipboard' in navigator)
+      copyClipboard()
+  }
+  function copyClipboard () {
+    navigator.clipboard.writeText(shareData.url)
+    document.getElementById('clipboardHint').style.display = 'block'
+    setTimeout(() => {
+      document.getElementById('clipboardHint').style.display = 'none'
+    }, 2000)
+  }
+</script>
+{% endblock %}

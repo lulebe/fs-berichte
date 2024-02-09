@@ -75,6 +75,26 @@ const User = sequelize.define('User', {
     defaultValue: false,
     allowNull: false
   },
+  isReportsUser: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  isFormsUser: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  isPetitionsUser: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  isAwardsUser: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
   extendedUntil: {
     type: DataTypes.DATEONLY,
     allowNull: true
@@ -115,7 +135,7 @@ const User = sequelize.define('User', {
       return this.isAdmin || this.moderator
     }
   },
-  hasAnyPermissions: {
+  isAnyAdmin: {
     type: DataTypes.VIRTUAL,
     get () {
       return this.isAdmin || this.awardsAdmin || this.petitionsAdmin || this.formsAdmin || this.moderator

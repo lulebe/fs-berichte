@@ -14,27 +14,47 @@ module.exports = async (req, res, next) => {
   if (req.body.toggleAdmin == "yes") {
     user.isAdmin = !user.isAdmin
     await user.save()
-    res.tmplOpts.adminChanged = true
+    res.tmplOpts.permissionsChanged = true
   }
   if (req.body.toggleAwardsAdmin == "yes") {
     user.awardsAdmin = !user.awardsAdmin
     await user.save()
-    res.tmplOpts.adminChanged = true
+    res.tmplOpts.permissionsChanged = true
   }
   if (req.body.togglePetitionsAdmin == "yes") {
     user.petitionsAdmin = !user.petitionsAdmin
     await user.save()
-    res.tmplOpts.adminChanged = true
+    res.tmplOpts.permissionsChanged = true
   }
   if (req.body.toggleFormsAdmin == "yes") {
     user.formsAdmin = !user.formsAdmin
     await user.save()
-    res.tmplOpts.adminChanged = true
+    res.tmplOpts.permissionsChanged = true
   }
   if (req.body.toggleModerator == "yes") {
     user.moderator = !user.moderator
     await user.save()
-    res.tmplOpts.adminChanged = true
+    res.tmplOpts.permissionsChanged = true
+  }
+  if (req.body.toggleReportsUser == "yes") {
+    user.isReportsUser = !user.isReportsUser
+    await user.save()
+    res.tmplOpts.permissionsChanged = true
+  }
+  if (req.body.toggleAwardsUser == "yes") {
+    user.isAwardsUser = !user.isAwardsUser
+    await user.save()
+    res.tmplOpts.permissionsChanged = true
+  }
+  if (req.body.togglePetitionsUser == "yes") {
+    user.isPetitionsUser = !user.isPetitionsUser
+    await user.save()
+    res.tmplOpts.permissionsChanged = true
+  }
+  if (req.body.toggleFormsUser == "yes") {
+    user.isFormsUser = !user.isFormsUser
+    await user.save()
+    res.tmplOpts.permissionsChanged = true
   }
   if (req.body.extendAccount == "yes") {
     const extendedUntil = new Date().setFullYear(new Date().getFullYear() + 1)

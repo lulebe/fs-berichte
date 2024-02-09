@@ -16,6 +16,8 @@ module.exports = async (req, res) => {
     return res.redirect('/?status=4')
   if (!foundUser.activated)
     return res.redirect('/?status=6')
+  if (!foundUser.authorized)
+    return res.redirect('/?status=12')
   if (!(await foundUser.stillActive()))
     if (await foundUser.hasAuthorizedDomain()) {
       sendReactivationEmail(foundUser)
@@ -31,7 +33,7 @@ module.exports = async (req, res) => {
 }
 
 async function sendReactivationEmail (user) {
-  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '3 days'})
+  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '7 days'})
   const url = `${config.ROOT_URL}/recover?token=${jwt}`
   return mailer(
     user.email,

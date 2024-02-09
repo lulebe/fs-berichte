@@ -4,8 +4,8 @@
 
 {% block content %}
   <div class="resultsgrid morecols" style="padding: 16px">
-    <a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>
-    {% if isAuthDomainUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
+    {% if user.isReportsUser %}<a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>{% endif %}
+    {% if user.isPetitionsUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
   </div>
   <div class="resultsgrid home morecols" style="padding: 16px">
     {% for r in results %}
