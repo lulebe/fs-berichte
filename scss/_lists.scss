@@ -11,7 +11,7 @@ ul.striped {
     align-items: center;
     gap: 4px;
     &:not(:has(> .main-text)) {
-      line-height: 1rem;
+      line-height: 1.15rem;
       min-height: 48px;
     }
     &.endpad {

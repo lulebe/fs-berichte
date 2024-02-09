@@ -501,7 +501,7 @@ ul.striped li {
   gap: 4px;
 }
 ul.striped li:not(:has(> .main-text)) {
-  line-height: 1rem;
+  line-height: 1.15rem;
   min-height: 48px;
 }
 ul.striped li.endpad {
