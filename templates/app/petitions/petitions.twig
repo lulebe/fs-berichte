@@ -20,7 +20,7 @@
         {% endfor %}<br><br>
         <button type="submit" class="iconbtn important"><i class="material-icons">search</i> suchen</button>
         {% if user.isPetitionsAdmin %}
-          <br><a href="/app/admin/petitions">Tags verwalten</a>
+          <br><br><a href="/app/admin/petitions">Tags verwalten</a>
         {% endif %}
       </form>
     </div>
@@ -29,7 +29,7 @@
     {% if userPetitions %}
       <ul class="striped">
         {% for p in userPetitions %}
-          <li><a href="/app/petitions/{{p.id}}" class="main-text">{{p.title}} - <small>{{p.dateReadable}}</small></a></li>
+          <a href="/app/petitions/{{p.id}}" class="main-text"><li><span>{{p.title}} - <small>{{p.dateReadable}}</small></span></li></a>
         {% endfor %}
       </ul>
     {% else %}

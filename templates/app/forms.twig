@@ -8,9 +8,9 @@
     {% if forms %}
     <ul class="striped">
       {% for form in forms %}
-        <li><a href="/app/forms/{{form.id}}" class="main-text">
+        <a href="/app/forms/{{form.id}}" class="main-text"><li><span>
           {{form.title}} - <small>{{form.dateReadable}}</small>
-        </a></li>
+        </span></li></a>
       {% endfor %}
     </ul>
     {% else %}

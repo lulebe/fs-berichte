@@ -19,18 +19,18 @@
         {% endif %}
         <ul class="striped">
           {% for result in petitions %}
-            <li><a href="/app/petitions/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.title}}</strong> ({{result.statusReadable}})</a></li>
+            <a href="/app/petitions/{{result.id}}" class="main-text"><li><span>{{result.dateReadable}} - <strong>{{result.title}}</strong> ({{result.statusReadable}})</span></li></a>
           {% endfor %}
           {% for result in reports %}
-            <li><a href="/app/exam/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</a></li>
+            <a href="/app/exam/{{result.id}}" class="main-text"><li><span>{{result.dateReadable}} - <strong>{{result.ExamType.name}}</strong>: {{result.subjects}}</span></li></a>
           {% endfor %}
           {% for result in research %}
-            <li><a href="/app/research/{{result.id}}" class="main-text">{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</a></li>
+            <a href="/app/research/{{result.id}}" class="main-text"><li><span>{{result.dateReadable}} - <strong>{{result.subject}}</strong>: {{result.head}} & {{result.supervisor}}</span></li></a>
           {% endfor %}
           {% for result in petitionComments %}
-            <li><a href="/app/petitions/{{result.Petition.id}}#comment{{result.id}}" class="main-text">
+            <a href="/app/petitions/{{result.Petition.id}}#comment{{result.id}}" class="main-text"><li><span>
               {{result.dateReadable}} - <strong>{{result.Petition.title}}</strong>: <small>{{result.text | slice(0,30)}}{% if result.text|length > 30 %}...{% endif %}</small>
-            </a></li>
+            </span></li></a>
           {% endfor %}
         </ul>
       </section>
