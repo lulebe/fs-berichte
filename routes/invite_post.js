@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     authorized: true,
     password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS)),
     isReportsUser: !!tokenData.r,
-    isFormsAdmin: !!tokenData.f,
+    isFormsUser: !!tokenData.f,
     isPetitionsUser: !!tokenData.p,
     isAwardsUser: !!tokenData.a,
     extendedUntil
