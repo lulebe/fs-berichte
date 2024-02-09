@@ -12,7 +12,8 @@ module.exports = async (req, res) => {
     r: req.query.reportsuser ? 1 : 0,
     d: req.query.duration
   }
-  res.tmplOpts.inviteLink = config.ROOT_URL + '/invite?t=' + jwt.sign(data, config.JWT_SECRET, { expiresIn: '180 days' })
+  if (req.query.duration)
+    res.tmplOpts.inviteLink = config.ROOT_URL + '/invite?t=' + jwt.sign(data, config.JWT_SECRET, { expiresIn: '180 days' })
   res.tmplOpts.query = req.query
   res.tmplOpts.activeAdminTab = filename
   tmpl.render('app/admin/' + filename + '.twig', res.tmplOpts).then(rendered => res.end(rendered))
