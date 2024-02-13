@@ -1,8 +1,8 @@
+const path = require('path')
 const router = require('express').Router()
 const appRouter = require('express').Router()
 const adminRouter = require('express').Router()
 
-const { User } = require('./db/db')
 const perms = require('./middleware/permissions')
 
 module.exports = router
@@ -21,6 +21,7 @@ router.get('/recover', require('./routes/recover'))
 router.get('/invite', require('./routes/invite'))
 router.post('/invite', require('./routes/invite_post'))
 
+router.get('/sw.js', (req, res) => res.sendFile(path.resolve(__dirname, './assets/sw.js')))
 
 router.use('/app', require('./middleware/userHandler'))
 router.use('/app', appRouter)
@@ -33,6 +34,9 @@ appRouter.use((req, res, next) => {
 appRouter.use('/admin', adminRouter)
 
 appRouter.get('/main', require('./routes/app/main'))
+
+//random api stuff
+appRouter.post('/api/registerPush', require('./routes/app/api/registerPush'))
 
 //user stuff
 appRouter.get('/logout', require('./routes/app/logout'))

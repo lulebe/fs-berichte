@@ -1,4 +1,4 @@
-const { Petition, PetitionComment, PETITION_STATUS, Settings } = requiremain('./db/db')
+const { Petition, PetitionComment, PETITION_STATUS, Settings, User } = requiremain('./db/db')
 
 module.exports = async (req, res, next) => {
   if (!req.params.id) return res.status(404).send()
@@ -30,6 +30,8 @@ module.exports = async (req, res, next) => {
       if (petition.status < 4) {
         if (req.user.isPetitionsAdmin ||petition.status !== 0 || !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) {
           petition.status++
+          if (petition.status === PETITION_STATUS.ACTIVE)
+            User.notifyWhere({isPetitionsUser: true}, 'Neue Petition', petition.title, '/app/petitions/' + petition.id)
           await petition.save()
         } else {
           res.tmplOpts.requireAdminConfirmationMsg = true

@@ -1,5 +1,6 @@
-const { Sequelize, DataTypes, STRING } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize')
 const session = require('express-session')
+const push = require('web-push')
 const SequelizeStore = require("connect-session-sequelize")(session.Store)
 
 const config = require('../config')
@@ -156,6 +157,65 @@ User.prototype.stillActive = async function () {
 }
 User.prototype.activeUntilReadable = async function () {
   return (await this.activeUntil()).toLocaleDateString('de-DE')
+}
+User.prototype.notify = async function (title, text, url) {
+  const subscriptions = await this.getNotificationSubscriptions()
+  Promise.all(subscriptions.map(subscription => subscription.sendMessage(title, text, url)))
+  .catch(e => {
+    console.error(e.message)
+  })
+}
+User.notifyWhere = async function (where, title, text, url) {
+  const subscriptions = await NotificationSubscription.findAll({include: [{model: User, where}]})
+  return Promise.all(subscriptions.map(subscription => subscription.sendMessage(title, text, url)))
+  .catch(e => {
+    console.log(e.message)
+  })
+}
+
+//Notifications
+const NotificationSubscription = sequelize.define('NotificationSubscription', {
+  endpoint: {
+    type: DataTypes.STRING(500),
+    allowNull: false,
+    primaryKey: true
+  },
+  p256dh: {
+    type: DataTypes.STRING(500),
+    allowNull: true
+  },
+  auth: {
+    type: DataTypes.STRING(500),
+    allowNull: true
+  }
+}, {
+  timestamps: false
+})
+NotificationSubscription.prototype.sendMessage = async function (title, text, url) {
+  const sub = {
+    endpoint: this.endpoint,
+    keys: {
+      p256dh: this.p256dh,
+      auth: this.auth
+    }
+  }
+  const payload = JSON.stringify({
+    title, text, url
+  })
+  const vapidDetails = {
+    subject: 'mailto:'+config.ADMIN_EMAIL,
+    privateKey: await Settings.get(Settings.KEYS.VAPID_PRIVATE_KEY),
+    publicKey: await Settings.get(Settings.KEYS.VAPID_PUBLIC_KEY)
+  }
+  return push.sendNotification(sub, payload, {
+    TTL: 60 * 60 * 24 * 7,
+    vapidDetails
+  })
+  .catch(e => {
+    if (e.statusCode === 410) //Gone = expired/unsubbed
+      this.destroy()
+    else throw e
+  })
 }
 
 //Fach
@@ -567,21 +627,34 @@ Settings.KEYS = {
   LOGIN_DESCRIPTION: 5,
   LOGIN_REGISTER_EXPLAINER: 6,
   USER_ACTIVE_DURATION: 7,
-  AUTHORIZED_DOMAIN: 8
+  AUTHORIZED_DOMAIN: 8,
+  VAPID_PUBLIC_KEY: 9,
+  VAPID_PRIVATE_KEY: 10
 }
 Settings.cache = {}
 Settings.get = async function (key) {
   if (!Settings.cache.hasOwnProperty(key))
-    (await Settings.findAll()).forEach(entry => {Settings.cache[entry.id] = !isNaN(parseInt(entry.value)) ? parseInt(entry.value) : entry.value})
+    (await Settings.findAll()).forEach(entry => {Settings.cache[entry.id] = !isNaN(entry.value) && !isNaN(parseInt(entry.value)) ? parseInt(entry.value) : entry.value})
   if (!Settings.cache.hasOwnProperty(key)) throw new Error("Key not in DB")
   return Settings.cache[key]
 }
 Settings.set = async function (key, value) {
   const cappedValue = value && value.length && value.length > 4000 ? value.substring(0, 4000) : value
   const entry = await Settings.upsert({id: key, value: cappedValue})
-  Settings.cache[key] = !isNaN(parseInt(cappedValue)) ? parseInt(cappedValue) : cappedValue
+  Settings.cache[key] = !isNaN(cappedValue) && !isNaN(parseInt(entry.value)) ? parseInt(cappedValue) : cappedValue
   return entry
 }
+
+User.hasMany(NotificationSubscription,
+  {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    foreignKey: {
+      allowNull: false
+    }
+  }
+)
+NotificationSubscription.belongsTo(User)
 
 User.hasMany(Exam,
   {
@@ -743,4 +816,4 @@ AwardVote.belongsTo(AwardCandidate)
 async function init () {
   return await sequelize.sync({force: true})
 }
-module.exports = { init, User, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, CandidateImage, AwardVote, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }
+module.exports = { init, User, NotificationSubscription, ExamType, Exam, SubjectExam, ExamLocation, Examiner, Subject, ResearchReport, Petition, Tag, PetitionComment, Form, Award, AwardCandidate, CandidateImage, AwardVote, Settings, PETITION_STATUS, PETITION_STATUS_STRINGS, sessionStore }

@@ -69,6 +69,13 @@
         </form>
       </section>
       {% endif %}
+      {% if hasNotificationsEnabled %}
+      <section class="card mb">
+        <h3>Benachrichtigungen</h3>
+        <p>Du hast Geräte zum Erhalt von Benachrichtigungen aktiviert.</p>
+        <button class="iconbtn" onclick="removeNotificationSubscriptions"><i class="material-icons">delete</i> alle entfernen</button>
+      </section>
+      {% endif %}
       <section class="card mb">
         <h3>Account löschen</h3>
         <p style="color: red;">
@@ -104,5 +111,15 @@
   }
   makePWVisibilityToggle('pw-new')
   makePWVisibilityToggle('pw-repeat')
+  function removeNotificationSubscriptions () {
+    fetch('/app/api/removePush')
+    navigator.serviceWorker.ready.then(registration => {
+      registration.getSubscription().then(sub => {
+        if (sub) {
+          sub.unsubscribe()
+        }
+      })
+    })
+  }
 </script>
 {% endblock %}

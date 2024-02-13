@@ -1,4 +1,4 @@
-const { Award, AwardCandidate } = requiremain('./db/db')
+const { Award, AwardCandidate, User } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const award = await Award.findByPk(req.params.id)
@@ -11,6 +11,9 @@ module.exports = async (req, res) => {
     } catch (e) {
       return res.status(500).send(e.message)
     }
+  }
+  if (award.status === Award.STATUS.UNPUBLISHED && req.body.status === Award.STATUS.PUBLISHED) {
+    User.notifyWhere({isAwardsUser: true}, 'Neuer PaLMe-Award', award.title, '/app/awards/' + award.id)
   }
   if (req.body.title) award.title = req.body.title
   if (req.body.description) award.description = req.body.description

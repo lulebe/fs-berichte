@@ -92,9 +92,8 @@
 {% endblock %}
 
 {% block js %}
-<script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js" init></script>
 <script>
-  
+  PetiteVue.createApp().mount()
 </script>
 {% block userjs %}{% endblock %}
 {% endblock %}

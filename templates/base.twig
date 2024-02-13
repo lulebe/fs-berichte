@@ -39,6 +39,12 @@
   </head>
 <body>
   {% block body %}{% endblock %}
+  <script src="https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register('/sw.js', {scope: '/'})
+    }
+  </script>
   {% block js %}{% endblock %}
 </body>
 </html>
