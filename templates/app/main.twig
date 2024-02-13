@@ -83,20 +83,23 @@
 
 {% block js %}
 <script>
-  if (document.getElementById('notificationsInfo')) {
+  if (document.getElementById('notificationsInfo') && ('serviceWorker' in navigator)) {
     if ('Notification' in window) {
       if (window.Notification.permission === 'granted') {
-        document.getElementById('notificationsInfo').style.display = 'none'
-        registerPush()
+        navigator.serviceWorker.ready.then(registration => {
+          registration.pushManager.getSubscription().then(sub => {
+            if (!sub) document.getElementById('notificationsInfo').style.display = 'block'
+          })
+        })
+      } else if (window.Notification.permission !== 'denied') {
+        document.getElementById('notificationsInfo').style.display = 'block'
       }
-    } else {
-      document.getElementById('notificationsInfo').style.display = 'none'
     }
   }
   function activateNotifications () {
     window.Notification.requestPermission().then(perm => {
+      document.getElementById('notificationsInfo').style.display = 'none'
       if (perm === 'granted') {
-        document.getElementById('notificationsInfo').style.display = 'none'
         registerPush()
       }
     })
@@ -108,7 +111,6 @@
         userVisibleOnly: true,
         applicationServerKey: "{{vapidPublicKey}}"
       }).then(subscription => {
-        console.log(subscription)
         fetch('/app/api/registerPush', {
           method: 'POST',
           headers: {

@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
     r.subjects = r.SubjectExams.map(se => se.Subject.name).join(', ')
   })
   res.tmplOpts.user = req.user
+  res.tmplOpts.hasNotificationsEnabled = (await req.user.getNotificationSubscriptions()).length > 0
   res.tmplOpts.reports = results
   res.tmplOpts.research = await ResearchReport.findAll({where: {UserId: req.user.id}})
   res.tmplOpts.petitions = await Petition.findAll({where: {UserId: req.user.id}})

@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 
 const config = requiremain('./config')
 
+const { NotificationSubscription } = requiremain('./db/db')
+
 module.exports = async (req, res, next) => {
   if (req.body.changepw) {
     if (req.body.newpw != req.body.repeatpw) return res.status(400).send()
@@ -13,6 +15,9 @@ module.exports = async (req, res, next) => {
     req.user.nickname = req.body.nickname
     req.user.anonymous = !!req.body.anonymous
     await req.user.save()
+  }
+  if (req.body.removeNotificationSubscriptions) {
+    await NotificationSubscription.destroy({where: {UserId: req.user.id}})
   }
   next()
 }
