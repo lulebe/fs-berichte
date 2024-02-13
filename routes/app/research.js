@@ -5,7 +5,7 @@ const { ResearchReport, User, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   const report = await ResearchReport.findByPk(req.params.id, {include: [User]})
-  if (!report) return res.status(404).send()
+  if (!report) return res.redirect('/app/research')
   const researchPublic = !!(await Settings.get(Settings.KEYS.RESEARCH_REPORTS_PUBLIC))
   if ((!researchPublic || !report.isPublished) && report.User.id != req.user.id && !req.user.isModerator) return res.redirect('/app/research')
   const cookies = new Cookies(req, res)

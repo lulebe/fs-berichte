@@ -9,6 +9,7 @@ const { Petition, PetitionComment, PETITION_STATUS, PETITION_STATUS_STRINGS, Tag
 
 module.exports = async (req, res) => {
   const petition = await Petition.findByPk(req.params.id, {include: [Tag, User, {model: PetitionComment, include: [User]}], order: [[PetitionComment, 'createdAt', 'DESC']]})
+  if (!petition) return res.redirect('/app/petitions')
   petition.textHtml = md(petition.text)
   res.tmplOpts.petition = petition
   res.tmplOpts.petition.supporterCount = await petition.countSupporters()

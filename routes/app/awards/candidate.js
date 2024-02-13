@@ -6,7 +6,7 @@ const { Award, AwardCandidate, CandidateImage, AwardVote } = requiremain('./db/d
 
 module.exports = async (req, res) => {
   const candidate = await AwardCandidate.findByPk(req.params.candidateid, {include: [{model: CandidateImage, attributes: ['id', 'type']}]})
-  if (!candidate) return res.status(404).send()
+  if (!candidate) return res.redirect('/app/awards')
   const award = await Award.findByPk(candidate.AwardId, {include: [
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
