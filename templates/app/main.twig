@@ -3,6 +3,13 @@
 {% block title %}Startseite{% endblock %}
 
 {% block content %}
+  {% if notificationAllowedAreas %}
+    <div id="notificationsInfo">
+      <h3>Benachrichtigungen</h3>
+      <p>Du kannst Benachrichtigungen aktivieren, um über <strong>{{notificationAllowedAreas}}</strong> informiert zu bleiben.
+      <button type="button" onclick="activateNotifications()">aktivieren</button>
+    </div>
+  {% endif %}
   <div class="resultsgrid morecols" style="padding: 16px">
     {% if user.isReportsUser %}<a href="/app/newreport"><i class="material-icons">play_arrow</i> Bericht eintragen</a>{% endif %}
     {% if user.isPetitionsUser %}<a href="/app/petitions/new"><i class="material-icons">play_arrow</i> Petition erstellen</a>{% endif %}
@@ -75,4 +82,42 @@
 {% endblock %}
 
 {% block js %}
+<script>
+  if (document.getElementById('notificationsInfo')) {
+    if ('Notification' in window) {
+      if (window.Notification.permission === 'granted') {
+        document.getElementById('notificationsInfo').style.display = 'none'
+        registerPush()
+      }
+    } else {
+      document.getElementById('notificationsInfo').style.display = 'none'
+    }
+  }
+  function activateNotifications () {
+    window.Notification.requestPermission().then(perm => {
+      if (perm === 'granted') {
+        document.getElementById('notificationsInfo').style.display = 'none'
+        registerPush()
+      }
+    })
+  }
+  function registerPush () {
+    if (!('serviceWorker' in navigator)) return
+    navigator.serviceWorker.ready.then(registration => {
+      registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: "{{vapidPublicKey}}"
+      }).then(subscription => {
+        console.log(subscription)
+        fetch('/app/api/registerPush', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(subscription)
+        })
+      })
+    })
+  }
+</script>
 {% endblock %}

@@ -41,6 +41,12 @@ module.exports = async (req, res) => {
 
   const reports = [...exams, ...researchReports].sort(() => 0.5 - Math.random())
   res.tmplOpts.results = [...awards, ...petitions, ...forms, ...reports]
+  const notificationAllowedAreas = []
+  if (req.user.isPetitionsUser) notificationAllowedAreas.push('Petitionen')
+  if (req.user.isFormsUser) notificationAllowedAreas.push('Umfragen')
+  if (req.user.isAwardsUser) notificationAllowedAreas.push('PaLMe')
+  res.tmplOpts.notificationAllowedAreas = notificationAllowedAreas.slice(0, -1).join(', ') + (notificationAllowedAreas.length > 1 ? ' und ' : '') + notificationAllowedAreas.slice(-1)
+  res.tmplOpts.vapidPublicKey = await Settings.get(Settings.KEYS.VAPID_PUBLIC_KEY)
   tmpl.render('app/main.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
 

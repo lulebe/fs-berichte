@@ -23,7 +23,7 @@ app.use(require('body-parser').urlencoded({extended: true}))
 app.use(require('body-parser').json())
 
 app.use('/', require('./routes'))
-app.use('/assets', require('express').static('./assets'))
+app.use('/assets', require('express').static('./assets', {maxAge: 24*60*60*1000}))
 
 
 app.listen(config.PORT, () => {

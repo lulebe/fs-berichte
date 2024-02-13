@@ -33,7 +33,8 @@
     "nodemailer": "^6.9.1",
     "pdfkit": "^0.13.0",
     "sequelize": "^6.28.0",
-    "twing": "^5.1.2"
+    "twing": "^5.1.2",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "brunch": "^4.0.1",
