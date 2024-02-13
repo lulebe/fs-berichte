@@ -102,7 +102,7 @@
         <div class="inputlabel">
           <label>Passwort</label>
           <div class="pwinput" id="pw-reg">
-            <input type="password" name="password" placeholder="Passwort">
+            <input type="password" name="password" placeholder="Passwort" oninput="checkPWrepeat()" required>
             <i class="material-icons on">visibility</i>
             <i class="material-icons off">visibility_off</i>
           </div>
@@ -110,7 +110,7 @@
         <div class="inputlabel">
           <label>Passwort wiederholen</label>
           <div class="pwinput" id="pw-reg-repeat">
-            <input type="password" name="repeatPassword" placeholder="Passwort">
+            <input type="password" name="repeatPassword" placeholder="Passwort" oninput="checkPWrepeat()" required>
             <i class="material-icons on">visibility</i>
             <i class="material-icons off">visibility_off</i>
           </div>
@@ -138,6 +138,14 @@
 
 {% block js %}
 <script type="text/javascript">
+  function checkPWrepeat() {
+    const input = document.getElementsByName('password')[0]
+    const repeatInput = document.getElementsByName('repeatPassword')[0]
+    if (input.value != repeatInput.value) {
+      repeatInput.setCustomValidity('Passwörter stimmen nicht überein')
+    } else
+      repeatInput.setCustomValidity('')
+  }
   function makePWVisibilityToggle (container) {
     const elContainer = document.getElementById(container)
     const elOn = elContainer.querySelector('i.on')
