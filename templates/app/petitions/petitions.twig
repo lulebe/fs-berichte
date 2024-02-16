@@ -19,7 +19,7 @@
           <label for="cbtag{{tag.id}}">{{tag.name}}</label>
         {% endfor %}<br><br>
         <button type="submit" class="iconbtn important"><i class="material-icons">search</i> suchen</button>
-        {% if selectedTags|length > 0 %}<a href="petitions">Filter reset</a>{% endif %}
+        {% if selectedTags|length > 0 %}<a href="petitions" class="btn secondary">Filter reset</a>{% endif %}
         {% if user.isPetitionsAdmin %}
           <br><br><a href="/app/admin/petitions">Tags verwalten</a>
         {% endif %}
