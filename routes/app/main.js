@@ -21,12 +21,12 @@ module.exports = async (req, res) => {
     where: {[Op.and]: [{ status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
-  await Promise.all(petitions.map(p => {
-    return p.data.countSupporters().then(count => {
-      p.data.supporterCount = count
-      p.data.percentage = count / p.data.goal * 100
-      p.data.isActive =p.data.status === PETITION_STATUS.ACTIVE && p.data.beforeDeadline
-    })
+  await Promise.all(petitions.map(async (p) => {
+    p.data.isSupporting = await petition.hasSupporter(req.user)
+    const count = await p.data.countSupporters()
+    p.data.supporterCount = count
+    p.data.percentage = count / p.data.goal * 100
+    p.data.isActive =p.data.status === PETITION_STATUS.ACTIVE && p.data.beforeDeadline
   }))
 
   //awards

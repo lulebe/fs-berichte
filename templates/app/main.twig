@@ -16,7 +16,7 @@
   </div>
   <div class="resultsgrid home morecols" style="padding: 16px">
     {% for r in results %}
-      <a href="/app/{{r.type}}/{{r.data.id}}"><div class="card" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.98) 20%, rgba(255,255,255,0.75) 100%), url('/assets/home-bgs/{{r.type}}.jpg')">
+      <a href="/app/{{r.type}}/{{r.data.id}}"><div class="card {% if r.type == 'petitions' and r.data.isSupporting %}voted{% endif %}" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.98) 20%, rgba(255,255,255,0.75) 100%), url('/assets/home-bgs/{{r.type}}.jpg')">
       {% if r.type == 'exam' %}
         <h3>{{r.data.ExamType.name}}</h3>
         <small>{{r.data.dateReadable}}</small><br>
@@ -62,8 +62,8 @@
           <div class="progressText">{{r.data.statusReadable}}</div>
         </div>
         {% endif %}
-        <small><i class="material-icons primary">edit_note</i> {{r.data.dateReadable}} - {{r.data.author}}</small><br>
-        <i class="material-icons accent">send</i> {{r.data.recipient}}
+        <small><i class="material-icons primary">edit_note</i> {{r.data.dateReadable}} - von {{r.data.author}}</small><br>
+        <i class="material-icons accent">send</i> an {{r.data.recipient}}
         <p class="usertext">{{r.data.shortText | nl2br }}</p>
         {% for tag in r.data.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
       {% elseif r.type == 'awards' %}

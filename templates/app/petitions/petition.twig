@@ -25,7 +25,7 @@
         <div class="progressStep"><i class="material-icons">groups</i></div>
         <div class="progressText">{{petition.statusReadable}}</div>
       </div>
-      <i class="material-icons primary">edit_note</i> von {{petition.dateReadable}} - {{petition.author}}<br>
+      <i class="material-icons primary">edit_note</i> {{petition.dateReadable}} - von {{petition.author}}<br>
       <i class="material-icons accent">send</i> an {{petition.recipient}}<br>
       <div class="card mtop16 mb">{{petition.shortText | nl2br }}</div>
       {% for tag in petition.Tags %}

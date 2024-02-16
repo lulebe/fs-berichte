@@ -40,7 +40,7 @@
   {% if results %}
   <div class="resultsgrid">
     {% for result in results %}
-      <a href="petitions/{{result.id}}" class="card selectable">
+      <a href="petitions/{{result.id}}" class="card selectable {% if result.isSupporting %}voted{% endif %}">
         <h3>{{result.title}}</h3>
         {% if result.isActive %}
           <div class="supportersdisplay">
@@ -57,8 +57,8 @@
           <div class="progressText">{{result.statusReadable}}</div>
         </div>
         {% endif %}
-        <small><i class="material-icons primary">edit_note</i> {{result.dateReadable}} - {{result.author}}</small><br>
-        <i class="material-icons accent">send</i> {{result.recipient}}
+        <small><i class="material-icons primary">edit_note</i> {{result.dateReadable}} - von {{result.author}}</small><br>
+        <i class="material-icons accent">send</i> an {{result.recipient}}
         <p class="usertext">{{result.shortText | nl2br }}</p>
         {% for tag in result.Tags %} <span class="small tag">{{tag.name}}</span> {% endfor %}
       </a>
