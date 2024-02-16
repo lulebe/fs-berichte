@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   }
   const results = await Petition.findAll({where, limit: 50, offset: 0, order: [['createdAt', 'DESC']], include: [tagInclude]})
   await Promise.all(results.map(async (p) => {
-    p.isSupporting = await petition.hasSupporter(req.user)
+    p.isSupporting = await p.hasSupporter(req.user)
     const count = await p.countSupporters()
     p.supporterCount = count
     p.percentage = count / p.goal * 100
