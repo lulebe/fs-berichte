@@ -10,7 +10,7 @@
       <h3>{{setting.readableKey}}</h3>
       <form method="post">
         <input type="hidden" name="settingskey" value="{{setting.id}}">
-        <textarea name="settingsvalue" class="short">{{setting.value}}</textarea>
+        <textarea name="settingsvalue" class="short" style="font-family: monospace">{{setting.value}}</textarea>
         <br>
         <button type="submit">speichern</button>
       </form>
