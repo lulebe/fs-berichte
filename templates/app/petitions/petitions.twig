@@ -12,13 +12,13 @@
   </div>
   <div class="grid-col right">
     <div class="card mb">
-      <h2>Filtern</h2>
+      <h2>Filter</h2>
       <form method="get">
         {% for tag in tags %}
           <input type="checkbox" class="inp-cb-tag lbl" name="tags" value="{{tag.id}}" id="cbtag{{tag.id}}" {% if tag.id in selectedTags %}checked{% endif %}>
           <label for="cbtag{{tag.id}}">{{tag.name}}</label>
         {% endfor %}<br><br>
-        <button type="submit" class="iconbtn important"><i class="material-icons">search</i> suchen</button>
+        <button type="submit" class="iconbtn important"><i class="material-icons">filter_list</i> filtern</button>
         {% if selectedTags|length > 0 %}<a href="petitions" class="btn secondary">Filter reset</a>{% endif %}
         {% if user.isPetitionsAdmin %}
           <br><br><a href="/app/admin/petitions">Tags verwalten</a>
