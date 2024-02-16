@@ -1,0 +1,20 @@
+{% extends "app/appbase.twig" %}
+
+{% block title %}Admin Konfiguration{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <h1 class="mtop0">Konfiguration</h1>
+    {% for setting in settings %}
+    <div class="card mb">
+      <h3>{{setting.readableKey}}</h3>
+      <form method="post">
+        <input type="hidden" name="settingskey" value="{{setting.id}}">
+        <textarea name="settingsvalue" class="short">{{setting.value}}</textarea>
+        <br>
+        <button type="submit">speichern</button>
+      </form>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

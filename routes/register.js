@@ -63,9 +63,9 @@ function sendActivationEmail (user, goto) {
   )
 }
 
-function sendAdminEmail (user, reason) {
+async function sendAdminEmail (user, reason) {
   return mailer(
-    config.ADMIN_EMAIL,
+    await Settings.get(Settings.KEYS.ADMIN_EMAIL),
     'Lehre Freischaltungsanfrage',
     'Der Nutzer ' + user.email + ' bittet um Freischaltung mit folgender Begründung:\n\n' + reason + '\n\n Er kann unter ' + config.ROOT_URL + '/app/admin/users freigeschaltet werden.',
     'Der Nutzer <pre>' + user.email + '</pre> bittet um Freischaltung mit folgender Begründung:<br><br>' + reason + '<br><br> Er kann unter <a href="' + config.ROOT_URL + '/app/admin/users">' + config.ROOT_URL + '/app/admin/users</a> freigeschaltet werden.'

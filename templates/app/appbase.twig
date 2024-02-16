@@ -31,7 +31,7 @@
         {% endif %}
         {% if user.isAnyAdmin %}
           <li class="header">Admin</li>
-          {% if user.isModerator %}<a href="/app/admin/users"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/user' %}selected{% endif %}"><span class="sidebar-text">Nutzer</span></li></a>{% endif %}
+          {% if user.isModerator %}<a href="/app/admin/users"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/user' %}selected{% endif %}"><span class="sidebar-text">Site &amp; User</span></li></a>{% endif %}
           {% if user.isModerator %}<a href="/app/admin/examtypes"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/exam' %}selected{% endif %}"><span class="sidebar-text">Berichte</span></li></a>{% endif %}
           {% if user.isPetitionsAdmin %}<a href="/app/admin/petitions"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/petitions' %}selected{% endif %}"><span class="sidebar-text">Petitionen</span></li></a>{% endif %}
           {% if user.isFormsAdmin %}<a href="/app/admin/forms"><li class="noimg {% if sidebarSelectedUrl starts with '/admin/forms' %}selected{% endif %}"><span class="sidebar-text">Umfragen</span></li></a>{% endif %}

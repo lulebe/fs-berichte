@@ -203,7 +203,7 @@ NotificationSubscription.prototype.sendMessage = async function (title, text, ur
     title, text, url
   })
   const vapidDetails = {
-    subject: 'mailto:'+config.ADMIN_EMAIL,
+    subject: 'mailto:'+Settings.get(Settings.KEYS.ADMIN_EMAIL),
     privateKey: await Settings.get(Settings.KEYS.VAPID_PRIVATE_KEY),
     publicKey: await Settings.get(Settings.KEYS.VAPID_PUBLIC_KEY)
   }
@@ -617,6 +617,12 @@ const Settings = sequelize.define('Settings', {
   value: {
     type: DataTypes.STRING(4000),
     allowNull: false
+  },
+  readableKey: {
+    type: DataTypes.VIRTUAL,
+    get () {
+      return Settings.READABLE_KEYS[this.id]
+    }
   }
 }, {timestamps: false})
 Settings.KEYS = {
@@ -629,7 +635,21 @@ Settings.KEYS = {
   USER_ACTIVE_DURATION: 7,
   AUTHORIZED_DOMAIN: 8,
   VAPID_PUBLIC_KEY: 9,
-  VAPID_PRIVATE_KEY: 10
+  VAPID_PRIVATE_KEY: 10,
+  ADMIN_EMAIL: 11
+}
+Settings.READABLE_KEYS = {
+  [Settings.KEYS.RESEARCH_REPORTS_PUBLIC]: "Promotionsberichte einsehbar",
+  [Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION]: "Petitionen benötigen Admin-Freigabe",
+  [Settings.KEYS.PETITION_HOW_TO]: "Anleitung für die Erstellung von Petitionen",
+  [Settings.KEYS.AWARD_DESCRIPTION]: "Erklärungstext bei PaLMe",
+  [Settings.KEYS.LOGIN_DESCRIPTION]: "Beschreibung der Website auf der Login-Seite",
+  [Settings.KEYS.LOGIN_REGISTER_EXPLAINER]: "Text, der im Registrierungsformular angezeigt wird",
+  [Settings.KEYS.USER_ACTIVE_DURATION]: "Dauer bis Nutzer erneut aktiviert müssen (Jahre)",
+  [Settings.KEYS.AUTHORIZED_DOMAIN]: "erlaubte E-Mail Domain",
+  [Settings.KEYS.VAPID_PUBLIC_KEY]: "VAPID public key (für Notifications)",
+  [Settings.KEYS.VAPID_PRIVATE_KEY]: "VAPID private key (für Notifications)",
+  [Settings.KEYS.ADMIN_EMAIL]: "E-Mail-Adresse von Admins"
 }
 Settings.cache = {}
 Settings.get = async function (key) {

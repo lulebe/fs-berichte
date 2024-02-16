@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     return res.redirect('/app/main')
   res.tmplOpts.isLoggedIn = false
   res.tmplOpts.hasError = !!req.query.status
-  res.tmplOpts.errorMsg = makeMsg(parseInt(req.query.status))
+  res.tmplOpts.errorMsg = await makeMsg(parseInt(req.query.status))
   res.tmplOpts.loginGoto = req.query.goto ? '?goto=' + req.query.goto : ''
   res.tmplOpts.loginDescription = await Settings.get(Settings.KEYS.LOGIN_DESCRIPTION)
   res.tmplOpts.loginRegisterExplainer = md(await Settings.get(Settings.KEYS.LOGIN_REGISTER_EXPLAINER))
@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   tmpl.render('index.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
 
-function makeMsg (code) {
+async function makeMsg (code) {
   switch (code) {
     case 1:
       return "Bitte die benötigten Felder ausfüllen."
@@ -39,7 +39,7 @@ function makeMsg (code) {
     case 10:
       return "Dein Account ist abgelaufen. Du hast eine E-Mail mit einem Link zur Verlängerung erhalten."
     case 11:
-      return `Dein Account ist abgelaufen. Da du eine externe Mailadresse hast, können dich nur unsere Admins (${config.ADMIN_EMAIL}) verlängern.`
+      return `Dein Account ist abgelaufen. Da du eine externe Mailadresse hast, können dich nur unsere Admins (${await Settings.get(Settings.KEYS.ADMIN_EMAIL)}) verlängern.`
     case 12:
       return `Die Admins haben deinen Account noch nicht aktiviert.`
   }

@@ -1,6 +1,6 @@
 {% extends "app/appbase.twig" %}
 
-{% block title %}Admin Benutzer{% endblock %}
+{% block title %}Admin{% endblock %}
 
 {% block content %}
   <div class="wrapper-2-col">
@@ -85,6 +85,11 @@
             <button type="submit" class="iconbtn"><i class="material-icons">save</i> speichern</button>
           </form>
         {% endverbatim %}
+      </div>
+      <div class="card">
+        <h1>Konfiguration</h1>
+        Interne Konfiguration der Website. Bitte nur verändern, wenn du weißt, was du tust ;)<br>
+        <a href="/app/admin/settings" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>
       </div>
       {% endif %}
     </section>
