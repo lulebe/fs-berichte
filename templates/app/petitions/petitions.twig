@@ -12,7 +12,7 @@
   </div>
   <div class="grid-col right">
     <div class="card mb">
-      <h2>Suche</h2>
+      <h2>Filtern</h2>
       <form method="get">
         {% for tag in tags %}
           <input type="checkbox" class="inp-cb-tag lbl" name="tags" value="{{tag.id}}" id="cbtag{{tag.id}}" {% if tag.id in selectedTags %}checked{% endif %}>
