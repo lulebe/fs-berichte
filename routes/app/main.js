@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
   await Promise.all(petitions.map(async (p) => {
-    p.data.isSupporting = await petition.hasSupporter(req.user)
+    p.data.isSupporting = await p.data.hasSupporter(req.user)
     const count = await p.data.countSupporters()
     p.data.supporterCount = count
     p.data.percentage = count / p.data.goal * 100
