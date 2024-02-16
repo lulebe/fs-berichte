@@ -727,6 +727,17 @@ ul.selectionlist li {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   background-color: #f2f7fc;
 }
+.resultsgrid .card.voted {
+  border-right: none;
+  border-bottom: 25px solid #2e9f43;
+}
+.resultsgrid .card.voted::after {
+  bottom: -22px;
+  left: 50%;
+  margin-top: 0;
+  font-size: 16px;
+  margin-left: -16px;
+}
 
 .no-content {
   text-align: center;

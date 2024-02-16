@@ -118,6 +118,17 @@
       box-shadow: $shadow-m;
       background-color: lighten($primary-color, 56%);
     }
+    &.voted {
+      border-right: none;
+      border-bottom: 25px solid $secondary-color;
+      &::after {
+        bottom: -22px;
+        left: 50%;
+        margin-top: 0;
+        font-size: 16px;
+        margin-left: -16px;
+      }
+    }
   }
 }
 
