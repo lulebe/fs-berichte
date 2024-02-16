@@ -122,11 +122,11 @@
       border-right: none;
       border-bottom: 25px solid $secondary-color;
       &::after {
-        bottom: -22px;
+        top: 100%;
         left: 50%;
-        margin-top: 0;
+        margin-top: 5px;
+        margin-left: -9px;
         font-size: 16px;
-        margin-left: -16px;
       }
     }
   }
