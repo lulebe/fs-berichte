@@ -41,7 +41,7 @@
   {% if results %}
   <div class="resultsgrid">
     {% for result in results %}
-      <a href="petitions/{{result.id}}" class="card selectable {% if result.isSupporting %}voted{% endif %}">
+      <a href="petitions/{{result.id}}" class="card {% if result.isSupporting %}voted{% endif %}">
         <h3>{{result.title}}</h3>
         {% if result.isActive %}
           <div class="supportersdisplay">
