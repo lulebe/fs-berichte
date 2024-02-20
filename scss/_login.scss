@@ -1,35 +1,36 @@
 #splash {
-    color: white;
-    font-size: 3rem;
-    text-align: center;
-    line-height: 150px;
-    > p {
-      line-height: initial;
-      font-size: initial;
-      padding-bottom: 35px;
-      margin: 0;
-    }
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+  line-height: 150px;
+  padding: 0 16px;
+  > p {
+    line-height: initial;
+    font-size: initial;
+    padding-bottom: 35px;
+    margin: 0;
   }
-  @media (max-width: 440px) {
-    #splash {
-      font-size: 2rem;
-      line-height: 80px;
-    }
+}
+@media (max-width: 440px) {
+  #splash {
+    font-size: 2rem;
+    line-height: 80px;
   }
+}
   
 
-  .pwinput {
-    position: relative;
-    i {
-      position: absolute;
-      top: 1px;
-      right: 1px;
-      cursor: pointer;
-      padding: 5px;
-      border-radius: 50px;
-      color: grey;
-      &:hover {
-        background: lightgrey;
-      }
+.pwinput {
+  position: relative;
+  i {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50px;
+    color: grey;
+    &:hover {
+      background: lightgrey;
     }
   }
+}

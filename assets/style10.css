@@ -459,6 +459,7 @@ nav#subtabs .tab:hover {
   font-size: 3rem;
   text-align: center;
   line-height: 150px;
+  padding: 0 16px;
 }
 #splash > p {
   line-height: initial;
