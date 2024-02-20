@@ -192,6 +192,11 @@ const NotificationSubscription = sequelize.define('NotificationSubscription', {
   timestamps: false
 })
 NotificationSubscription.prototype.sendMessage = async function (title, text, url) {
+  //delete Subscription if user not active anymore
+  if (!(await (await this.getUser()).stillActive())) {
+    this.destroy()
+    return
+  }
   const sub = {
     endpoint: this.endpoint,
     keys: {

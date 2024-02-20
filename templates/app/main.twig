@@ -89,6 +89,7 @@
         navigator.serviceWorker.ready.then(registration => {
           registration.pushManager.getSubscription().then(sub => {
             if (!sub) document.getElementById('notificationsInfo').style.display = 'block'
+            else registerPush(sub)
           })
         })
       } else if (window.Notification.permission !== 'denied') {
@@ -104,21 +105,21 @@
       }
     })
   }
-  function registerPush () {
+  async function registerPush (subscription) {
     if (!('serviceWorker' in navigator)) return
-    navigator.serviceWorker.ready.then(registration => {
-      registration.pushManager.subscribe({
+    if (!subscription) {
+      const registration = await navigator.serviceWorker.ready
+      subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: "{{vapidPublicKey}}"
-      }).then(subscription => {
-        fetch('/app/api/registerPush', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(subscription)
-        })
       })
+    }
+    fetch('/app/api/registerPush', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(subscription)
     })
   }
 </script>
