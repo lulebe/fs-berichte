@@ -21,6 +21,5 @@ module.exports = async (req, res) => {
   const oneYear = new Date()
   oneYear.setFullYear(oneYear.getFullYear() + 1)
   res.tmplOpts.canExtendActivation = await user.activeUntil() < oneYear
-  res.tmplOpts.activeAdminTab = "users"
   tmpl.render('app/admin/user.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

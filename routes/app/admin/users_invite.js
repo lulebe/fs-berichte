@@ -16,6 +16,5 @@ module.exports = async (req, res) => {
   if (req.query.duration)
     res.tmplOpts.inviteLink = await Settings.get(Settings.KEYS.ROOT_URL) + '/invite?t=' + jwt.sign(data, await Settings.get(Settings.KEYS.JWT_SECRET), { expiresIn: '180 days' })
   res.tmplOpts.query = req.query
-  res.tmplOpts.activeAdminTab = filename
   tmpl.render('app/admin/' + filename + '.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

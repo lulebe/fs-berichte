@@ -19,6 +19,5 @@ module.exports = async (req, res) => {
   res.tmplOpts.searchQuery = req.query.searchUser
   res.tmplOpts.onlyExternalShown = req.query.onlyExternal
 
-  res.tmplOpts.activeAdminTab = filename
   tmpl.render('app/admin/' + filename + '.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }
