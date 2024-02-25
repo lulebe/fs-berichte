@@ -30,7 +30,7 @@
           </div><br>
           <div class="inputlabel">
             <label>Allgemeines</label>
-            <textarea name="comment" class="usertext" placeholder="Atmosphäre, allgemeine Tipps, alles drumherum..."></textarea>
+            <textarea name="comment" id="reportGeneralInput">Atmosphäre, allgemeine Tipps, alles drumherum...</textarea>
           </div>
         </div>
         {% for subjectIndex in 1..examType.subjectCount %}
@@ -53,7 +53,7 @@
               <button type="button" class="iconbtn small" onclick="pickExaminer({{subjectIndex}})"><i class="material-icons">edit</i> Prüfer wählen</button>
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" class="usertext" placeholder="Es begab sich eines schönen Sommertages, ..." required minlength="30"></textarea>
+            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
           </div>
         {% endfor %}
         <button type="submit" class="fullpagesubmit">eintragen</button>
@@ -148,6 +148,39 @@
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 <script src="/assets/pickfromdbmodals.js"></script>
 <script type="text/javascript">
+  const easyMDE0 = new EasyMDE({
+    element: document.getElementById('reportGeneralInput'),
+    spellChecker: false,
+    toolbar: [
+      "bold", "italic", "heading", "|",
+      "quote", "unordered-list", "ordered-list", "|",
+      "preview", "side-by-side", "fullscreen", "|",
+      "undo", "redo", "|",
+      "guide"
+      ],
+    autosave: {
+      enabled: false,
+      uniqueId: "reportInput0"
+    }
+  })
+  {% for subjectIndex in 1..examType.subjectCount %}
+  const easyMDE{{subjectIndex}} = new EasyMDE({
+    element: document.getElementById('reportInput{{subjectIndex}}'),
+    spellChecker: false,
+    toolbar: [
+      "bold", "italic", "heading", "|",
+      "quote", "unordered-list", "ordered-list", "|",
+      "preview", "side-by-side", "fullscreen", "|",
+      "undo", "redo", "|",
+      "guide"
+      ],
+    autosave: {
+      enabled: false,
+      uniqueId: "reportInput{{subjectIndex}}"
+    }
+  })
+  {% endfor %}
+
   atData = {
     examiner: new Fuse({{examiners | json_encode() | raw}}, {keys: ['name']}),
     subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),

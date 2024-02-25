@@ -12,12 +12,12 @@
       {% if user.id == exam.UserId or user.isModerator %}<form method="post" action="{{exam.id}}/delete" onsubmit="return confirm('Diesen Bericht wirklich löschen?')" style="display: inline-block"><button type="submit" class="btn iconbtn important"><i class="material-icons">delete</i> löschen</button></form>{% endif %}
       <h4>{{exam.ExamLocation.name}}</h4>
       <h4>Note: {{exam.grade}}</h4>
-      <p class="usertext">{{exam.comment | nl2br}}</p>
+      <p class="usertext">{{exam.commentRendered | raw}}</p>
       {% for report in exam.SubjectExams %}
         <div class="card mb" >
           <h3>{{report.Subject.name}}</h3>
           <h5>{{report.Examiner.name}}</h5>
-          <p class="usertext">{{report.report | nl2br}}</p>
+          <p class="usertext">{{report.reportRendered | raw}}</p>
         </div>
       {% endfor %}
     </section>
