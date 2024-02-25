@@ -53,21 +53,23 @@ module.exports = async (req, res) => {
   }
 }
 
-function sendActivationEmail (user, goto) {
-  const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '7 days' })
+async function sendActivationEmail (user, goto) {
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
+  const token = jwt.sign({userId: user.id}, await Settings.get(Settings.KEYS.JWT_SECRET), { expiresIn: '7 days' })
   return mailer(
     user.email,
     'Aktivierungslink',
-    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token+goto,
-    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token+goto + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
+    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:\n\n' + ROOT_URL + '/activate?token='+token+goto,
+    'Dein neuer FSmed Lehre Account kann hier aktiviert werden:<br><a href="' + ROOT_URL + '/activate?token='+token+goto + '">' + ROOT_URL + '/activate?token='+token + '</a>'
   )
 }
 
 async function sendAdminEmail (user, reason) {
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
   return mailer(
     await Settings.get(Settings.KEYS.ADMIN_EMAIL),
     'Lehre Freischaltungsanfrage',
-    'Der Nutzer ' + user.email + ' bittet um Freischaltung mit folgender Begründung:\n\n' + reason + '\n\n Er kann unter ' + config.ROOT_URL + '/app/admin/users freigeschaltet werden.',
-    'Der Nutzer <pre>' + user.email + '</pre> bittet um Freischaltung mit folgender Begründung:<br><br>' + reason + '<br><br> Er kann unter <a href="' + config.ROOT_URL + '/app/admin/users">' + config.ROOT_URL + '/app/admin/users</a> freigeschaltet werden.'
+    'Der Nutzer ' + user.email + ' bittet um Freischaltung mit folgender Begründung:\n\n' + reason + '\n\n Er kann unter ' + ROOT_URL + '/app/admin/users freigeschaltet werden.',
+    'Der Nutzer <pre>' + user.email + '</pre> bittet um Freischaltung mit folgender Begründung:<br><br>' + reason + '<br><br> Er kann unter <a href="' + ROOT_URL + '/app/admin/users">' + ROOT_URL + '/app/admin/users</a> freigeschaltet werden.'
   )
 }

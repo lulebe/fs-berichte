@@ -2,11 +2,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const config = require('../config')
-const { User } = requiremain('./db/db')
+const { User, Settings } = requiremain('./db/db')
 const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
-  const tokenData = jwt.verify(req.query.t, config.JWT_SECRET)
+  const tokenData = jwt.verify(req.query.t, await Settings.get(Settings.KEYS.JWT_SECRET))
   
   const extendedUntil = new Date()
   extendedUntil.setFullYear(extendedUntil.getFullYear() + parseInt(tokenData.d))
@@ -26,12 +26,13 @@ module.exports = async (req, res) => {
   res.redirect('/?status=6')
 }
 
-function sendActivationEmail (user) {
-  const token = jwt.sign({userId: user.id}, config.JWT_SECRET, { expiresIn: '180 days' })
+async function sendActivationEmail (user) {
+  const ROOT_URL = Settings.get(Settings.KEYS.ROOT_URL)
+  const token = jwt.sign({userId: user.id}, await Settings.get(Settings.KEYS.JWT_SECRET), { expiresIn: '180 days' })
   return mailer(
     user.email,
     'Aktivierungslink',
-    'Ihr neuer FSmed Lehre Account kann hier aktiviert werden:\n\n' + config.ROOT_URL + '/activate?token='+token,
-    'Ihr neuer FSmed Lehre Account kann hier aktiviert werden:<br><a href="' + config.ROOT_URL + '/activate?token='+token + '">' + config.ROOT_URL + '/activate?token='+token + '</a>'
+    'Ihr neuer FSmed Lehre Account kann hier aktiviert werden:\n\n' + ROOT_URL + '/activate?token='+token,
+    'Ihr neuer FSmed Lehre Account kann hier aktiviert werden:<br><a href="' + ROOT_URL + '/activate?token='+token + '">' + ROOT_URL + '/activate?token='+token + '</a>'
   )
 }

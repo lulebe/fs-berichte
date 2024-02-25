@@ -1,14 +1,12 @@
 const verifyJWT = require('util').promisify(require('jsonwebtoken').verify)
 
-const { User } = requiremain('./db/db')
-const mailer = requiremain('./email')
-const config = requiremain('./config')
+const { User, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.query.token) return res.status(400).send()
   let tokenData = null
   try {
-    tokenData = await verifyJWT(req.query.token, config.JWT_SECRET)
+    tokenData = await verifyJWT(req.query.token, await Settings.get(Settings.KEYS.JWT_SECRET))
   } catch (err) {
     return res.status(400).send()
   }

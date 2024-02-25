@@ -641,7 +641,14 @@ Settings.KEYS = {
   AUTHORIZED_DOMAIN: 8,
   VAPID_PUBLIC_KEY: 9,
   VAPID_PRIVATE_KEY: 10,
-  ADMIN_EMAIL: 11
+  ADMIN_EMAIL: 11,
+  MAIL_HOST: 12,
+  MAIL_USER: 13,
+  MAIL_PASSWORD: 14,
+  MAIL_SENDER: 15,
+  ROOT_URL: 16,
+  COOKIE_SECRET: 17,
+  JWT_SECRET: 18
 }
 Settings.READABLE_KEYS = {
   [Settings.KEYS.RESEARCH_REPORTS_PUBLIC]: "Promotionsberichte einsehbar",
@@ -654,7 +661,14 @@ Settings.READABLE_KEYS = {
   [Settings.KEYS.AUTHORIZED_DOMAIN]: "erlaubte E-Mail Domain",
   [Settings.KEYS.VAPID_PUBLIC_KEY]: "VAPID public key (für Notifications)",
   [Settings.KEYS.VAPID_PRIVATE_KEY]: "VAPID private key (für Notifications)",
-  [Settings.KEYS.ADMIN_EMAIL]: "E-Mail-Adresse von Admins"
+  [Settings.KEYS.ADMIN_EMAIL]: "E-Mail-Adresse von Admins",
+  [Settings.KEYS.MAIL_HOST]: "E-Mail-Host",
+  [Settings.KEYS.MAIL_USER]: "E-Mail-User",
+  [Settings.KEYS.MAIL_PASSWORD]: "E-Mail-Passwort",
+  [Settings.KEYS.MAIL_SENDER]: "E-Mail-Absender",
+  [Settings.KEYS.ROOT_URL]: "Root URL",
+  [Settings.KEYS.COOKIE_SECRET]: "Cookie Secret (restart required)",
+  [Settings.KEYS.JWT_SECRET]: "JWT Secret"
 }
 Settings.cache = {}
 Settings.get = async function (key) {

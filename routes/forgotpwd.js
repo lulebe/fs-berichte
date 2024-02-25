@@ -1,10 +1,7 @@
-const bcrypt = require('bcryptjs')
-const generator = require('generate-password')
 const signJWT = require('util').promisify(require('jsonwebtoken').sign)
 
 const mailer = requiremain('./email')
-const config = requiremain('./config')
-const { User } = requiremain('./db/db')
+const { User, Settings } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
   if (!req.body.email)
@@ -17,8 +14,9 @@ module.exports = async (req, res) => {
 }
 
 async function sendEmail (user) {
-  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '7 days'})
-  const url = `${config.ROOT_URL}/recover?token=${jwt}`
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
+  const jwt = await signJWT({id: user.id, password: user.password}, await Settings.get(Settings.KEYS.JWT_SECRET), {expiresIn: '7 days'})
+  const url = `${ROOT_URL}/recover?token=${jwt}`
   return mailer(
     user.email,
     'Passwort zurückgesetzt',

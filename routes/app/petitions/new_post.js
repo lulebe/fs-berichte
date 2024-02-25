@@ -15,10 +15,11 @@ module.exports = async (req, res) => {
 }
 
 async function notifyAdmin(petition) {
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
   return mailer(
     await Settings.get(Settings.KEYS.ADMIN_EMAIL),
     'Neue Petition',
-    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:\n${config.ROOT_URL}/app/petitions/${petition.id}.`,
-    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:<br><a href="${config.ROOT_URL}/app/petitions/${petition.id}">${config.ROOT_URL}/app/petitions/${petition.id}</a>.`
+    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:\n${ROOT_URL}/app/petitions/${petition.id}.`,
+    `Die Petition ${petition.title} wurde erstellt. Überprüfe sie und schalte sie frei unter:<br><a href="${ROOT_URL}/app/petitions/${petition.id}">${ROOT_URL}/app/petitions/${petition.id}</a>.`
   )
 }

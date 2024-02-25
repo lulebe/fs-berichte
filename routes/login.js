@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs')
 const signJWT = require('util').promisify(require('jsonwebtoken').sign)
 
-const { User } = requiremain('./db/db')
+const { User, Settings } = requiremain('./db/db')
 const mailer = requiremain('./email')
-const config = requiremain('./config')
 
 module.exports = async (req, res) => {
   if (!req.body.email)
@@ -33,8 +32,9 @@ module.exports = async (req, res) => {
 }
 
 async function sendReactivationEmail (user) {
-  const jwt = await signJWT({id: user.id, password: user.password}, config.JWT_SECRET, {expiresIn: '7 days'})
-  const url = `${config.ROOT_URL}/recover?token=${jwt}`
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
+  const jwt = await signJWT({id: user.id, password: user.password}, await Settings.get(Settings.KEYS.JWT_SECRET), {expiresIn: '7 days'})
+  const url = `${ROOT_URL}/recover?token=${jwt}`
   return mailer(
     user.email,
     'Account reaktivieren',
