@@ -17,7 +17,7 @@
         <div class="card mb" >
           <h3>{{report.Subject.name}}</h3>
           <h5>{{report.Examiner.name}}</h5>
-          <p class="usertext">{{report.reportRendered | raw}}</p>
+          <div class="usertext">{{report.reportRendered | raw}}</div>
         </div>
       {% endfor %}
     </section>
