@@ -31,7 +31,7 @@
       {% if loop.index == pageIndex %}
         <strong>{{p}}</strong>
       {% else %}
-        <a href="?page={{p}}">{{p}}</a>
+        <a href="?page={{p}}{% if newestFirst %}&newestFirst=on{% endif %}">{{p}}</a>
       {% endif %}
     {% endfor %}
   {% endif %}
