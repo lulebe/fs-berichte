@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
     doc.font('Helvetica')
   }
   doc.moveDown()
+  doc.fontSize(11).text("")
   doc.moveDown()
   exam.SubjectExams.forEach((se, i) => {
     doc.fontSize(18).text(se.Subject.name)
