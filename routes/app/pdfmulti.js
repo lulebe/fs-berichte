@@ -56,12 +56,14 @@ async function renderExamPartially (id, doc, query, first) {
     doc.font('Helvetica').fontSize(11).text("Note: " + (exam.grade || ""))
     const reader = new commonmark.Parser()
     const writer = new CommonmarkPDFRenderer({fontSize: 11})
-    const parsedComment = reader.parse(exam.comment || "")
-    writer.render(doc, parsedComment)
+    if (exam.comment) {
+      const parsedComment = reader.parse(exam.comment)
+      writer.render(doc, parsedComment)
+    }
     doc.moveDown()
     doc.font('Helvetica-Bold').fontSize(11).text(description)
     doc.moveDown()
-    const parsedReport = reader.parse(se.report || "")
+    const parsedReport = reader.parse(se.report)
     writer.render(doc, parsedReport)
     doc.font('Helvetica')
     doc.moveDown()
@@ -88,9 +90,11 @@ async function renderWholeExam (id, doc) {
   doc.fontSize(18).text("Kommentar", 70, 200)
   const reader = new commonmark.Parser()
   const writer = new CommonmarkPDFRenderer({fontSize: 11})
-  const parsed = reader.parse(exam.comment || "")
-  writer.render(doc, parsed)
-  doc.font('Helvetica')
+  if (exam.comment) {
+    const parsed = reader.parse(exam.comment)
+    writer.render(doc, parsed)
+    doc.font('Helvetica')
+  }
   doc.moveDown()
   doc.moveDown()
   exam.SubjectExams.forEach((se, i) => {
