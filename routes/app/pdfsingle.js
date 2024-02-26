@@ -1,4 +1,6 @@
 const PDFDocument = require('pdfkit')
+const commonmark = require('commonmark')
+const CommonmarkPDFRenderer = require('pdfkit-commonmark').default
 const joinpath = require('path').join
 
 const { Exam, ExamLocation, SubjectExam, Subject, Examiner } = requiremain('./db/db')
@@ -23,13 +25,19 @@ module.exports = async (req, res) => {
   doc.fontSize(9).text("© lehre.fsmed-hd.de", 255, 170)
   doc.moveTo(70, 180).lineTo(525, 180).stroke()
   doc.fontSize(18).text("Kommentar", 70, 200)
-  doc.fontSize(11).text(exam.comment ? exam.comment.replaceAll(/\r\n|\r/g, '\n') : "")
+  const reader = new commonmark.Parser()
+  const writer = new CommonmarkPDFRenderer()
+  const parsed = reader.parse(exam.comment || "")
+  writer.render(doc, parsed)
+  doc.font('Helvetica')
   doc.moveDown()
   exam.SubjectExams.forEach((se, i) => {
     doc.fontSize(18).text(se.Subject.name)
     doc.fontSize(13).text(se.Examiner.name)
     doc.moveDown()
-    doc.fontSize(11).text(se.report.replaceAll(/\r\n|\r/g, '\n'))
+    const parsed = reader.parse(se.report)
+    writer.render(doc, parsed)
+    doc.font('Helvetica')
     doc.moveDown()
     doc.moveDown()
   })
