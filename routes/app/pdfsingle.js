@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
   doc.moveTo(70, 180).lineTo(525, 180).stroke()
   doc.fontSize(18).text("Kommentar", 70, 200)
   const reader = new commonmark.Parser()
-  const writer = new CommonmarkPDFRenderer()
+  const writer = new CommonmarkPDFRenderer({fontSize: 11})
   const parsed = reader.parse(exam.comment || "")
   writer.render(doc, parsed)
   doc.font('Helvetica')
