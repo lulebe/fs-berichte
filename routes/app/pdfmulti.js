@@ -61,12 +61,14 @@ async function renderExamPartially (id, doc, query, first) {
       writer.render(doc, parsedComment)
     }
     doc.moveDown()
+    doc.fontSize(11).text("") //Hack to reset text position
     doc.font('Helvetica-Bold').fontSize(11).text(description)
     doc.moveDown()
     const parsedReport = reader.parse(se.report)
     writer.render(doc, parsedReport)
     doc.font('Helvetica')
     doc.moveDown()
+    doc.fontSize(11).text("") //Hack to reset text position
     doc.moveDown()
   })
 }
@@ -96,6 +98,7 @@ async function renderWholeExam (id, doc) {
     doc.font('Helvetica')
   }
   doc.moveDown()
+  doc.fontSize(11).text("") //Hack to reset text position
   doc.moveDown()
   exam.SubjectExams.forEach((se, i) => {
     doc.fontSize(18).text(se.Subject.name)
@@ -105,6 +108,7 @@ async function renderWholeExam (id, doc) {
     writer.render(doc, parsed)
     doc.font('Helvetica')
     doc.moveDown()
+    doc.fontSize(11).text("") //Hack to reset text position
     doc.moveDown()
   })
 }
