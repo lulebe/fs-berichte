@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { Op } = require('sequelize')
 
 const config = require('../config')
 const { User, Settings } = requiremain('./db/db')
@@ -65,6 +66,7 @@ async function sendActivationEmail (user, goto) {
 }
 
 async function sendAdminEmail (user, reason) {
+  User.notifyWhere({[Op.or]: [{isAdmin: true}, {moderator: true}]}, 'Neuen Nutzer freischalten', user.email, '/app/admin/users')
   const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
   return mailer(
     await Settings.get(Settings.KEYS.ADMIN_EMAIL),

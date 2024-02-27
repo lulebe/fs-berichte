@@ -1,5 +1,6 @@
-const { Petition, Settings } = requiremain('./db/db')
-const { User } = requiremain('./db/db')
+const { Op } = require('sequelize')
+
+const { Petition, Settings, User } = requiremain('./db/db')
 const mailer = requiremain('./email')
 
 module.exports = async (req, res) => {
@@ -11,6 +12,7 @@ module.exports = async (req, res) => {
     await petition.setTags(req.body.Tags)
   }
   if (!req.user.isPetitionsAdmin && !!(await Settings.get(Settings.KEYS.PETITIONS_REQUIRE_ADMIN_CONFIRMATION))) notifyAdmin(petition)
+  User.notifyWhere({[Op.or]: [{isAdmin: true}, {petitionsAdmin: true}]}, 'Neue Petition', petition.title, '/app/petitions/' + petition.id)
   res.redirect('/app/petitions/'+petition.id)
 }
 
