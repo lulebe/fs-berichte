@@ -139,11 +139,11 @@
 {% block js %}
 <script type="text/javascript">
   function checkPWrepeat() {
-    const input = document.getElementsByName('password')[0]
-    const repeatInput = document.getElementsByName('repeatPassword')[0]
-    if (input.value != repeatInput.value) {
+    const input = document.querySelector('.card-register [name=password]')
+    const repeatInput = document.querySelector('.card-register [name=repeatPassword]')
+    if (input.value != repeatInput.value)
       repeatInput.setCustomValidity('Passwörter stimmen nicht überein')
-    } else
+    else
       repeatInput.setCustomValidity('')
   }
   function makePWVisibilityToggle (container) {
