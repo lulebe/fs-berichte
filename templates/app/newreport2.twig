@@ -60,7 +60,7 @@
             <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
           </div>
         {% endfor %}
-        <button type="submit" class="fullpagesubmit">eintragen</button>
+        <button type="submit" class="fullpagesubmit" id="submitFormBtn">eintragen</button>
       </form>
     </div>
     <div style="height: 64px">&nbsp;</div>
@@ -190,6 +190,7 @@
     subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),
     location: new Fuse({{locations | json_encode() | raw}}, {keys: ['name']})
   }
+  validateForm()
 
   function validateForm () {
     let valid = true
@@ -201,6 +202,7 @@
         document.getElementById(element.dataset.label).classList.add('error')
       }
     }
+    document.getElementById('submitFormBtn').disabled = !valid
     return valid
   }
 

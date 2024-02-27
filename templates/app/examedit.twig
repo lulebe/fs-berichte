@@ -139,7 +139,7 @@
       <div class="modalbtns">
         <button type="button" class="secondary modalCancelBtn">abbrechen</button>
         <div style="flex-grow: 1"></div>
-        <button type="button" class="confirmNewBtn">übernehmen</button>
+        <button type="button" class="confirmNewBtn" id="submitFormBtn">übernehmen</button>
       </div>
     </div>
   </div>
@@ -190,6 +190,7 @@
     subject: new Fuse({{subjects | json_encode() | raw}}, {keys: ['name']}),
     location: new Fuse({{locations | json_encode() | raw}}, {keys: ['name']})
   }
+  validateForm()
 
   function validateForm () {
     let valid = true
@@ -201,6 +202,7 @@
         document.getElementById(element.dataset.label).classList.add('error')
       }
     }
+    document.getElementById('submitFormBtn').disabled = !valid
     return valid
   }
 
