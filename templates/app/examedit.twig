@@ -156,7 +156,7 @@
     spellChecker: false,
     toolbar: [
       "bold", "italic", "heading", "|",
-      "unordered-list", "ordered-list", "|",
+      "link", "unordered-list", "ordered-list", "|",
       "preview", "side-by-side", "fullscreen", "|",
       "undo", "redo", "|",
       "guide"
@@ -172,7 +172,7 @@
     spellChecker: false,
     toolbar: [
       "bold", "italic", "heading", "|",
-      "unordered-list", "ordered-list", "|",
+      "link", "unordered-list", "ordered-list", "|",
       "preview", "side-by-side", "fullscreen", "|",
       "undo", "redo", "|",
       "guide"
@@ -211,6 +211,7 @@
       document.getElementsByName('location')[0].value = name
       document.getElementById('locationDisplay').textContent = name
       document.getElementById(document.getElementsByName('location')[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
   function pickExaminer (n) {
@@ -219,6 +220,7 @@
       document.getElementsByName('examiner'+n)[0].value = name
       document.getElementById('examinerDisplay'+n).textContent = name
       document.getElementById(document.getElementsByName('examiner'+n)[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
   function pickSubject (n) {
@@ -227,6 +229,7 @@
       document.getElementsByName('subject'+n)[0].value = name
       document.getElementById('subjectDisplay'+n).textContent = name
       document.getElementById(document.getElementsByName('subject'+n)[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
 </script>
