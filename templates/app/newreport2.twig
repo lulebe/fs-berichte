@@ -56,7 +56,7 @@
               <button type="button" class="iconbtn small" onclick="pickExaminer({{subjectIndex}})"><i class="material-icons">edit</i> Prüfer wählen</button>
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}">Es begab sich eines schönen Sommertages, ...</textarea>
+            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
           </div>
         {% endfor %}
         <button type="submit" class="fullpagesubmit" id="submitFormBtn">eintragen</button>
@@ -211,6 +211,7 @@
       document.getElementsByName('location')[0].value = name
       document.getElementById('locationDisplay').textContent = name
       document.getElementById(document.getElementsByName('location')[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
   function pickExaminer (n) {
@@ -219,6 +220,7 @@
       document.getElementsByName('examiner'+n)[0].value = name
       document.getElementById('examinerDisplay'+n).textContent = name
       document.getElementById(document.getElementsByName('examiner'+n)[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
   function pickSubject (n) {
@@ -227,6 +229,7 @@
       document.getElementsByName('subject'+n)[0].value = name
       document.getElementById('subjectDisplay'+n).textContent = name
       document.getElementById(document.getElementsByName('subject'+n)[0].dataset.label).classList.remove('error')
+      validateForm()
     })
   }
   
