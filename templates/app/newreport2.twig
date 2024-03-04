@@ -56,7 +56,7 @@
               <button type="button" class="iconbtn small" onclick="pickExaminer({{subjectIndex}})"><i class="material-icons">edit</i> Prüfer wählen</button>
             </div><br>
             <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
+            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}">Es begab sich eines schönen Sommertages, ...</textarea>
           </div>
         {% endfor %}
         <button type="submit" class="fullpagesubmit" id="submitFormBtn">eintragen</button>
@@ -156,7 +156,7 @@
     spellChecker: false,
     toolbar: [
       "bold", "italic", "heading", "|",
-      "unordered-list", "ordered-list", "|",
+      "link", "unordered-list", "ordered-list", "|",
       "preview", "side-by-side", "fullscreen", "|",
       "undo", "redo", "|",
       "guide"
@@ -172,7 +172,7 @@
     spellChecker: false,
     toolbar: [
       "bold", "italic", "heading", "|",
-      "unordered-list", "ordered-list", "|",
+      "link", "unordered-list", "ordered-list", "|",
       "preview", "side-by-side", "fullscreen", "|",
       "undo", "redo", "|",
       "guide"
