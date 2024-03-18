@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   petition.textHtml = md(petition.text)
   res.tmplOpts.petition = petition
   res.tmplOpts.petition.supporterCount = await petition.countSupporters()
-  res.tmplOpts.indicatorLength = res.tmplOpts.petition.supporterCount / petition.goal * 100
+  res.tmplOpts.indicatorLength = Math.floor(res.tmplOpts.petition.supporterCount / petition.goal * 100)
   if (req.user)
     res.tmplOpts.isSupporting = await petition.hasSupporter(req.user)
   res.tmplOpts.daysLeft = Math.ceil((new Date(petition.deadline) - new Date()) / (1000 * 60 * 60 * 24))

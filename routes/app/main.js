@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     p.data.isSupporting = await p.data.hasSupporter(req.user)
     const count = await p.data.countSupporters()
     p.data.supporterCount = count
-    p.data.percentage = count / p.data.goal * 100
+    p.data.percentage = Math.floor(count / p.data.goal * 100)
     p.data.isActive =p.data.status === PETITION_STATUS.ACTIVE && p.data.beforeDeadline
   }))
 

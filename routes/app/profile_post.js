@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     res.tmplOpts.pwChanged = true
   }
   if (req.body.changename) {
-    req.user.nickname = req.body.nickname
+    req.user.nickname = req.body.nickname || null
     req.user.anonymous = !!req.body.anonymous
     await req.user.save()
   }

@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     p.isSupporting = await p.hasSupporter(req.user)
     const count = await p.countSupporters()
     p.supporterCount = count
-    p.percentage = count / p.goal * 100
+    p.percentage = Math.floor(count / p.goal * 100)
     p.isActive =p.status === PETITION_STATUS.ACTIVE && p.beforeDeadline
   }))
   res.tmplOpts.tags = await Tag.findAll({order: [['name', 'ASC']]})

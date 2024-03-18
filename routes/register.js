@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
   if (userIsAuthorizedDomain) {
     const user = await User.create({
       email: req.body.email.toLowerCase(),
-      nickname: req.body.nickname,
+      nickname: req.body.nickname || null,
       authorized: true,
       password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS)),
       isReportsUser: true,
@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
     //create user
     const user = await User.create({
       email: req.body.email,
-      nickname: req.body.nickname,
+      nickname: req.body.nickname || null,
       authorized: false,
       authReason: req.body.reason,
       password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(config.SALT_ROUNDS)),
