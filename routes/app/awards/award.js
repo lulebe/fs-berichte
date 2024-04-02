@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const tmpl = requiremain('./templates')
 
-const md = requiremain('./markdownrender')
+const shuffleArray = requiremain('./shuffleArray')
 const { Award, AwardCandidate, CandidateImage, AwardVote } = requiremain('./db/db')
 
 module.exports = async (req, res) => {
@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
+  award.AwardCandidates = shuffleArray(award.AwardCandidates)
   res.tmplOpts.award = award
   if (req.user && req.user.isAwardsUser)
     res.tmplOpts.userVote = await AwardVote.findOne({where: {UserId: req.user.id, AwardId: award.id}, include: [AwardCandidate]})

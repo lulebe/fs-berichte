@@ -5,7 +5,8 @@ module.exports = async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     votingDeadline: req.body.deadline,
-    status: Award.STATUS.UNPUBLISHED
+    status: Award.STATUS.UNPUBLISHED,
+    shuffleCandidates: !!req.body.shuffleCandidates
   })
   res.redirect('/app/admin/awards/'+award.id)
 }

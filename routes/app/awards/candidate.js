@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 
 const md = requiremain('./markdownrender')
+const shuffleArray = requiremain('./shuffleArray')
 const tmpl = requiremain('./templates')
 const { Award, AwardCandidate, CandidateImage, AwardVote } = requiremain('./db/db')
 
@@ -11,6 +12,7 @@ module.exports = async (req, res) => {
       {model: AwardCandidate, include: [{model: CandidateImage, attributes: ['id', 'type']}]}
   ],order: [[AwardCandidate, 'position', 'asc']]})
   if (!award) return res.redirect('/app/awards')
+  award.AwardCandidates = shuffleArray(award.AwardCandidates)
   res.tmplOpts.award = award
   candidate.longDescriptionHtml = md(candidate.longDescription)
   res.tmplOpts.candidate = candidate

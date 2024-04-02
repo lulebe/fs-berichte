@@ -35,7 +35,9 @@
       <div class="inputlabel">
         <label>Deadline</label>
         <input type="date" v-model="award.votingDeadline" min="{{currentDate}}">
-      </div>
+      </div><br>
+      <input type="checkbox" class="lbl" id="cbshuffle" v-model="award.shuffleCandidates">
+      <label class="check" for="cbshuffle">Kandidaten zufällig sortieren</label><br><br>
       <div class="inputlabel">
         <label>Beschreibung</label>
         <textarea class="short usertext" v-model="award.description"></textarea>
@@ -55,6 +57,7 @@
     <h2>Kandidaten</h2>
     <a href="/app/admin/awards/{{award.id}}/candidates/new" class="btn iconbtn"><i class="material-icons">add</i> Kandidaten anlegen</a>
     <p>Drag &amp; Drop zum Ändern der Reihenfolge</p>
+    <p v-if="award.shuffleCandidates">Die Abstimmenden sehen zufällig sortierte Kandidaten.</p>
     <div id="candidatesList">
       {% for candidate in award.AwardCandidates %}
         <div class="card mb" data-candidate-id="{{candidate.id}}" style="cursor: move;">

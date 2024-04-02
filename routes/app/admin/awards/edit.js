@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
   if (req.body.description) award.description = req.body.description
   if (req.body.votingDeadline) award.votingDeadline = req.body.votingDeadline
   if (req.body.status != undefined) award.status = req.body.status
+  if (req.body.shuffleCandidates != undefined) award.shuffleCandidates = req.body.shuffleCandidates
   try {
     await award.save()
   } catch (e) {

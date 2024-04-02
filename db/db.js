@@ -543,6 +543,11 @@ const Award = sequelize.define('Awards', {
       return Award.STATUS_READABLE[this.status]
     }
   },
+  shuffleCandidates: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
   votingDeadline: {
     type: DataTypes.DATEONLY,
     allowNull: false
