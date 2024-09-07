@@ -6,6 +6,7 @@ const config = require('../config')
 
 
 const USER_COUNT = 100
+const REPORT_COUNT = 100
 const AWARD_COUNT = 1
 const CANDIDATE_COUNT = 6
 
@@ -15,6 +16,7 @@ async function generateTestData () {
   await init
   await generateTestUsers()
   await generateTestAwards()
+  await generateTestReports()
 }
 
 async function generateTestUsers () {
@@ -22,6 +24,10 @@ async function generateTestUsers () {
   return Promise.all(Array.from(Array(USER_COUNT-1))
   .map((u, i) => ({email: `test${i}@${randomDomain()}`, password,  activated: true, authorized: true, isReportsUser: true, isAwardsUser: true, isPetitionsUser: true}))
   .map(userdata => db.User.create(userdata)))
+}
+
+function randomUserId () {
+  return Math.ceil(Math.random() * USER_COUNT)
 }
 
 function randomDomain () {
@@ -52,6 +58,28 @@ async function generateTestAward () {
     if (Math.random() > 0.7) continue
     await db.AwardVote.create({UserId: i, AwardId: award.id, AwardCandidateId: pickFrom(candidateIds)})
   }
+}
+
+async function generateTestReports () {
+  const examtype = await db.ExamType.create({name: "testtype", subjectCount: 1})
+  const examlocation = await db.ExamLocation.create({name: "testlocation"})
+  const subject = await db.Subject.create({name: "testsubject"})
+  const examiner = await db.Examiner.create({name: "testexaminer"})
+  await Promise.all(Array.from(Array(REPORT_COUNT)).map(async _ => {
+    const exam = await (await db.User.findByPk(randomUserId())).createExam({
+      date: new Date(),
+      studentCount: 1,
+      grade: "1",
+      comment: randomWords(150),
+      ExamTypeId: examtype.id
+    })
+    exam.setExamLocation(examlocation)
+    const report = await exam.createSubjectExam({
+      report: randomWords(300),
+      SubjectId: subject.id,
+      ExaminerId: examiner.id
+    })
+  }))
 }
 
 function randomWords (count) {
