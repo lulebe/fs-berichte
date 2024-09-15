@@ -78,7 +78,7 @@
             - {{sub.deviceName | default('altes Gerät')}}<br>
           {% endfor %}
         </p>
-        <button class="iconbtn" onclick="removeNotificationSubscriptions"><i class="material-icons">delete</i> alle entfernen</button>
+        <button class="iconbtn" onclick="removeNotificationSubscriptions()"><i class="material-icons">delete</i> alle entfernen</button>
       </section>
       {% endif %}
       <section class="card mb">
@@ -117,12 +117,14 @@
   makePWVisibilityToggle('pw-new')
   makePWVisibilityToggle('pw-repeat')
   function removeNotificationSubscriptions () {
-    fetch('/app/api/removePush')
-    navigator.serviceWorker.ready.then(registration => {
-      registration.getSubscription().then(sub => {
-        if (sub) {
-          sub.unsubscribe()
-        }
+    fetch('/app/api/removePush').then(_ => {
+      navigator.serviceWorker.ready.then(registration => {
+        registration.pushManager.getSubscription().then(sub => {
+          if (sub) {
+            sub.unsubscribe()
+          }
+          window.location.href = window.location.href
+        })
       })
     })
   }
