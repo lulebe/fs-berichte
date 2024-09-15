@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   
   //petitions
   const petitions = req.user.isPetitionsUser ? (await Petition.findAll({
-    where: {[Op.and]: [{ status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1 } }, { status: {[Op.lte]: 3 } } ]},
+    where: {[Op.and]: [{ status: {[Op.gte]: req.user.isPetitionsAdmin ? 0 : 1 } }, { status: {[Op.lte]: 1 } } ]},
     order: [['createdAt', 'DESC']]
   })).map(p => ({type: 'petitions', data: p})) : []
   await Promise.all(petitions.map(async (p) => {
