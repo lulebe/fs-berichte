@@ -13,6 +13,8 @@ module.exports = async (req, res) => {
       deviceName: parseDevice(req.headers['user-agent']),
       UserId: req.user.id
     })
+  else
+    subscription.update({deviceName: parseDevice(req.headers['user-agent'])})
   res.status(201).send()
 }
 
