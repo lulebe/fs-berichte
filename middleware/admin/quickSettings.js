@@ -1,4 +1,5 @@
 const md = requiremain('./markdownrender')
+const email = requiremain('./email')
 
 const { User, Settings } = requiremain('./db/db')
 
@@ -10,6 +11,11 @@ module.exports = async function (req, res, next) {
         authUser.authorized = true
         authUser.activated = true
         await authUser.save()
+        const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
+        email(authUser.email, "Dein Account wurde freigeschaltet",
+          `Dein Account auf ${ROOT_URL} wurde freigeschaltet.`,
+          `Dein Account auf <a href="${ROOT_URL}">${ROOT_URL}</a> wurde freigeschaltet.`
+        )
       }
     }
     if (req.query.deleteAuth) {

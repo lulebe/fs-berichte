@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
 }
 
 async function sendActivationEmail (user) {
-  const ROOT_URL = Settings.get(Settings.KEYS.ROOT_URL)
+  const ROOT_URL = await Settings.get(Settings.KEYS.ROOT_URL)
   const token = jwt.sign({userId: user.id}, await Settings.get(Settings.KEYS.JWT_SECRET), { expiresIn: '180 days' })
   return mailer(
     user.email,

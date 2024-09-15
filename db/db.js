@@ -208,7 +208,7 @@ NotificationSubscription.prototype.sendMessage = async function (title, text, ur
     title, text, url
   })
   const vapidDetails = {
-    subject: 'mailto:'+Settings.get(Settings.KEYS.ADMIN_EMAIL),
+    subject: 'mailto:'+ (await Settings.get(Settings.KEYS.ADMIN_EMAIL)),
     privateKey: await Settings.get(Settings.KEYS.VAPID_PRIVATE_KEY),
     publicKey: await Settings.get(Settings.KEYS.VAPID_PUBLIC_KEY)
   }
