@@ -73,6 +73,11 @@
       <section class="card mb">
         <h3>Benachrichtigungen</h3>
         <p>Du hast Geräte zum Erhalt von Benachrichtigungen aktiviert.</p>
+        <p>
+          {% for sub in notificationSubs %}
+            - {{sub.deviceName | default('altes Gerät')}}<br>
+          {% endfor %}
+        </p>
         <button class="iconbtn" onclick="removeNotificationSubscriptions"><i class="material-icons">delete</i> alle entfernen</button>
       </section>
       {% endif %}

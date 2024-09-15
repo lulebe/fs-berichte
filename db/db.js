@@ -187,6 +187,10 @@ const NotificationSubscription = sequelize.define('NotificationSubscription', {
   auth: {
     type: DataTypes.STRING(500),
     allowNull: true
+  },
+  deviceName: {
+    type: DataTypes.STRING(500),
+    allowNull: true
   }
 }, {
   timestamps: false
