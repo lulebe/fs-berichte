@@ -37,6 +37,7 @@ appRouter.get('/main', require('./routes/app/main'))
 
 //random api stuff
 appRouter.post('/api/registerPush', require('./routes/app/api/registerPush'))
+appRouter.post('/api/removePush', require('./routes/app/api/removePush'))
 
 //user stuff
 appRouter.get('/logout', require('./routes/app/logout'))
