@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     subscription = await NotificationSubscription.findByPk(req.body.endpoint)
     subscription && subscription.destroy()
   } else {
-    req.user.removeNotificationSubscriptions()
+    NotificationSubscription.destroy({where: {UserId: req.user.id}})
   }
   res.status(201).send()
 }

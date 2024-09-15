@@ -117,7 +117,7 @@
   makePWVisibilityToggle('pw-new')
   makePWVisibilityToggle('pw-repeat')
   function removeNotificationSubscriptions () {
-    fetch('/app/api/removePush').then(_ => {
+    fetch('/app/api/removePush', {method: 'post'}).then(_ => {
       navigator.serviceWorker.ready.then(registration => {
         registration.pushManager.getSubscription().then(sub => {
           if (sub) {
