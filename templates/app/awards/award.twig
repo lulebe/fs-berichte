@@ -18,9 +18,28 @@
 <div class="wrapper-2-col" style="padding-top: 0">
   <div class="grid-col left">
     <p class="usertext" style="white-space: pre-wrap">{{award.description}}</p>
+    {% if hasAwardWinner %}
+        <div class="card mb award-winners">
+          <div class="award-winner-2">
+            <img src="/app/awards/image/{{awardWinners[1].CandidateImages[0].id}}.{{awardWinners[1].CandidateImages[0].type}}">
+            <h3>{{awardWinners[1].name}}</h3>
+            <div class="stand">2</div>
+          </div>
+          <div class="award-winner-1">
+            <img src="/app/awards/image/{{awardWinners[0].CandidateImages[0].id}}.{{awardWinners[0].CandidateImages[0].type}}">
+            <h3>{{awardWinners[0].name}}</h3>
+            <div class="stand">1</div>
+          </div>
+          <div class="award-winner-3">
+            <img src="/app/awards/image/{{awardWinners[2].CandidateImages[0].id}}.{{awardWinners[2].CandidateImages[0].type}}">
+            <h3>{{awardWinners[2].name}}</h3>
+            <div class="stand">3</div>
+          </div>
+        </div>
+      {% endif %}
     <div class="card mb">
       <h2>{{totalVotes}} Stimmen</h2>
-      <div class="wide award-vote-chart"></div>
+        <div class="wide award-vote-chart"></div>
     </div>
     {% if user.isAwardsAdmin %}
       <br><a href="/app/admin/awards/{{award.id}}#edit" class="btn iconbtn"><i class="material-icons">edit</i> bearbeiten</a>

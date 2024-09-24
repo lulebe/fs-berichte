@@ -21,5 +21,9 @@ module.exports = async (req, res) => {
   voteCountData.sort((a, b) => b.count - a.count)
   res.tmplOpts.voteCounts = voteCountData
   res.tmplOpts.totalVotes = await AwardVote.count({where: {AwardId: award.id}})
+  if (award.status === Award.STATUS.DONE) {
+    res.tmplOpts.awardWinners = await Promise.all(voteCountData.map(v => AwardCandidate.findByPk(v.AwardCandidate.id, {include: [CandidateImage]})))
+    res.tmplOpts.hasAwardWinner = !!res.tmplOpts.awardWinners.length
+  }
   tmpl.render('app/awards/award.twig', res.tmplOpts).then(rendered => res.end(rendered))
 }

@@ -21,5 +21,52 @@
     .ct-bar {
       stroke-width: 40px;
     }
+  }
 }
+
+.award-winners {
+  background: #1D1D30;
+  color: white;
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-items: end;
+  padding-top: 64px;
+  .stand {
+    font-size: 40px;
+    font-weight: bold;
+  }
+  .award-winner-3, .award-winner-2, .award-winner-1 {
+    padding: 0 8px;
+  }
+  .award-winner-1 {
+    .stand {
+      line-height: 200px;
+      background-color: gold;
+    }
+    grid-column: 2;
+  }
+  .award-winner-2 {
+    .stand {
+      line-height: 150px;
+      background-color: silver;
+    }
+    grid-column: 1;
+  }
+  .award-winner-3 {
+    .stand {
+      line-height: 100px;
+      background-color: brown;
+    }
+    grid-column: 3;
+  }
+  img {
+    height: 200px;
+    width: 200px;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 }
