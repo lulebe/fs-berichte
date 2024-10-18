@@ -1501,7 +1501,7 @@ textarea:invalid {
   background-color: brown;
 }
 .award-winners img {
-  height: 200px;
+  aspect-ratio: 1/1;
   width: 200px;
   max-width: 100%;
   object-fit: cover;
