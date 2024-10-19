@@ -12,6 +12,9 @@
     "dbinit": "node ./db/init-db.js",
     "init-with-testdata": "node ./db/generate-testdata.js"
   },
+  "engines" : {
+    "node" : ">=16.0.0 <21.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/lulebe/fs-berichte"
