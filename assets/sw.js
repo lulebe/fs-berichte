@@ -9,7 +9,8 @@ self.addEventListener('push', (e) => {
   const data = e.data.json()
   self.registration.showNotification(data.title, {
     body: data.text,
-    data: {url: data.url}
+    data: {url: data.url},
+    icon: self.location.origin + '/assets/notificationicon.png'
   })
 })
 self.addEventListener('notificationclick', (event) => {
