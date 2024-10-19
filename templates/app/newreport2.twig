@@ -177,6 +177,7 @@
 
   function deleteSubject (btn) {
     const index = parseInt(btn.parentElement.dataset.subjectindex)
+    if (!confirm('Bericht über Fach ' + (index+1) + ' wirklich entfernen?')) return
     subjectIndex--
     const el = document.getElementById('subjectCard'+index)
     el.remove()
