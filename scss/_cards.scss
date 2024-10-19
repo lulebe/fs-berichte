@@ -3,11 +3,9 @@
     box-shadow: $shadow-s;
     background: white;
     padding: 16px 16px 16px 16px;
-    > {
-      h1, h2, h3, h4 {
-        &:first-child {
-          margin-top: 0;
-        }
+    h1, h2, h3, h4 {
+      &:first-child {
+        margin-top: 0;
       }
     }
     &.selectable {

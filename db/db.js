@@ -293,10 +293,6 @@ const ExamType = sequelize.define('ExamType', {
     allowNull: false,
     unique: true
   },
-  subjectCount: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
   createdAtReadable: {
     type: DataTypes.VIRTUAL,
     get () {

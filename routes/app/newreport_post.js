@@ -4,7 +4,8 @@ const { ExamType, Subject, ExamLocation, Examiner } = requiremain('./db/db')
 module.exports = async (req, res) => {
   const examType = await ExamType.findByPk(req.body.examType)
   if (!examType) return res.status(400).send()
-  if (!validate(req.body, examType.subjectCount)) return res.status(400).send()
+  const validSubjects = validate(req.body)
+  if (!validSubjects) return res.status(400).send()
   const exam = await req.user.createExam({
     date: req.body.date,
     studentCount: req.body.studentCount,
@@ -14,7 +15,7 @@ module.exports = async (req, res) => {
   })
   const location = await getOrCreateMetadata(ExamLocation, req.body.locationId, req.body.location)
   await exam.setExamLocation(location)
-  for (let i = 1; i <= examType.subjectCount; i++) {
+  for (let i = 0; i < validSubjects; i++) {
     await storeReport(i, exam, req)
   }
   res.redirect('/app/exam/'+exam.id)
@@ -61,12 +62,14 @@ function fixExaminerName (name) {
   return name
 }
 
-function validate (body, subjectCount) {
-  if (!body.location || body.location.length < 3) return false
-  for (let i = 1; i <= subjectCount; i++) {
-    if (!body['examiner'+i] || body['examiner'+i].length < 3) return false
-    if (!body['subject'+i] || body['subject'+i].length < 3) return false
-    if (!body['report'+i] || body['report'+i].length < 30) return false
+function validate (body) {
+  if (!body.location || body.location.length < 3) return 0
+  let i = 0
+  while (true) {
+    if (!body['examiner'+i] || body['examiner'+i].length < 3) break
+    if (!body['subject'+i] || body['subject'+i].length < 3) break
+    if (!body['report'+i] || body['report'+i].length < 30) break
+    i++
   }
-  return true
+  return i
 }

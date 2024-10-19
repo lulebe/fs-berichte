@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="wrapper">
+  <div class="wrapper" v-scope>
     <div>
       <h1>Protokoll anlegen</h1>
       <form action="" method="POST" onsubmit="return validateForm()">
@@ -36,29 +36,8 @@
             <textarea name="comment" id="reportGeneralInput">Atmosphäre, allgemeine Tipps, alles drumherum...</textarea>
           </div>
         </div>
-        {% for subjectIndex in 1..examType.subjectCount %}
-          <div class="card mb" >
-            <h3>Fach {{subjectIndex}}</h3><br>
-            <div class="inputlabel">
-              <label id="subjectLabel{{subjectIndex}}">Fach</label>
-              <input type="hidden" name="subjectId{{subjectIndex}}">
-              <input type="hidden" name="subject{{subjectIndex}}" class="requiredInvisible" data-label="subjectLabel{{subjectIndex}}">
-              <br>
-              <span id="subjectDisplay{{subjectIndex}}"></span>
-              <button type="button" class="iconbtn small" onclick="pickSubject({{subjectIndex}})"><i class="material-icons">edit</i> Fach wählen</button>
-            </div><br>
-            <div class="inputlabel">
-              <label id="examinerLabel{{subjectIndex}}">Prüfer (ganzer Name, ohne Titel)</label>
-              <input type="hidden" name="examinerId{{subjectIndex}}">
-              <input type="hidden" name="examiner{{subjectIndex}}" class="requiredInvisible" data-label="examinerLabel{{subjectIndex}}">
-              <br>
-              <span id="examinerDisplay{{subjectIndex}}"></span>
-              <button type="button" class="iconbtn small" onclick="pickExaminer({{subjectIndex}})"><i class="material-icons">edit</i> Prüfer wählen</button>
-            </div><br>
-            <small>Bericht</small>
-            <textarea name="report{{subjectIndex}}" id="reportInput{{subjectIndex}}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
-          </div>
-        {% endfor %}
+        
+        <button onclick="createSubject()" class="iconbtn" id="addSubjectBtn"><i class="material-icons">add</i> weiteres Fach</button>
         <button type="submit" class="fullpagesubmit" id="submitFormBtn">eintragen</button>
       </form>
     </div>
@@ -151,6 +130,7 @@
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 <script src="/assets/pickfromdbmodals.js"></script>
 <script type="text/javascript">
+  let subjectIndex = 0
   const easyMDE0 = new EasyMDE({
     element: document.getElementById('reportGeneralInput'),
     spellChecker: false,
@@ -166,23 +146,85 @@
       uniqueId: "reportInput0"
     }
   })
-  {% for subjectIndex in 1..examType.subjectCount %}
-  const easyMDE{{subjectIndex}} = new EasyMDE({
-    element: document.getElementById('reportInput{{subjectIndex}}'),
-    spellChecker: false,
-    toolbar: [
-      "bold", "italic", "heading", "|",
-      "link", "unordered-list", "ordered-list", "|",
-      "preview", "side-by-side", "fullscreen", "|",
-      "undo", "redo", "|",
-      "guide"
-      ],
-    autosave: {
-      enabled: false,
-      uniqueId: "reportInput{{subjectIndex}}"
+
+  createSubject()
+
+  function createSubject () {
+    const addBtn = document.getElementById('addSubjectBtn')
+    const el = document.createElement('div')
+    el.innerHTML = createSubjectFromTemplate(subjectIndex)
+    el.classList.add('card', 'mb')
+    el.id = 'subjectCard'+subjectIndex
+    el.dataset.subjectindex = subjectIndex
+    addBtn.parentElement.insertBefore(el, addBtn)
+    const editor = new EasyMDE({
+      element: document.getElementById('reportInput'+subjectIndex),
+      spellChecker: false,
+      toolbar: [
+        "bold", "italic", "heading", "|",
+        "link", "unordered-list", "ordered-list", "|",
+        "preview", "side-by-side", "fullscreen", "|",
+        "undo", "redo", "|",
+        "guide"
+        ],
+      autosave: {
+        enabled: false
+      }
+    })
+    validateForm()
+    subjectIndex++
+  }
+
+  function deleteSubject (btn) {
+    const index = parseInt(btn.parentElement.dataset.subjectindex)
+    subjectIndex--
+    const el = document.getElementById('subjectCard'+index)
+    el.remove()
+    for (let i = index+1; i <= subjectIndex; i++) {
+      const el = document.getElementById('subjectCard'+i)
+      el.id = 'subjectCard' + (i-1)
+      el.dataset.subjectindex = i-1
+      document.getElementById('subjectLabel'+i).id = 'subjectLabel' + (i-1)
+      document.getElementById('subjectDisplay'+i).id = 'subjectDisplay' + (i-1)
+      document.getElementById('examinerLabel'+i).id = 'examinerLabel' + (i-1)
+      document.getElementById('examinerDisplay'+i).id = 'examinerDisplay' + (i-1)
+      document.getElementById('reportInput'+i).id = 'reportInput' + (i-1)
+      document.getElementsByName('subjectId'+i)[0].name = 'subjectId' + (i-1)
+      document.getElementsByName('subject'+i)[0].dataset.label = 'subjectLabel' + (i-1)
+      document.getElementsByName('subject'+i)[0].name = 'subject' + (i-1)
+      document.getElementsByName('examinerId'+i)[0].name = 'examinerId' + (i-1)
+      document.getElementsByName('examiner'+i)[0].dataset.label = 'examinerLabel' + (i-1)
+      document.getElementsByName('examiner'+i)[0].name = 'examiner' + (i-1)
+      document.getElementsByName('report'+i)[0].name = 'report' + (i-1)
+      el.getElementsByTagName('h3')[0].textContent = 'Fach ' + (i)
     }
-  })
-  {% endfor %}
+    validateForm()
+  }
+
+  function createSubjectFromTemplate (subjectIndex) {
+    return `
+        <h3>Fach ${subjectIndex + 1}</h3><br>
+        <div class="inputlabel">
+          <label id="subjectLabel${subjectIndex}">Fach</label>
+          <input type="hidden" name="subjectId${subjectIndex}">
+          <input type="hidden" name="subject${subjectIndex}" class="requiredInvisible" data-label="subjectLabel${subjectIndex}">
+          <br>
+          <span id="subjectDisplay${subjectIndex}"></span>
+          <button type="button" class="iconbtn small" onclick="pickSubject(this)"><i class="material-icons">edit</i> Fach wählen</button>
+        </div><br>
+        <div class="inputlabel">
+          <label id="examinerLabel${subjectIndex}">Prüfer (ganzer Name, ohne Titel)</label>
+          <input type="hidden" name="examinerId${subjectIndex}">
+          <input type="hidden" name="examiner${subjectIndex}" class="requiredInvisible" data-label="examinerLabel${subjectIndex}">
+          <br>
+          <span id="examinerDisplay${subjectIndex}"></span>
+          <button type="button" class="iconbtn small" onclick="pickExaminer(this)"><i class="material-icons">edit</i> Prüfer wählen</button>
+        </div><br>
+        <small>Bericht</small>
+        <textarea name="report${subjectIndex}" id="reportInput${subjectIndex}" required minlength="30">Es begab sich eines schönen Sommertages, ...</textarea>
+        <button class="small iconbtn important" onclick="deleteSubject(this)"><i class="material-icons">delete</i> Fach entfernen</button>
+    `
+  }
 
   atData = {
     examiner: new Fuse({{examiners | json_encode() | raw}}, {keys: ['name']}),
@@ -214,7 +256,8 @@
       validateForm()
     })
   }
-  function pickExaminer (n) {
+  function pickExaminer (el) {
+    const n = parseInt(el.parentElement.parentElement.dataset.subjectindex)
     new ModalHandler(document.getElementById('examinerPicker'), atData.examiner, (id, name) => {
       document.getElementsByName('examinerId'+n)[0].value = id
       document.getElementsByName('examiner'+n)[0].value = name
@@ -223,7 +266,8 @@
       validateForm()
     })
   }
-  function pickSubject (n) {
+  function pickSubject (el) {
+    const n = parseInt(el.parentElement.parentElement.dataset.subjectindex)
     new ModalHandler(document.getElementById('subjectPicker'), atData.subject, (id, name) => {
       document.getElementsByName('subjectId'+n)[0].value = id
       document.getElementsByName('subject'+n)[0].value = name

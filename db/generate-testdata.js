@@ -61,7 +61,7 @@ async function generateTestAward () {
 }
 
 async function generateTestReports () {
-  const examtype = await db.ExamType.create({name: "testtype", subjectCount: 1})
+  const examtype = await db.ExamType.create({name: "testtype"})
   const examlocation = await db.ExamLocation.create({name: "testlocation"})
   const subject = await db.Subject.create({name: "testsubject"})
   const examiner = await db.Examiner.create({name: "testexaminer"})
