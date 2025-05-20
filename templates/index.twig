@@ -71,7 +71,7 @@
 {% block body %}
   <section id="splash">
     FSmed Lehre
-    <p>{{loginDescription | nl2br}}</p>
+    <p>{{loginDescription | raw}}</p>
   </section>
   {% if hasError %}<section class="card" style="width: 100%; max-width: 500px" id="error-msg"><i class="material-icons">warning</i> {{ errorMsg }}</section>{% endif %}
   <div class="frontpage-cards">
