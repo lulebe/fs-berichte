@@ -38,6 +38,7 @@
     <div class="grid-col right">
       <h1 class="mtop0">Account</h1>
       {% if pwChanged %}<section class="card" id="error-msg"><i class="material-icons">check</i>Passwort wurde geändert.</section><br>{% endif %}
+      {{user.email}}
       <section class="card mb">
         <h3>Passwort ändern</h3>
         <form method="POST">
