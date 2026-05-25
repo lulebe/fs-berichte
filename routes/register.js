@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     sendActivationEmail(user, goto)
     res.redirect('/?status=6' + goto)
   } else {
-    if (!req.body.reason) {
+    if (!req.body.reason && humanCheck(req.body)) {
       return res.redirect('/?status=8' + goto)
     }
     //create user
@@ -52,6 +52,13 @@ module.exports = async (req, res) => {
     sendAdminEmail (user, req.body.reason)
     return res.redirect('/?status=9' + goto)
   }
+}
+
+//Bots started appearing, so far they always provide a string without spaces as reason, so easy catch
+function humanCheck (data) {
+  if (!data.reason) return false
+  if (data.reason.trim().split(' ').length < 2) return false
+  return true
 }
 
 async function sendActivationEmail (user, goto) {
