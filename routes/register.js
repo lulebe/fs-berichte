@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     sendActivationEmail(user, goto)
     res.redirect('/?status=6' + goto)
   } else {
-    if (!req.body.reason && humanCheck(req.body)) {
+    if (!req.body.reason || !humanCheck(req.body)) {
       return res.redirect('/?status=8' + goto)
     }
     //create user
